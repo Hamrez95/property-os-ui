@@ -200,6 +200,30 @@ export function BusinessStrategyHub(){
           {forces.map(([name,level,desc])=><article key={name}><div><strong>{name}</strong><span>{level}</span></div><p>{desc}</p></article>)}
         </div>
       </section>
+      <section className="biz-section strategy-framework-section">
+        <div className="hub-section-head"><span>08B · STRATEGIC MANAGEMENT</span><h2>PESTEL، VRIO و Balanced Scorecard در یک نگاه</h2><p>این frameworkها برای تصمیم‌گیری‌اند، نه برای تزئین presentation.</p></div>
+        <div className="pestel-grid">
+          {[
+            ['P','Institutional','رگولاتوری ملک و APIهای رسمی می‌توانند هم فرصت و هم dependency باشند.','Adapter + capability gate'],
+            ['E','Economic','تورم و رشد ضعیف روی WTP، هزینه تیم و pricing فشار می‌آورد.','Low burn + price review'],
+            ['S','Social','اعتماد شخصی، اسناد و چندنقشی بودن افراد در ملک مهم است.','Role-aware + explainable trust'],
+            ['T','Technology','رفتار دیجیتال قوی است ولی عملیات ملک هنوز پراکنده است.','Mobile-first + API-first'],
+            ['E','Environmental','انرژی، آب و نگهداری بعداً به intelligence ملک وصل می‌شوند.','Extensible Asset/Maintenance'],
+            ['L','Legal','حقوق ملک و قرارداد نیازمند مرز دقیق بین Internal و Official است.','Legal review + provenance'],
+          ].map(([letter,title,desc,response],i)=><article key={title}><span>{letter}</span><div><strong>{title}</strong><p>{desc}</p><small>{response}</small></div></article>)}
+        </div>
+        <div className="scorecard-grid">
+          {[
+            ['Financial','MRR · Margin · Burn · Runway · Payback'],
+            ['Customer','Activation · D90 Retention · Collaboration · Trust'],
+            ['Internal','Onboarding time · Inspection TAT · Deployment quality'],
+            ['Learning','Interviews · Experiment cycle · Docs · Founder bandwidth'],
+          ].map(([title,items])=><article key={title}><strong>{title}</strong><span>{items}</span></article>)}
+        </div>
+        <div className="capital-card">
+          <CircleDollarSign size={22}/><div><span>CAPITAL STRATEGY</span><strong>سرمایه را روی موتور تکرارپذیر خرج کنیم، نه روی vision حل‌نشده.</strong><p>Foundation → Research → Core Product → Minimum reliable infra → Legal/Security expertise. Paid marketing، تیم فروش بزرگ و field network قبل از retention/unit economics عقب می‌مانند.</p></div>
+        </div>
+      </section>
 
       <section id="risk" className="biz-section">
         <div className="hub-section-head"><span>09 · BUSINESS RISK REGISTER</span><h2>ریسک باید صاحب، signal و mitigation داشته باشد</h2><p>تمرکز این نسخه روی ریسک‌هایی است که می‌توانند thesis یا runway را بشکنند.</p></div>
