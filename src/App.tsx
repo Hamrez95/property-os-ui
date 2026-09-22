@@ -12,7 +12,7 @@ import { QualityGallery } from './QualityGallery'
 import { PublishListing, NegotiationThread, ContractReview, SecurePayment, NotificationSettings } from './MarketplaceAccountScreens'
 import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
-import { go, goDesignBoard, isPrototypeRoute, normalizeRoute } from './navigation'
+import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PROTOTYPE_SCREENS, type PrototypeGroup } from './navigation'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -72,8 +72,8 @@ function HomeScreen() {
     </div>
     <section className="mobile-section">
       <div className="section-head"><h3>املاک من</h3><button onClick={() => go('/portfolio')}>مشاهده همه</button></div>
-      {properties.map((p,i)=><PropertyCard key={i} {...p}/>)}
-      <div className="attention"><CalendarDays size={18}/><div><strong>یادآوری مهم</strong><span>قرارداد آپارتمان نیاوران ۲۷ روز دیگر پایان می‌یابد.</span></div></div>
+      {properties.map((p,i)=><PropertyCard key={i} {...p} route={i===0?'/property':'/space'}/>)}
+      <button className="attention interactive-row" onClick={() => go('/property-lease')}><CalendarDays size={18}/><div><strong>یادآوری مهم</strong><span>قرارداد آپارتمان نیاوران ۲۷ روز دیگر پایان می‌یابد.</span></div><ChevronLeft size={16}/></button>
     </section>
   </Phone>
 }
@@ -87,7 +87,7 @@ function PropertyDetail() {
     </div>
     <div className="property-title-row"><div><h2>آپارتمان نیاوران ☆</h2><p>تهران، نیاوران · ساختمان کسری</p></div></div>
     <div className="property-facts"><div><strong>۱۴۰</strong><span>متر</span></div><div><strong>۳</strong><span>خواب</span></div><div><strong>طبقه ۴</strong><span>از ۶</span></div><div><strong>۱۴۰۰</strong><span>سال ساخت</span></div></div>
-    <div className="tabs"><span>جزئیات</span><span>مالی</span><span>مستندات</span><span className="active">قرارداد</span></div>
+    <div className="tabs interactive-tabs"><button onClick={() => go('/property')}>جزئیات</button><button onClick={() => go('/property-finance')}>مالی</button><button onClick={() => go('/property-documents')}>مستندات</button><button className="active" onClick={() => go('/property-lease')}>قرارداد</button></div>
     <div className="detail-panel">
       <div className="panel-head"><strong>وضعیت قرارداد</strong><Status tone="verified">اجاره‌شده</Status></div>
       <div className="kv"><span>مستأجر</span><b>علی محمدی</b></div>
@@ -107,7 +107,7 @@ function MyCity() {
       {[...Array(17)].map((_,i)=><div key={i} className={'map-building b'+i}/>)}
       <div className="selected-building"/>
       <div className="map-pin red"/><div className="map-pin blue"/><div className="map-pin amber"/>
-      <div className="map-card"><strong>ساختمان نیاوران</strong><span>۱۲ واحد · تهران</span><small>میانگین قیمت: ۲۶۰ میلیون / متر</small></div>
+      <button className="map-card interactive-card" onClick={() => go('/building')}><strong>ساختمان نیاوران</strong><span>۱۲ واحد · تهران</span><small>میانگین قیمت: ۲۶۰ میلیون / متر</small></button>
       <div className="map-switch"><span className="active"><Map size={14}/>نقشه</span><span><Menu size={14}/>لیست</span></div>
     </div>
   </Phone>
@@ -116,11 +116,11 @@ function MyCity() {
 function AdminDashboard() {
   return <AdminShell section="داشبورد">
     <div className="admin-page-head"><div><h2>داشبورد</h2><p>نمای کلی عملیات Property OS</p></div></div>
-    <div className="stats-grid">
-      <Stat icon={Users} label="کل کاربران" value="12,480" delta="+12%"/>
-      <Stat icon={Building2} label="املاک ثبت‌شده" value="8,320" delta="+8%"/>
-      <Stat icon={FileCheck2} label="قراردادهای فعال" value="5,210" delta="+11%"/>
-      <Stat icon={ClipboardCheck} label="بازرسی تأییدشده" value="1,240" delta="+4%"/>
+    <div className="stats-grid interactive-stats">
+      <button onClick={() => go('/admin-users')}><Stat icon={Users} label="کل کاربران" value="12,480" delta="+12%"/></button>
+      <button onClick={() => go('/admin-properties')}><Stat icon={Building2} label="املاک ثبت‌شده" value="8,320" delta="+8%"/></button>
+      <button onClick={() => go('/admin-deals')}><Stat icon={FileCheck2} label="قراردادهای فعال" value="5,210" delta="+11%"/></button>
+      <button onClick={() => go('/admin-trust')}><Stat icon={ClipboardCheck} label="بازرسی تأییدشده" value="1,240" delta="+4%"/></button>
     </div>
     <div className="dash-grid">
       <div className="chart-card"><div className="card-title">روند رشد ماهانه</div><div className="line-chart"><svg viewBox="0 0 500 160"><polyline points="10,130 90,112 170,110 250,72 330,82 410,48 490,26" fill="none" stroke="#315EFB" strokeWidth="4"/><polyline points="10,130 90,112 170,110 250,72 330,82 410,48 490,26 490,160 10,160" fill="rgba(49,94,251,.08)" stroke="none"/></svg></div></div>
@@ -139,7 +139,7 @@ const users = [
 
 function UsersManagement() {
   return <AdminShell section="کاربران">
-    <div className="admin-page-head"><div><h2>کاربران</h2><p>مدیریت Partyها، نقش‌ها و وضعیت حساب</p></div><button className="btn primary compact"><Plus size={15}/>کاربر جدید</button></div>
+    <div className="admin-page-head"><div><h2>کاربران</h2><p>مدیریت Partyها، نقش‌ها و وضعیت حساب</p></div><button className="btn primary compact" onClick={() => go('/admin-users')}><Plus size={15}/>کاربر جدید</button></div>
     <div className="table-toolbar"><div className="global-search"><Search size={15}/><span>جستجو در کاربران...</span></div></div>
     <div className="data-table">
       <div className="table-row header"><span>نام</span><span>موبایل</span><span>نقش</span><span>وضعیت</span><span/></div>
@@ -158,7 +158,7 @@ const adminProperties = [
 
 function PropertyManagement() {
   return <AdminShell section="املاک">
-    <div className="admin-page-head"><div><h2>مدیریت املاک</h2><p>Property Recordها و وضعیت عملیاتی</p></div><button className="btn primary compact"><Plus size={15}/>افزودن ملک</button></div>
+    <div className="admin-page-head"><div><h2>مدیریت املاک</h2><p>Property Recordها و وضعیت عملیاتی</p></div><button className="btn primary compact" onClick={() => go('/admin-properties')}><Plus size={15}/>افزودن ملک</button></div>
     <div className="table-toolbar"><div className="global-search"><Search size={15}/><span>جستجو در املاک...</span></div><div className="filter-pills"><span className="active">همه</span><span>فعال</span><span>خالی</span></div></div>
     <div className="data-table property-table">
       <div className="table-row header"><span>عنوان</span><span>نوع</span><span>موقعیت</span><span>وضعیت</span><span/></div>
@@ -174,13 +174,13 @@ function PortfolioOverview() {
       <div><span>ارزش تقریبی سبد</span><strong>۴۲.۸ میلیارد</strong><small>تومان</small></div>
       <div className="portfolio-metrics"><span><b>۵</b> ملک</span><span><b>۳</b> اجاره‌شده</span><span><b>۱</b> خالی</span></div>
     </div>
-    <div className="portfolio-toolbar"><div className="searchbox"><Search size={15}/><span>جستجو در سبد...</span></div><button className="icon-button"><Plus size={16}/></button></div>
+    <div className="portfolio-toolbar"><div className="searchbox"><Search size={15}/><span>جستجو در سبد...</span></div><button className="icon-button" onClick={() => go('/property-add')} aria-label="افزودن ملک"><Plus size={16}/></button></div>
     <div className="chips portfolio-chips"><span className="active">همه</span><span>مسکونی</span><span>تجاری</span><span>فضاها</span></div>
     <section className="mobile-section portfolio-list">
-      <PropertyCard title="آپارتمان نیاوران" meta="۱۴۰ متر · طبقه ۴" status="اجاره‌شده" tone="verified"/>
-      <PropertyCard title="ویلای لواسان" meta="۴۲۰ متر · ۳ خواب" status="در فروش" tone="info"/>
-      <PropertyCard title="پارکینگ ونک" meta="P-21 · طبقه -۱" status="خالی" tone="neutral"/>
-      <PropertyCard title="تجاری جردن" meta="۸۵ متر · همکف" status="اجاره‌شده" tone="verified"/>
+      <PropertyCard title="آپارتمان نیاوران" meta="۱۴۰ متر · طبقه ۴" status="اجاره‌شده" tone="verified" route="/property"/>
+      <PropertyCard title="ویلای لواسان" meta="۴۲۰ متر · ۳ خواب" status="در فروش" tone="info" route="/listing"/>
+      <PropertyCard title="پارکینگ ونک" meta="P-21 · طبقه -۱" status="خالی" tone="neutral" route="/space"/>
+      <PropertyCard title="تجاری جردن" meta="۸۵ متر · همکف" status="اجاره‌شده" tone="verified" route="/property"/>
     </section>
   </Phone>
 }
@@ -200,8 +200,8 @@ function PropertyPassport() {
       <div><span>رسانه</span><Status tone="verified">توسط بازرس</Status></div>
     </div>
     <div className="passport-actions">
-      <button className="btn secondary"><FileCheck2 size={15}/>افزودن مدرک</button>
-      <button className="btn primary"><ShieldCheck size={15}/>افزایش سطح اعتماد</button>
+      <button className="btn secondary" onClick={() => go('/property-documents')}><FileCheck2 size={15}/>افزودن مدرک</button>
+      <button className="btn primary" onClick={() => go('/trust')}><ShieldCheck size={15}/>افزایش سطح اعتماد</button>
     </div>
   </Phone>
 }
@@ -227,16 +227,16 @@ function PropertyTimeline() {
 
 function SpacesOverview() {
   return <Phone title="فضاها و متعلقات">
-    <div className="spaces-hero"><div><strong>۳ فضای مستقل</strong><span>هر فضا می‌تواند lifecycle اجاره و تاریخچه مستقل داشته باشد.</span></div><button className="icon-button"><Plus size={16}/></button></div>
-    <div className="space-card">
+    <div className="spaces-hero"><div><strong>۳ فضای مستقل</strong><span>هر فضا می‌تواند lifecycle اجاره و تاریخچه مستقل داشته باشد.</span></div><button className="icon-button" onClick={() => go('/bundle')} aria-label="ساخت Bundle"><Plus size={16}/></button></div>
+    <button className="space-card interactive-card" onClick={() => go('/property')}>
       <div className="space-icon"><Home size={18}/></div><div><strong>واحد مسکونی ۴</strong><span>۱۴۰ متر · طبقه ۴</span></div><Status tone="verified">اشغال</Status>
-    </div>
-    <div className="space-card">
+    </button>
+    <button className="space-card interactive-card" onClick={() => go('/space')}>
       <div className="space-icon"><KeyRound size={18}/></div><div><strong>پارکینگ P-21</strong><span>طبقه -۱ · دسترسی مستقل</span></div><Status tone="neutral">خالی</Status>
-    </div>
-    <div className="space-card">
+    </button>
+    <button className="space-card interactive-card" onClick={() => go('/space')}>
       <div className="space-icon"><Building2 size={18}/></div><div><strong>انباری A4</strong><span>۶ متر · زیرزمین</span></div><Status tone="warning">رزرو</Status>
-    </div>
+    </button>
     <div className="space-rule"><ShieldCheck size={17}/><div><strong>Scope-aware</strong><span>اجاره یا آگهی می‌تواند کل ملک، یک فضا یا Bundle چند فضا را هدف بگیرد.</span></div></div>
   </Phone>
 }
@@ -252,7 +252,7 @@ function SpaceDetail() {
       <div className="kv"><span>شماره / موقعیت</span><b>P-21 / B1</b></div>
       <div className="kv"><span>حق استفاده</span><b>سند پشتیبان</b></div>
     </div>
-    <div className="detail-actions"><button className="btn secondary">ویرایش</button><button className="btn primary">اجاره این فضا</button></div>
+    <div className="detail-actions"><button className="btn secondary" onClick={() => go('/spaces')}>همه فضاها</button><button className="btn primary" onClick={() => go('/space-lease')}>اجاره این فضا</button></div>
   </Phone>
 }
 
@@ -268,7 +268,7 @@ function BundleBuilder() {
       <div className="check-box">{r[2] ? '✓' : ''}</div><div><strong>{r[0]}</strong><span>{r[1]}</span></div>
     </div>)}</div>
     <div className="bundle-summary"><span>Bundle فعلی</span><strong>واحد ۴ + پارکینگ P-21</strong><small>۲ فضای انتخاب‌شده</small></div>
-    <button className="btn primary bundle-cta">ادامه برای شرایط اجاره</button>
+    <button className="btn primary bundle-cta" onClick={() => go('/space-lease')}>ادامه برای شرایط اجاره</button>
   </Phone>
 }
 
@@ -281,11 +281,11 @@ function BuildingDashboard() {
     </div>
     <div className="building-kpis"><div><span>بدهی جاری</span><strong>۱۸.۴ م</strong></div><div><span>درخواست باز</span><strong>۳</strong></div><div><span>سرویس بعدی</span><strong>۶ روز</strong></div></div>
     <div className="building-actions">
-      <div><CircleDollarSign/><span>شارژ و بدهی</span></div><div><Wrench/><span>تعمیرات</span></div>
-      <div><Bell/><span>اعلان‌ها</span></div><div><Users/><span>ساکنین</span></div>
+      <button onClick={() => go('/charges')}><CircleDollarSign/><span>شارژ و بدهی</span></button><button onClick={() => go('/maintenance')}><Wrench/><span>تعمیرات</span></button>
+      <button onClick={() => go('/building-announcements')}><Bell/><span>اعلان‌ها</span></button><button onClick={() => go('/building-units')}><Users/><span>ساکنین</span></button>
     </div>
     <section className="mobile-section">
-      <div className="section-head"><h3>آخرین فعالیت‌ها</h3><button>همه</button></div>
+      <div className="section-head"><h3>آخرین فعالیت‌ها</h3><button onClick={() => go('/building-expenses')}>همه</button></div>
       <div className="activity-row"><CheckCircle2 size={16}/><div><strong>شارژ شهریور ثبت شد</strong><span>۱۰ واحد پرداخت کرده‌اند</span></div><small>امروز</small></div>
       <div className="activity-row"><Wrench size={16}/><div><strong>تیکت آسانسور</strong><span>در انتظار تأیید مدیر</span></div><small>دیروز</small></div>
       <div className="activity-row"><FileCheck2 size={16}/><div><strong>فاکتور نظافت</strong><span>۲,۸۰۰,۰۰۰ تومان</span></div><small>۳ روز</small></div>
@@ -310,7 +310,7 @@ function ChargesLedger() {
     <div className="ledger-list">
       {[['واحد ۱','۲,۰۰۰,۰۰۰','پرداخت‌شده','verified'],['واحد ۲','۲,۲۰۰,۰۰۰','بدهکار','warning'],['واحد ۳','۱,۹۵۰,۰۰۰','پرداخت‌شده','verified'],['واحد ۴','۲,۳۵۰,۰۰۰','بدهکار','warning']].map((r,i)=><div key={i}><div><strong>{r[0]}</strong><span>{r[1]} تومان</span></div><Status tone={r[3] as Tone}>{r[2]}</Status></div>)}
     </div>
-    <button className="btn primary ledger-cta">ثبت پرداخت / یادآوری</button>
+    <button className="btn primary ledger-cta" onClick={() => go('/building-expenses')}>ثبت پرداخت / یادآوری</button>
   </Phone>
 }
 
@@ -323,7 +323,7 @@ function TrustCenter() {
       <div><i className="dot verified"/><span><strong>تأیید بازرس</strong><small>Inspector verified</small></span></div>
       <div><i className="dot official"/><span><strong>تأیید رسمی</strong><small>Officially verified</small></span></div>
     </div>
-    <div className="trust-task"><div><strong>پروفایل اعتماد آپارتمان نیاوران</strong><span>۳ مورد برای تکمیل باقی مانده</span></div><button className="btn primary compact">ادامه</button></div>
+    <div className="trust-task"><div><strong>پروفایل اعتماد آپارتمان نیاوران</strong><span>۳ مورد برای تکمیل باقی مانده</span></div><button className="btn primary compact" onClick={() => go('/claim-evidence')}>ادامه</button></div>
   </Phone>
 }
 
@@ -337,7 +337,7 @@ function ClaimEvidence() {
       <div className="evidence-file"><Wrench size={20}/><div><strong>رکورد سرویس</strong><span>ثبت توسط شرکت سرویس</span></div><Status tone="verified">ارائه‌دهنده</Status></div>
     </div>
     <div className="claim-result"><span>سطح فعلی</span><strong>Evidence-backed</strong><p>این Claim مدرک دارد، اما هنوز توسط بازرس یا منبع رسمی تأیید نشده است.</p></div>
-    <button className="btn primary claim-cta"><Plus size={15}/>افزودن مدرک</button>
+    <button className="btn primary claim-cta" onClick={() => go('/property-documents')}><Plus size={15}/>افزودن مدرک</button>
   </Phone>
 }
 
@@ -350,7 +350,7 @@ function InspectionRequest() {
       <label><span className="check-box"></span><div><strong>انباری A4</strong><small>۶ متر</small></div></label>
     </div>
     <div className="inspection-note"><AlertTriangle size={16}/><span>بازرس وضعیت حقوقی مالکیت یا سلامت تخصصی سازه را تضمین نمی‌کند.</span></div>
-    <button className="btn primary inspection-cta">انتخاب زمان و ادامه</button>
+    <button className="btn primary inspection-cta" onClick={() => go('/inspection-status')}>انتخاب زمان و ادامه</button>
   </Phone>
 }
 
@@ -366,11 +366,11 @@ function MarketplaceSearch() {
     <div className="market-filter-row"><span className="active">همه</span><span>فروش</span><span>اجاره</span><span>تأییدشده</span></div>
     <div className="market-map-strip"><Map size={17}/><span>مشاهده روی نقشه</span><b>۳۲ نتیجه</b></div>
     <div className="listing-stack">
-      {cards.map((c,i)=><div className="listing-card" key={i}>
+      {cards.map((c,i)=><button className="listing-card interactive-card" key={i} onClick={() => go('/listing')}>
         <div className="listing-image"><div className={'listing-house h'+i}/><Status tone={c[4] as Tone}>{c[2]}</Status></div>
         <div className="listing-copy"><strong>{c[0]}</strong><span>{c[1]}</span><b>{c[3]} تومان</b></div>
         <ChevronLeft size={17}/>
-      </div>)}
+      </button>)}
     </div>
   </Phone>
 }
@@ -384,8 +384,8 @@ function ListingDetail() {
     </div>
     <div className="listing-detail-head"><div><h2>آپارتمان فرمانیه</h2><p>تهران، فرمانیه · ۱۶۰ متر · ۳ خواب</p></div><Status tone="verified">Verified</Status></div>
     <div className="price-row"><div><span>قیمت کل</span><strong>۱۲.۸ میلیارد</strong></div><div><span>هر متر</span><strong>۸۰ میلیون</strong></div></div>
-    <div className="listing-trust"><ShieldCheck size={18}/><div><strong>Trust Passport</strong><span>هویت، موقعیت و ۶ Claim تأیید شده</span></div><ChevronLeft size={17}/></div>
-    <div className="detail-actions sticky-actions"><button className="btn secondary">درخواست بازدید</button><button className="btn primary">ثبت پیشنهاد</button></div>
+    <button className="listing-trust interactive-row" onClick={() => go('/verified-passport')}><ShieldCheck size={18}/><div><strong>Trust Passport</strong><span>هویت، موقعیت و ۶ Claim تأیید شده</span></div><ChevronLeft size={17}/></button>
+    <div className="detail-actions sticky-actions"><button className="btn secondary" onClick={() => go('/visit')}>درخواست بازدید</button><button className="btn primary" onClick={() => go('/offer')}>ثبت پیشنهاد</button></div>
   </Phone>
 }
 
@@ -395,7 +395,7 @@ function VisitBooking() {
     <div className="visit-section"><h3>روز مناسب</h3><div className="date-pills"><span>امروز<br/><b>۳۱</b></span><span className="active">فردا<br/><b>۱</b></span><span>پنجشنبه<br/><b>۲</b></span><span>جمعه<br/><b>۳</b></span></div></div>
     <div className="visit-section"><h3>ساعت</h3><div className="time-grid"><span>۱۰:۳۰</span><span className="active">۱۲:۰۰</span><span>۱۴:۳۰</span><span>۱۶:۰۰</span><span>۱۷:۳۰</span><span>۱۹:۰۰</span></div></div>
     <div className="visit-note"><CalendarDays size={18}/><div><strong>هماهنگی بازدید</strong><span>بعد از تأیید مالک، جزئیات ورود برای شما ارسال می‌شود.</span></div></div>
-    <button className="btn primary visit-cta">ارسال درخواست بازدید</button>
+    <button className="btn primary visit-cta" onClick={() => go('/listing')}>ارسال درخواست بازدید</button>
   </Phone>
 }
 
@@ -406,7 +406,7 @@ function OfferBuilder() {
     <div className="offer-field"><label>شرایط پرداخت</label><div className="select-like">۳۰٪ هنگام قرارداد · الباقی در انتقال <ChevronLeft size={15}/></div></div>
     <div className="offer-field"><label>اعتبار پیشنهاد</label><div className="select-like">۴۸ ساعت <ChevronLeft size={15}/></div></div>
     <div className="offer-note"><ShieldCheck size={17}/><span>پیشنهاد شما برای طرف مقابل ثبت و در timeline معامله نگهداری می‌شود.</span></div>
-    <button className="btn primary offer-cta">ارسال پیشنهاد</button>
+    <button className="btn primary offer-cta" onClick={() => go('/negotiation')}>ارسال پیشنهاد</button>
   </Phone>
 }
 
@@ -420,7 +420,7 @@ function DealSummary() {
       <div><i>3</i><span><strong>پرداخت</strong><small>پس از قرارداد</small></span></div>
       <div><i>4</i><span><strong>تحویل و ثبت</strong><small>مرحله نهایی</small></span></div>
     </div>
-    <button className="btn primary deal-cta">ادامه به قرارداد</button>
+    <button className="btn primary deal-cta" onClick={() => go('/contract-review')}>ادامه به قرارداد</button>
   </Phone>
 }
 
@@ -448,9 +448,9 @@ function NotificationsScreen() {
   ] as const
   return <Phone title="اعلان‌ها" active="messages">
     <div className="notification-tabs"><span className="active">همه</span><span>املاک</span><span>قرارداد</span><span>مالی</span></div>
-    <div className="notification-list">{items.map((n,i)=><div className="notification-row" key={i}>
+    <div className="notification-list">{items.map((n,i)=><button className="notification-row interactive-row" key={i} onClick={() => go(i===0?'/property-lease':i===1?'/charges':i===2?'/visit':'/passport')}>
       <div className={'notice-dot '+n[2]}/><div><strong>{n[0]}</strong><span>{n[1]}</span><small>{i===0?'امروز، ۱۰:۳۲':'دیروز'}</small></div><ChevronLeft size={16}/>
-    </div>)}</div>
+    </button>)}</div>
   </Phone>
 }
 
@@ -458,20 +458,20 @@ function MessagesScreen() {
   const chats=[['علی محمدی','درباره تمدید قرارداد صحبت کنیم؟','۱۰:۴۲','2'],['پشتیبانی Property OS','درخواست شما بررسی شد','دیروز',''],['بازرس نیاوران','گزارش بازرسی آماده است','شنبه','1']] as const
   return <Phone title="پیام‌ها" active="messages">
     <div className="messages-search"><Search size={15}/><span>جستجو در گفتگوها...</span></div>
-    <div className="chat-list">{chats.map((c,i)=><div className="chat-row" key={i}>
+    <div className="chat-list">{chats.map((c,i)=><button className="chat-row interactive-row" key={i} onClick={() => go(i===1?'/support':i===2?'/inspection-status':'/property-lease')}>
       <div className="avatar">{c[0][0]}</div><div><strong>{c[0]}</strong><span>{c[1]}</span></div><div className="chat-meta"><small>{c[2]}</small>{c[3]&&<b>{c[3]}</b>}</div>
-    </div>)}</div>
+    </button>)}</div>
   </Phone>
 }
 
 function ProfileRoles() {
   return <Phone title="حساب من" active="account">
-    <div className="profile-hero"><div className="avatar profile-avatar">ح</div><div><h3>حمیدرضا پاکپور</h3><span>0912 345 6789</span></div><button className="btn secondary compact">ویرایش</button></div>
+    <div className="profile-hero"><div className="avatar profile-avatar">ح</div><div><h3>حمیدرضا پاکپور</h3><span>0912 345 6789</span></div><button className="btn secondary compact" onClick={() => go('/security')}>ویرایش</button></div>
     <div className="role-section"><h3>نقش‌های من</h3>
       <div className="role-card"><div><Home size={18}/><span><strong>مالک</strong><small>۵ ملک</small></span></div><Status tone="verified">فعال</Status></div>
       <div className="role-card"><div><Building2 size={18}/><span><strong>مدیر ساختمان</strong><small>ساختمان نیاوران</small></span></div><Status tone="verified">فعال</Status></div>
     </div>
-    <div className="account-menu"><div><ShieldCheck/><span>امنیت و دستگاه‌ها</span><ChevronLeft/></div><div><WalletCards/><span>اشتراک و پرداخت</span><ChevronLeft/></div><div><Bell/><span>تنظیمات اعلان</span><ChevronLeft/></div><div><MessageSquare/><span>پشتیبانی</span><ChevronLeft/></div></div>
+    <div className="account-menu"><button onClick={() => go('/security')}><ShieldCheck/><span>امنیت و دستگاه‌ها</span><ChevronLeft/></button><button onClick={() => go('/subscription')}><WalletCards/><span>اشتراک و پرداخت</span><ChevronLeft/></button><button onClick={() => go('/notification-settings')}><Bell/><span>تنظیمات اعلان</span><ChevronLeft/></button><button onClick={() => go('/support')}><MessageSquare/><span>پشتیبانی</span><ChevronLeft/></button></div>
   </Phone>
 }
 
@@ -483,7 +483,7 @@ function SubscriptionScreen() {
       <div><span>فضای اسناد</span><strong>1.8 / 5 GB</strong></div><i><em style={{width:'36%'}}/></i>
     </div>
     <div className="plan-features"><h3>امکانات فعال</h3><div>✓ مدیریت Portfolio</div><div>✓ Property Passport</div><div>✓ یادآوری قراردادها</div><div>✓ گزارش مالی پایه</div></div>
-    <div className="renewal-card"><div><span>تمدید بعدی</span><strong>۱۴۰۵/۰۷/۲۲</strong></div><button className="btn secondary compact">مدیریت پلن</button></div>
+    <div className="renewal-card"><div><span>تمدید بعدی</span><strong>۱۴۰۵/۰۷/۲۲</strong></div><button className="btn secondary compact" onClick={() => go('/account')}>مدیریت پلن</button></div>
   </Phone>
 }
 
@@ -494,16 +494,16 @@ function SecurityDevices() {
       <div className="device-row"><div className="device-icon">A55</div><div><strong>Galaxy A55</strong><span>تهران · همین دستگاه</span></div><Status tone="verified">فعال</Status></div>
       <div className="device-row"><div className="device-icon">PC</div><div><strong>Windows Desktop</strong><span>آخرین فعالیت: ۲ ساعت قبل</span></div><Status tone="neutral">معتبر</Status></div>
     </div>
-    <div className="security-options"><div><span>ورود دومرحله‌ای</span><Status tone="verified">روشن</Status></div><div><span>هشدار ورود جدید</span><Status tone="verified">روشن</Status></div><div><span>خروج از همه دستگاه‌ها</span><button>اجرا</button></div></div>
+    <div className="security-options"><div><span>ورود دومرحله‌ای</span><Status tone="verified">روشن</Status></div><div><span>هشدار ورود جدید</span><Status tone="verified">روشن</Status></div><div><span>خروج از همه دستگاه‌ها</span><button onClick={() => go('/login')}>اجرا</button></div></div>
   </Phone>
 }
 
 function SupportCenter() {
   return <Phone title="پشتیبانی">
     <div className="support-hero"><MessageSquare size={27}/><div><h3>چطور می‌تونیم کمک کنیم؟</h3><p>موضوع را انتخاب کنید یا درخواست جدید بسازید.</p></div></div>
-    <div className="support-actions"><div><FileCheck2/><span>قرارداد و معامله</span></div><div><CircleDollarSign/><span>پرداخت و صورتحساب</span></div><div><ShieldCheck/><span>اعتماد و بازرسی</span></div><div><Settings/><span>حساب و تنظیمات</span></div></div>
+    <div className="support-actions"><button onClick={() => go('/transaction')}><FileCheck2/><span>قرارداد و معامله</span></button><button onClick={() => go('/secure-payment')}><CircleDollarSign/><span>پرداخت و صورتحساب</span></button><button onClick={() => go('/trust')}><ShieldCheck/><span>اعتماد و بازرسی</span></button><button onClick={() => go('/account')}><Settings/><span>حساب و تنظیمات</span></button></div>
     <div className="support-ticket"><div><strong>#2481 — اصلاح اطلاعات Property Passport</strong><span>آخرین پاسخ: ۲ ساعت قبل</span></div><Status tone="info">در حال بررسی</Status></div>
-    <button className="btn primary support-cta"><Plus size={15}/>درخواست جدید</button>
+    <button className="btn primary support-cta" onClick={() => go('/messages')}><Plus size={15}/>درخواست جدید</button>
     <p className="privacy-note">حریم خصوصی و داده‌های حساس فقط در محدوده لازم برای رسیدگی به درخواست نمایش داده می‌شوند.</p>
   </Phone>
 }
@@ -621,11 +621,30 @@ function ReviewBoard() {
   </div>
 }
 
-function PrototypeShell({children, admin=false}:{children:ReactNode, admin?:boolean}) {
+function PrototypeShell({children, admin=false, route}:{children:ReactNode, admin?:boolean, route:string}) {
+  const mobileScreens = PROTOTYPE_SCREENS.filter(screen => screen.group === 'mobile')
+  const inspectorScreens = PROTOTYPE_SCREENS.filter(screen => screen.group === 'inspector')
+  const adminScreens = PROTOTYPE_SCREENS.filter(screen => screen.group === 'admin')
+  const prev = adjacentScreen(route, -1)
+  const next = adjacentScreen(route, 1)
+  const groupLabel:Record<PrototypeGroup,string> = { mobile:'Mobile App', inspector:'Inspector App', admin:'Admin Panel' }
+
   return <div className={'prototype-page '+(admin?'admin-mode':'mobile-mode')}>
     <div className="prototype-toolbar" dir="rtl">
-      <button onClick={goDesignBoard}>بازگشت به Design Board</button>
-      <div><strong>Property OS — Interactive Prototype</strong><span>روی دکمه‌های داخل اپ کلیک کنید.</span></div>
+      <div className="prototype-toolbar-actions">
+        <button onClick={goDesignBoard}>Design Board</button>
+        <button onClick={() => go(prev.path)} aria-label={'صفحه قبل: '+prev.label}>‹</button>
+        <button onClick={() => go(next.path)} aria-label={'صفحه بعد: '+next.label}>›</button>
+      </div>
+      <div className="prototype-screen-picker">
+        <label htmlFor="prototype-screen">صفحه</label>
+        <select id="prototype-screen" value={route} onChange={event => go(event.target.value)}>
+          <optgroup label={groupLabel.mobile}>{mobileScreens.map(screen => <option key={screen.path} value={screen.path}>{screen.label}</option>)}</optgroup>
+          <optgroup label={groupLabel.inspector}>{inspectorScreens.map(screen => <option key={screen.path} value={screen.path}>{screen.label}</option>)}</optgroup>
+          <optgroup label={groupLabel.admin}>{adminScreens.map(screen => <option key={screen.path} value={screen.path}>{screen.label}</option>)}</optgroup>
+        </select>
+      </div>
+      <div className="prototype-toolbar-title"><strong>Property OS — Interactive Prototype</strong><span>{PROTOTYPE_SCREENS.find(screen => screen.path===route)?.label ?? route} · همه صفحات قابل پیمایش‌اند</span></div>
     </div>
     <div className="prototype-stage">{children}</div>
   </div>
@@ -643,49 +662,69 @@ function App() {
   const route = normalizeRoute(hash)
   const prototype = isPrototypeRoute(hash)
   const mobile = (screen:ReactNode) => prototype
-    ? <PrototypeShell>{screen}</PrototypeShell>
+    ? <PrototypeShell route={route}>{screen}</PrototypeShell>
     : <div className="single-screen">{screen}</div>
   const admin = (screen:ReactNode) => prototype
-    ? <PrototypeShell admin>{screen}</PrototypeShell>
+    ? <PrototypeShell route={route} admin>{screen}</PrototypeShell>
     : <div className="single-screen admin-single">{screen}</div>
 
   if (route === '/splash') return mobile(<Splash/>)
   if (route === '/login') return mobile(<Login/>)
   if (route === '/otp') return mobile(<Otp/>)
   if (route === '/home') return mobile(<HomeScreen/>)
+  if (route === '/city') return mobile(<MyCity/>)
   if (route === '/portfolio') return mobile(<PortfolioOverview/>)
   if (route === '/property') return mobile(<PropertyDetail/>)
   if (route === '/passport') return mobile(<PropertyPassport/>)
-  if (route === '/spaces') return mobile(<SpacesOverview/>)
+  if (route === '/property-timeline') return mobile(<PropertyTimeline/>)
   if (route === '/property-add') return mobile(<AddProperty/>)
   if (route === '/property-documents') return mobile(<PropertyDocuments/>)
   if (route === '/property-people') return mobile(<PropertyPeople/>)
   if (route === '/property-finance') return mobile(<PropertyFinance/>)
   if (route === '/property-lease') return mobile(<PropertyLease/>)
+  if (route === '/spaces') return mobile(<SpacesOverview/>)
+  if (route === '/space') return mobile(<SpaceDetail/>)
+  if (route === '/bundle') return mobile(<BundleBuilder/>)
   if (route === '/space-lease') return mobile(<SpaceLease/>)
   if (route === '/building') return mobile(<BuildingDashboard/>)
-  if (route === '/trust') return mobile(<TrustCenter/>)
-  if (route === '/inspection') return mobile(<InspectionRequest/>)
+  if (route === '/building-units') return mobile(<BuildingUnits/>)
+  if (route === '/charges') return mobile(<ChargesLedger/>)
   if (route === '/building-expenses') return mobile(<BuildingExpenses/>)
   if (route === '/building-announcements') return mobile(<BuildingAnnouncements/>)
   if (route === '/maintenance') return mobile(<MaintenanceRequest/>)
+  if (route === '/trust') return mobile(<TrustCenter/>)
+  if (route === '/claim-evidence') return mobile(<ClaimEvidence/>)
+  if (route === '/inspection') return mobile(<InspectionRequest/>)
   if (route === '/inspection-status') return mobile(<InspectionStatus/>)
   if (route === '/verified-passport') return mobile(<VerifiedPassport/>)
   if (route === '/marketplace') return mobile(<MarketplaceSearch/>)
   if (route === '/listing') return mobile(<ListingDetail/>)
+  if (route === '/visit') return mobile(<VisitBooking/>)
+  if (route === '/offer') return mobile(<OfferBuilder/>)
   if (route === '/deal') return mobile(<DealSummary/>)
+  if (route === '/transaction') return mobile(<TransactionTracker/>)
   if (route === '/publish-listing') return mobile(<PublishListing/>)
   if (route === '/negotiation') return mobile(<NegotiationThread/>)
   if (route === '/contract-review') return mobile(<ContractReview/>)
   if (route === '/secure-payment') return mobile(<SecurePayment/>)
-  if (route === '/notification-settings') return mobile(<NotificationSettings/>)
   if (route === '/notifications') return mobile(<NotificationsScreen/>)
   if (route === '/messages') return mobile(<MessagesScreen/>)
   if (route === '/account') return mobile(<ProfileRoles/>)
+  if (route === '/subscription') return mobile(<SubscriptionScreen/>)
   if (route === '/security') return mobile(<SecurityDevices/>)
+  if (route === '/support') return mobile(<SupportCenter/>)
+  if (route === '/notification-settings') return mobile(<NotificationSettings/>)
+
+  if (route === '/inspector-login') return mobile(<InspectorLogin/>)
+  if (route === '/inspector') return mobile(<InspectorAssignments/>)
+  if (route === '/inspector-assignment') return mobile(<InspectorAssignmentDetail/>)
+  if (route === '/inspector-checklist') return mobile(<InspectorChecklist/>)
   if (route === '/inspector-spaces') return mobile(<InspectorSpaceVerification/>)
   if (route === '/inspector-evidence') return mobile(<InspectorDocumentEvidence/>)
-  if (route === '/inspector') return mobile(<InspectorAssignments/>)
+  if (route === '/inspector-media') return mobile(<InspectorMediaCapture/>)
+  if (route === '/inspector-discrepancy') return mobile(<InspectorDiscrepancy/>)
+  if (route === '/inspector-submit') return mobile(<InspectorSubmitReport/>)
+  if (route === '/inspector-earnings') return mobile(<InspectorEarnings/>)
 
   if (route === '/admin') return admin(<AdminDashboard/>)
   if (route === '/admin-users') return admin(<UsersManagement/>)
