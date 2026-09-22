@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import {
-  Activity, ArrowUpLeft, Blocks, BookOpen, Boxes, CheckCircle2, ChevronLeft,
+  Activity, ArrowUpLeft, Blocks, BookOpen, Boxes, CalendarDays, CheckCircle2, ChevronLeft,
   CircleDot, Cloud, Code2, Database, FileCode2, FileText, Flag, GitBranch,
   Globe2, HardDrive, KeyRound, Landmark, LayoutDashboard, LockKeyhole, Menu, Search,
   MessageSquareText, Network, PackageCheck, PanelTop, Rocket, ServerCog,
