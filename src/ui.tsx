@@ -8,8 +8,8 @@ import {
 export type Tone = 'verified' | 'warning' | 'danger' | 'neutral' | 'info'
 
 export function Brand({ compact=false }: { compact?: boolean }) {
-  return <div className="brand">
-    <div className="brand-mark"><House size={compact ? 17 : 23} strokeWidth={2.4}/></div>
+  return <div className="brand" aria-label="Property OS">
+    <div className="brand-mark" aria-hidden="true"><House size={compact ? 17 : 23} strokeWidth={2.4}/></div>
     <div>
       <div className={compact ? 'brand-name compact' : 'brand-name'}>Property OS</div>
       {!compact && <div className="brand-tagline">Your Property. In a Smarter World.</div>}
@@ -19,14 +19,16 @@ export function Brand({ compact=false }: { compact?: boolean }) {
 
 export function Status({ tone='neutral', children }: { tone?: Tone, children: ReactNode }) {
   const Icon = tone === 'verified' ? CheckCircle2 : tone === 'warning' ? AlertTriangle : tone === 'danger' ? XCircle : ShieldCheck
-  return <span className={'status ' + tone}><Icon size={12}/>{children}</span>
+  return <span className={'status ' + tone} aria-label={typeof children === 'string' ? children : undefined}>
+    <Icon size={12} aria-hidden="true"/>{children}
+  </span>
 }
 
 export function Phone({ title, children, active='home' }: { title?: string, children: ReactNode, active?: string }) {
-  return <div className="phone">
-    <div className="phone-status"><span>9:41</span><span>▮▮◒</span></div>
-    {title && <div className="mobile-header"><ChevronLeft size={20}/><strong>{title}</strong><span className="header-spacer"/></div>}
-    <div className="phone-body">{children}</div>
+  return <div className="phone" dir="rtl" lang="fa">
+    <div className="phone-status" aria-hidden="true"><span>9:41</span><span>▮▮◒</span></div>
+    {title && <header className="mobile-header"><ChevronLeft size={20} aria-hidden="true"/><strong>{title}</strong><span className="header-spacer"/></header>}
+    <main className="phone-body">{children}</main>
     <BottomNav active={active}/>
   </div>
 }
@@ -36,25 +38,34 @@ export function BottomNav({ active='home' }: { active?: string }) {
     ['home', Home, 'خانه'], ['search', Search, 'جستجو'], ['add', Plus, 'افزودن'],
     ['messages', MessageSquare, 'پیام‌ها'], ['account', UserRound, 'حساب']
   ] as const
-  return <div className="bottom-nav">
-    {items.map(([key, Icon, label]) => <div key={key} className={'nav-item ' + (active===key ? 'active' : '') + (key==='add' ? ' add' : '')}>
-      <span className="nav-icon"><Icon size={17}/></span><span>{label}</span>
+  return <nav className="bottom-nav" aria-label="ناوبری اصلی">
+    {items.map(([key, Icon, label]) => <div
+      key={key}
+      role="link"
+      tabIndex={0}
+      aria-current={active===key ? 'page' : undefined}
+      aria-label={label}
+      className={'nav-item ' + (active===key ? 'active' : '') + (key==='add' ? ' add' : '')}>
+      <span className="nav-icon" aria-hidden="true"><Icon size={17}/></span><span>{label}</span>
     </div>)}
-  </div>
+  </nav>
 }
 
 export function PropertyCard({title,meta,status,tone='verified'}:{title:string,meta:string,status:string,tone?:Tone}) {
-  return <div className="property-card">
-    <div className="property-thumb"><div className="mini-building"><i/><i/><i/></div></div>
+  return <article className="property-card" aria-label={title}>
+    <div className="property-thumb" aria-hidden="true"><div className="mini-building"><i/><i/><i/></div></div>
     <div className="property-card-copy">
       <strong>{title}</strong><span>{meta}</span><Status tone={tone}>{status}</Status>
     </div>
-    <ChevronLeft size={18} className="muted-icon"/>
-  </div>
+    <ChevronLeft size={18} className="muted-icon" aria-hidden="true"/>
+  </article>
 }
 
 export function Stat({icon:Icon,label,value,delta}:{icon:any,label:string,value:string,delta:string}) {
-  return <div className="stat"><div className="stat-icon"><Icon size={18}/></div><div><span>{label}</span><strong>{value}</strong><small>{delta}</small></div></div>
+  return <div className="stat" aria-label={`${label}: ${value}, ${delta}`}>
+    <div className="stat-icon" aria-hidden="true"><Icon size={18}/></div>
+    <div><span>{label}</span><strong>{value}</strong><small>{delta}</small></div>
+  </div>
 }
 
 export function AdminShell({section,children}:{section:string,children:ReactNode}) {
@@ -63,13 +74,23 @@ export function AdminShell({section,children}:{section:string,children:ReactNode
     [FileCheck2,'قراردادها'],[ShieldCheck,'بازرسی‌ها'],[WalletCards,'پرداخت‌ها'],
     [MessageSquare,'پیام‌ها'],[Settings,'تنظیمات']
   ] as const
-  return <div className="admin-shell" dir="rtl">
+  return <div className="admin-shell" dir="rtl" lang="fa">
     <aside className="sidebar">
       <Brand compact/>
-      <nav>{nav.map(([Icon,label])=><div key={label} className={section===label?'active':''}><Icon size={17}/><span>{label}</span></div>)}</nav>
+      <nav aria-label="ناوبری مدیریت">{nav.map(([Icon,label])=><div
+        key={label}
+        role="link"
+        tabIndex={0}
+        aria-current={section===label ? 'page' : undefined}
+        className={section===label?'active':''}>
+        <Icon size={17} aria-hidden="true"/><span>{label}</span>
+      </div>)}</nav>
     </aside>
     <main className="admin-main">
-      <div className="admin-topbar"><div className="global-search"><Search size={15}/><span>جستجو ...</span></div><div className="admin-profile"><Bell size={17}/><div className="avatar small">ح</div><span>مدیر سیستم</span></div></div>
+      <header className="admin-topbar">
+        <div className="global-search" role="search"><Search size={15} aria-hidden="true"/><span>جستجو ...</span></div>
+        <div className="admin-profile"><Bell size={17} aria-hidden="true"/><div className="avatar small" aria-hidden="true">ح</div><span>مدیر سیستم</span></div>
+      </header>
       {children}
     </main>
   </div>
