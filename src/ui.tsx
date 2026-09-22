@@ -73,9 +73,19 @@ export function Stat({icon:Icon,label,value,delta}:{icon:any,label:string,value:
 
 export function AdminShell({section,children}:{section:string,children:ReactNode}) {
   const nav = [
-    [Home,'داشبورد','/admin'],[Users,'کاربران','/admin-users'],[Building2,'املاک','/admin-properties'],[Landmark,'ساختمان‌ها','/admin-buildings'],
-    [FileCheck2,'قراردادها','/admin-deals'],[ShieldCheck,'بازرسی‌ها','/admin-trust'],[WalletCards,'پرداخت‌ها','/admin-payments'],
-    [MessageSquare,'پیام‌ها','/admin-support'],[Settings,'تنظیمات','/admin-flags']
+    [Home,'داشبورد','/admin'],
+    [Users,'کاربران','/admin-users'],
+    [Building2,'املاک','/admin-properties'],
+    [Landmark,'ساختمان‌ها','/admin-buildings'],
+    [FileCheck2,'آگهی‌ها','/admin-listings'],
+    [FileCheck2,'معاملات','/admin-deals'],
+    [ShieldCheck,'Trust','/admin-trust'],
+    [Users,'بازرسان','/admin-inspectors'],
+    [WalletCards,'پرداخت‌ها','/admin-payments'],
+    [MessageSquare,'پشتیبانی','/admin-support'],
+    [FileCheck2,'گزارش‌ها','/admin-reports'],
+    [Settings,'Feature Flags','/admin-flags'],
+    [ShieldCheck,'امنیت','/admin-security']
   ] as const
   return <div className="admin-shell" dir="rtl" lang="fa">
     <aside className="sidebar">
@@ -92,7 +102,7 @@ export function AdminShell({section,children}:{section:string,children:ReactNode
     <main className="admin-main">
       <header className="admin-topbar">
         <div className="global-search" role="search"><Search size={15} aria-hidden="true"/><span>جستجو ...</span></div>
-        <div className="admin-profile"><Bell size={17} aria-hidden="true"/><div className="avatar small" aria-hidden="true">ح</div><span>مدیر سیستم</span></div>
+        <button className="admin-profile" onClick={() => go('/admin-security')}><Bell size={17} aria-hidden="true"/><div className="avatar small" aria-hidden="true">ح</div><span>مدیر سیستم</span></button>
       </header>
       {children}
     </main>
