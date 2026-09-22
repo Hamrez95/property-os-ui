@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Building2, CalendarDays, CheckCircle2, ChevronLeft, FileCheck2, FileText,
   Home, KeyRound, MoreVertical, Plus, ShieldCheck, Upload, UserRound, Users,
@@ -11,25 +12,51 @@ function SectionTitle({title, action}:{title:string,action?:string}) {
 }
 
 export function AddProperty() {
-  return <Phone title="افزودن ملک">
+  type Kind='apartment'|'villa'|'commercial'|'office'|'land'|'teardown'
+  const [kind,setKind]=useState<Kind>('apartment')
+  const kinds:{key:Kind,label:string,icon:any}[]=[
+    {key:'apartment',label:'آپارتمان',icon:Home},
+    {key:'villa',label:'ویلا / خانه',icon:Building2},
+    {key:'commercial',label:'تجاری',icon:Building2},
+    {key:'office',label:'اداری',icon:Building2},
+    {key:'land',label:'زمین',icon:FileText},
+    {key:'teardown',label:'کلنگی',icon:Wrench},
+  ]
+  const fields:Record<Kind,[string,string,string?][]> = {
+    apartment:[['مساحت واحد','۱۴۰','متر'],['تعداد خواب','۳'],['طبقه','۴ از ۶'],['سال ساخت','۱۴۰۰'],['آسانسور','دارد'],['پارکینگ','P-21 · سندی'],['انباری','A4 · ۶ متر'],['بالکن','دارد']],
+    villa:[['مساحت زمین','۴۲۰','متر'],['زیربنا','۲۳۰','متر'],['تعداد خواب','۴'],['طبقات','۲ · دوبلکس'],['حیاط','۱۹۰ متر'],['استخر','چهارفصل'],['پارکینگ','۳ خودرو'],['پایان‌کار','موجود']],
+    commercial:[['متراژ','۸۵','متر'],['عرض بر','۶.۲','متر'],['ارتفاع سقف','۴.۸','متر'],['کاربری','تجاری'],['دهنه','۲'],['نوع حق','ملکیت + سرقفلی'],['برق','سه‌فاز'],['انباری','۱۲ متر']],
+    office:[['متراژ','۱۱۰','متر'],['اتاق','۳'],['طبقه','۵ از ۸'],['کاربری','اداری'],['پارکینگ','۱ سندی'],['آسانسور','۲'],['آبدارخانه','دارد'],['دسترسی','۲۴ ساعته']],
+    land:[['مساحت زمین','۶۳۴','متر'],['عرض بر','۱۲','متر'],['عرض گذر','۱۰','متر'],['ابعاد','۲۱ × ۳۰'],['کاربری','مسکونی'],['موقعیت','دو نبش'],['آب/برق/گاز','لب مرز'],['پروانه','ثبت نشده']],
+    teardown:[['مساحت زمین','۲۸۰','متر'],['بنای فعلی','۱۶۰','متر'],['عرض بر','۱۲','متر'],['سال بنا','۱۳۵۸'],['تعداد بر','۲'],['عرض گذر','۱۲ / ۸ متر'],['سکونت','خالی'],['وضعیت بنا','فرسوده']],
+  }
+  const target:Record<Kind,string>={apartment:'/property/apartment',villa:'/property/villa',commercial:'/property/commercial',office:'/property/office',land:'/property/land',teardown:'/property/teardown'}
+  return <Phone title="افزودن Property Record" active="properties">
     <div className="flow-progress"><i className="done"/><i className="active"/><i/><span>مرحله ۲ از ۳</span></div>
     <div className="form-card">
-      <h3>اطلاعات پایه ملک</h3>
-      <label>نوع ملک</label>
-      <div className="choice-grid">
-        <button className="active"><Home size={17}/>آپارتمان</button>
-        <button><Building2 size={17}/>ویلا</button>
-        <button><Building2 size={17}/>تجاری</button>
+      <h3>نوع ملک را انتخاب کنید</h3>
+      <div className="property-kind-grid">
+        {kinds.map(item=>{const Icon=item.icon;return <button key={item.key} className={kind===item.key?'active':''} onClick={()=>setKind(item.key)}><Icon size={17}/>{item.label}</button>})}
       </div>
       <label>عنوان ملک</label>
-      <div className="field-like">آپارتمان نیاوران</div>
+      <div className="field-like">{kind==='land'?'زمین دماوند':kind==='teardown'?'خانه کلنگی یوسف‌آباد':kind==='villa'?'ویلای لواسان':kind==='commercial'?'تجاری جردن':kind==='office'?'دفتر سعادت‌آباد':'آپارتمان نیاوران'}</div>
       <label>موقعیت</label>
-      <div className="field-like">تهران، نیاوران <ChevronLeft size={15}/></div>
-      <label>مساحت</label>
-      <div className="field-like"><span>۱۴۰</span><small>متر مربع</small></div>
+      <div className="field-like">تهران / نمونه داده <ChevronLeft size={15}/></div>
     </div>
-    <div className="flow-note"><ShieldCheck size={17}/><span>در این مرحله فقط اطلاعات پایه ثبت می‌شود. مدارک و سطح اعتماد بعداً قابل تکمیل هستند.</span></div>
-    <button className="btn primary flow-bottom-cta" onClick={() => go('/property')}>ادامه</button>
+
+    <div className="form-card specialist-form">
+      <div className="specialist-form-head"><div><strong>مشخصات تخصصی</strong><span>فیلدها بر اساس نوع Property تغییر می‌کنند.</span></div><Status tone="info">{kinds.find(x=>x.key===kind)?.label}</Status></div>
+      <div className="specialist-field-grid">{fields[kind].map(([label,value,unit])=><div key={label}><span>{label}</span><strong>{value}</strong>{unit&&<small>{unit}</small>}</div>)}</div>
+    </div>
+
+    <div className="form-card ownership-form">
+      <div className="specialist-form-head"><div><strong>مالکیت و سند</strong><span>این مدل برای همه انواع ملک مشترک است.</span></div><KeyRound size={17}/></div>
+      <label>نوع سند</label><div className="field-like">تک‌برگ / شش‌دانگ / مشاع <ChevronLeft size={15}/></div>
+      <label>سهم شما از شش دانگ</label><div className="ownership-share-input"><strong>۶</strong><span>از</span><b>۶ دانگ</b></div>
+      <label>نوع رابطه</label><div className="field-like">مالک <ChevronLeft size={15}/></div>
+    </div>
+    <div className="flow-note"><ShieldCheck size={17}/><span>اطلاعات بازار، سند و برنامه ساخت یک چیز نیستند. مواردی مثل تراکم یا امکان ساخت فقط با منبع/استعلام به‌عنوان Claim نمایش داده می‌شوند.</span></div>
+    <button className="btn primary flow-bottom-cta" onClick={() => go(target[kind])}>ذخیره نمونه و مشاهده جزئیات</button>
   </Phone>
 }
 
@@ -56,20 +83,27 @@ export function PropertyDocuments() {
 }
 
 export function PropertyPeople() {
-  const people = [
-    ['حمیدرضا پاکپور','مالک','تأییدشده','verified'],
-    ['علی محمدی','مستأجر','فعال تا ۱۴۰۶/۰۳/۲۱','info'],
-    ['مریم پاکپور','نماینده','دسترسی مشاهده','neutral']
-  ] as const
-  return <Phone title="افراد و نقش‌ها">
-    <div className="people-summary"><Users size={23}/><div><strong>۳ فرد مرتبط</strong><span>رابطه افراد با ملک و سطح دسترسی</span></div></div>
-    <div className="people-list">{people.map((p,i)=><div className="person-row" key={p[0]}>
-      <div className="avatar person-avatar">{p[0][0]}</div>
-      <div><strong>{p[0]}</strong><span>{p[1]} · {p[2]}</span></div>
-      <Status tone={p[3]}>{p[1]}</Status>
-    </div>)}</div>
-    <button className="btn secondary flow-wide-button" onClick={() => go('/account')}><Plus size={15}/>افزودن فرد یا نقش</button>
-    <div className="flow-note subtle"><ShieldCheck size={17}/><span>تغییر مالکیت، اختیار عرضه و دسترسی‌های حساس در تاریخچه ثبت می‌شوند.</span></div>
+  const relations = [
+    {name:'حمیدرضا پاکپور',avatar:'ح',role:'مالک',scope:'کل Property Record',time:'بدون تاریخ پایان',share:'۶ از ۶ دانگ',access:'سند · مالی · واگذاری',tone:'verified' as const},
+    {name:'علی محمدی',avatar:'ع',role:'مستأجر',scope:'واحد ۴ + پارکینگ P-21',time:'تا ۱۴۰۶/۰۳/۲۱',share:'مالکیت ندارد',access:'قرارداد · ساختمان · خدمات',tone:'info' as const},
+    {name:'نرگس اکبری',avatar:'ن',role:'مدیر ساختمان',scope:'ساختمان نیاوران',time:'تا مجمع بعدی',share:'—',access:'شارژ · اعلان · تعمیرات',tone:'warning' as const},
+    {name:'مریم پاکپور',avatar:'م',role:'نماینده',scope:'فقط Listing / مذاکره',time:'تا ۱۴۰۵/۰۸/۳۰',share:'—',access:'عرضه · بازدید · پیشنهاد',tone:'neutral' as const},
+  ]
+  return <Phone title="افراد و نقش‌ها" active="properties">
+    <div className="people-summary"><Users size={23}/><div><strong>۴ رابطه فعال</strong><span>Role همیشه همراه Scope و بازه زمانی معنا دارد؛ حساب کاربر یک نقش جهانی ندارد.</span></div></div>
+    <div className="relationship-legend"><span><i className="person-dot owner"/>مالکیت</span><span><i className="person-dot tenant"/>سکونت</span><span><i className="person-dot manager"/>مدیریت</span></div>
+    <div className="relationship-people-list">{relations.map((r,i)=><article className="relationship-person-card" key={r.name}>
+      <div className="relationship-person-head"><div className="avatar person-avatar">{r.avatar}</div><div><strong>{r.name}</strong><span>{r.scope}</span></div><Status tone={r.tone}>{r.role}</Status></div>
+      <div className="relationship-meta-grid">
+        <div><span>Role</span><strong>{r.role}</strong></div>
+        <div><span>Scope</span><strong>{r.scope}</strong></div>
+        <div><span>زمان</span><strong>{r.time}</strong></div>
+        <div><span>سهم مالکیت</span><strong>{r.share}</strong></div>
+      </div>
+      <div className="relationship-access"><KeyRound size={13}/><span>دسترسی‌ها: {r.access}</span></div>
+    </article>)}</div>
+    <button className="btn secondary flow-wide-button" onClick={() => go('/account')}><Plus size={15}/>افزودن رابطه جدید</button>
+    <div className="flow-note subtle"><ShieldCheck size={17}/><span>یک فرد می‌تواند همزمان مثلاً مالک یک ملک، مستأجر ملک دیگر و مدیر یک ساختمان باشد.</span></div>
   </Phone>
 }
 
