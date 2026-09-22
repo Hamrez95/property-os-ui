@@ -13,6 +13,7 @@ import { PublishListing, NegotiationThread, ContractReview, SecurePayment, Notif
 import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PROTOTYPE_SCREENS, type PrototypeGroup } from './navigation'
+import { ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -521,7 +522,9 @@ function DesignSystem() {
 }
 
 function ReviewBoard() {
-  return <div className="review-page">
+  return <>
+    <ProjectSiteHeader active="design"/>
+    <div className="review-page">
     <header className="review-header">
       <div><h1>مدیریت هوشمند املاک و ساختمان‌ها</h1><p>ساختاری · امن‌تر · ارزشمندتر</p></div>
       <div className="review-header-actions"><button className="prototype-launch" onClick={() => go('/splash')}>مشاهده پروتوتایپ تعاملی</button><Brand/></div>
@@ -619,6 +622,7 @@ function ReviewBoard() {
       <div className="screen-wrap admin-wrap"><AdminSecurityAudit/><label>9J. Security & Audit</label></div>
     </div>
   </div>
+  </>
 }
 
 function PrototypeShell({children, admin=false, route}:{children:ReactNode, admin?:boolean, route:string}) {
@@ -651,10 +655,10 @@ function PrototypeShell({children, admin=false, route}:{children:ReactNode, admi
 }
 
 function App() {
-  const [hash, setHash] = useState(() => window.location.hash || '#/design')
+  const [hash, setHash] = useState(() => window.location.hash || '#/guide')
 
   useEffect(() => {
-    const onHashChange = () => setHash(window.location.hash || '#/design')
+    const onHashChange = () => setHash(window.location.hash || '#/guide')
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
@@ -667,6 +671,11 @@ function App() {
   const admin = (screen:ReactNode) => prototype
     ? <PrototypeShell route={route} admin>{screen}</PrototypeShell>
     : <div className="single-screen admin-single">{screen}</div>
+
+  if (route === '/guide') return <ProjectGuidePage/>
+  if (route === '/roadmap') return <ProjectRoadmapPage/>
+  if (route === '/operations') return <ProjectOperationsPage/>
+  if (route === '/design') return <ReviewBoard/>
 
   if (route === '/splash') return mobile(<Splash/>)
   if (route === '/login') return mobile(<Login/>)
