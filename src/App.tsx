@@ -5,7 +5,7 @@ import {
   ArrowLeft, House, Menu, Settings, Landmark, ClipboardCheck
 } from 'lucide-react'
 import { AdminShell, Brand, Phone, PropertyCard, Stat, Status, type Tone } from './ui'
-import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, InspectorDiscrepancy, InspectorEarnings, InspectorLogin, InspectorMediaCapture, InspectorSubmitReport } from './InspectorScreens'
+import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, InspectorDiscrepancy, InspectorDocumentEvidence, InspectorEarnings, InspectorLogin, InspectorMediaCapture, InspectorSpaceVerification, InspectorSubmitReport } from './InspectorScreens'
 import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 
@@ -579,6 +579,8 @@ function ReviewBoard() {
       <div className="screen-wrap"><InspectorAssignments/><label>35. Assignments</label></div>
       <div className="screen-wrap"><InspectorAssignmentDetail/><label>36. Assignment Detail</label></div>
       <div className="screen-wrap"><InspectorChecklist/><label>37. Checklist</label></div>
+      <div className="screen-wrap"><InspectorSpaceVerification/><label>37A. Space Verification</label></div>
+      <div className="screen-wrap"><InspectorDocumentEvidence/><label>37B. Document Evidence</label></div>
       <div className="screen-wrap"><InspectorMediaCapture/><label>38. Media Capture</label></div>
       <div className="screen-wrap"><InspectorDiscrepancy/><label>39. Discrepancy</label></div>
       <div className="screen-wrap"><InspectorSubmitReport/><label>40. Submit Report</label></div>
@@ -621,6 +623,8 @@ function App() {
   if (route === '/notifications') return <div className="single-screen"><NotificationsScreen/></div>
   if (route === '/account') return <div className="single-screen"><ProfileRoles/></div>
   if (route === '/security') return <div className="single-screen"><SecurityDevices/></div>
+  if (route === '/inspector-spaces') return <div className="single-screen"><InspectorSpaceVerification/></div>
+  if (route === '/inspector-evidence') return <div className="single-screen"><InspectorDocumentEvidence/></div>
   if (route === '/inspector') return <div className="single-screen"><InspectorAssignments/></div>
   return <ReviewBoard/>
 }
