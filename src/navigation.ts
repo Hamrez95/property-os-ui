@@ -39,6 +39,7 @@ export const PROTOTYPE_SCREENS: PrototypeScreen[] = [
   { path: '/charges', label: 'شارژ و بدهی', group: 'mobile' },
   { path: '/building-expenses', label: 'هزینه‌های ساختمان', group: 'mobile' },
   { path: '/building-announcements', label: 'اعلان‌های ساختمان', group: 'mobile' },
+  { path: '/building-governance', label: 'مجمع، مدیریت و مصوبات', group: 'mobile' },
   { path: '/maintenance', label: 'درخواست تعمیرات', group: 'mobile' },
   { path: '/trust', label: 'مرکز اعتماد', group: 'mobile' },
   { path: '/claim-evidence', label: 'مدرک ادعا', group: 'mobile' },
