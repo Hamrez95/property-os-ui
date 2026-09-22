@@ -17,6 +17,7 @@ import './design-system/role-aware.css'
 import './design-system/property-types.css'
 import './design-system/modeling.css'
 import './design-system/modeling-review.css'
+import './design-system/business-strategy.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode><App /></React.StrictMode>
