@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { AdminShell, Brand, Phone, PropertyCard, Stat, Status, type Tone } from './ui'
 import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, InspectorDiscrepancy, InspectorEarnings, InspectorLogin, InspectorMediaCapture, InspectorSubmitReport } from './InspectorScreens'
+import { PublishListing, NegotiationThread, ContractReview, SecurePayment, NotificationSettings } from './MarketplaceAccountScreens'
 import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 
@@ -563,6 +564,10 @@ function ReviewBoard() {
       <div className="screen-wrap"><OfferBuilder/><label>25. Offer</label></div>
       <div className="screen-wrap"><DealSummary/><label>26. Deal Summary</label></div>
       <div className="screen-wrap"><TransactionTracker/><label>27. Transaction Tracker</label></div>
+      <div className="screen-wrap"><PublishListing/><label>27A. Publish Listing</label></div>
+      <div className="screen-wrap"><NegotiationThread/><label>27B. Negotiation</label></div>
+      <div className="screen-wrap"><ContractReview/><label>27C. Contract Review</label></div>
+      <div className="screen-wrap"><SecurePayment/><label>27D. Secure Payment</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Communication + Account</span><h2>Messages / Profile / Security</h2></div><small>Personal · Clear · Controlled</small></div>
     <div className="mobile-grid">
@@ -572,6 +577,7 @@ function ReviewBoard() {
       <div className="screen-wrap"><SubscriptionScreen/><label>31. Subscription</label></div>
       <div className="screen-wrap"><SecurityDevices/><label>32. Security & Devices</label></div>
       <div className="screen-wrap"><SupportCenter/><label>33. Support</label></div>
+      <div className="screen-wrap"><NotificationSettings/><label>33A. Notification Settings</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Field operations</span><h2>Inspector App</h2></div><small>Fast · Auditable · Evidence-first</small></div>
     <div className="mobile-grid">
@@ -618,6 +624,11 @@ function App() {
   if (route === '/marketplace') return <div className="single-screen"><MarketplaceSearch/></div>
   if (route === '/listing') return <div className="single-screen"><ListingDetail/></div>
   if (route === '/deal') return <div className="single-screen"><DealSummary/></div>
+  if (route === '/publish-listing') return <div className="single-screen"><PublishListing/></div>
+  if (route === '/negotiation') return <div className="single-screen"><NegotiationThread/></div>
+  if (route === '/contract-review') return <div className="single-screen"><ContractReview/></div>
+  if (route === '/secure-payment') return <div className="single-screen"><SecurePayment/></div>
+  if (route === '/notification-settings') return <div className="single-screen"><NotificationSettings/></div>
   if (route === '/notifications') return <div className="single-screen"><NotificationsScreen/></div>
   if (route === '/account') return <div className="single-screen"><ProfileRoles/></div>
   if (route === '/security') return <div className="single-screen"><SecurityDevices/></div>
