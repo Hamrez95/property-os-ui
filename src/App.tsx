@@ -16,6 +16,7 @@ import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PR
 import { ProjectBenchmarkPage, ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
 import { ProjectModelingPage } from './ModelingBlueprint'
 import { ModelingDecisionsPage, ModelingDictionaryPage } from './ModelingReviewCenter'
+import { BusinessStrategyHub } from './BusinessStrategyHub'
 import { RelationshipPortfolio, RoleAwareHome } from './RoleAwareScreens'
 import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
 
@@ -698,6 +699,7 @@ function App() {
 
   if (route === '/guide') return <ProjectGuidePage/>
   if (route === '/roadmap') return <ProjectRoadmapPage/>
+  if (route === '/business') return <BusinessStrategyHub/>
   if (route === '/modeling') return <ProjectModelingPage/>
   if (route === '/modeling/dictionary') return <ModelingDictionaryPage/>
   if (route === '/modeling/decisions') return <ModelingDecisionsPage/>
