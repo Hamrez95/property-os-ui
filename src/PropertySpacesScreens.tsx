@@ -4,6 +4,7 @@ import {
   WalletCards
 } from 'lucide-react'
 import { Phone, Status } from './ui'
+import { go } from './navigation'
 
 function SectionTitle({title, action}:{title:string,action?:string}) {
   return <div className="flow-section-title"><h3>{title}</h3>{action && <button>{action}</button>}</div>
@@ -28,7 +29,7 @@ export function AddProperty() {
       <div className="field-like"><span>۱۴۰</span><small>متر مربع</small></div>
     </div>
     <div className="flow-note"><ShieldCheck size={17}/><span>در این مرحله فقط اطلاعات پایه ثبت می‌شود. مدارک و سطح اعتماد بعداً قابل تکمیل هستند.</span></div>
-    <button className="btn primary flow-bottom-cta">ادامه</button>
+    <button className="btn primary flow-bottom-cta" onClick={() => go('/property')}>ادامه</button>
   </Phone>
 }
 
@@ -42,15 +43,15 @@ export function PropertyDocuments() {
   return <Phone title="اسناد ملک">
     <div className="document-hero">
       <div><FileText size={22}/><span>۴ سند</span><strong>۳ مورد دارای اعتبار کافی</strong></div>
-      <button className="icon-button"><Plus size={16}/></button>
+      <button className="icon-button" onClick={() => go('/claim-evidence')} aria-label="افزودن مدرک"><Plus size={16}/></button>
     </div>
-    <div className="document-list">{docs.map((d,i)=><div className="document-row" key={d[0]}>
+    <div className="document-list">{docs.map((d,i)=><button className="document-row interactive-row" key={d[0]} onClick={() => go('/claim-evidence')}>
       <div className="document-icon"><FileCheck2 size={17}/></div>
       <div><strong>{d[0]}</strong><span>{d[1]}</span></div>
       <Status tone={d[2]}>{d[2]==='verified'?'تأیید':'بررسی'}</Status>
       <MoreVertical size={16}/>
-    </div>)}</div>
-    <div className="upload-zone"><Upload size={18}/><strong>افزودن سند یا تصویر</strong><span>PDF، JPG یا PNG</span></div>
+    </button>)}</div>
+    <button className="upload-zone interactive-card" onClick={() => go('/claim-evidence')}><Upload size={18}/><strong>افزودن سند یا تصویر</strong><span>PDF، JPG یا PNG</span></button>
   </Phone>
 }
 
@@ -67,7 +68,7 @@ export function PropertyPeople() {
       <div><strong>{p[0]}</strong><span>{p[1]} · {p[2]}</span></div>
       <Status tone={p[3]}>{p[1]}</Status>
     </div>)}</div>
-    <button className="btn secondary flow-wide-button"><Plus size={15}/>افزودن فرد یا نقش</button>
+    <button className="btn secondary flow-wide-button" onClick={() => go('/account')}><Plus size={15}/>افزودن فرد یا نقش</button>
     <div className="flow-note subtle"><ShieldCheck size={17}/><span>تغییر مالکیت، اختیار عرضه و دسترسی‌های حساس در تاریخچه ثبت می‌شوند.</span></div>
   </Phone>
 }
@@ -85,7 +86,7 @@ export function PropertyFinance() {
       <div><b>+۱۲٪</b><span>نسبت به ماه قبل</span></div>
     </div>
     <div className="finance-kpis"><div><span>درآمد</span><strong>۸۵ م</strong></div><div><span>هزینه</span><strong>۶.۳ م</strong></div><div><span>مطالبات</span><strong>۸۵ م</strong></div></div>
-    <SectionTitle title="آخرین تراکنش‌ها" action="همه"/>
+    <div className="flow-section-title"><h3>آخرین تراکنش‌ها</h3><button onClick={() => go('/transaction')}>همه</button></div>
     <div className="finance-list">{rows.map(r=><div className="finance-row" key={r[0]}>
       <div><strong>{r[0]}</strong><span>{r[1]} تومان</span></div><Status tone={r[3]}>{r[2]}</Status>
     </div>)}</div>
@@ -112,7 +113,7 @@ export function PropertyLease() {
       <div><span>اجاره ماهانه</span><strong>۸۵ میلیون تومان</strong></div>
     </div>
     <div className="renew-card"><CalendarDays size={18}/><div><strong>زمان تمدید نزدیک است</strong><span>برای مذاکره و تمدید قرارداد اقدام کنید.</span></div></div>
-    <div className="detail-actions"><button className="btn secondary">مشاهده فایل</button><button className="btn primary">مدیریت تمدید</button></div>
+    <div className="detail-actions"><button className="btn secondary" onClick={() => go('/property-documents')}>مشاهده فایل</button><button className="btn primary" onClick={() => go('/negotiation')}>مدیریت تمدید</button></div>
   </Phone>
 }
 
@@ -130,6 +131,6 @@ export function SpaceLease() {
       <label>اجاره ماهانه</label><div className="field-like"><span>۴,۵۰۰,۰۰۰</span><small>تومان</small></div>
       <label>مدت</label><div className="field-like">۱۲ ماه <ChevronLeft size={15}/></div>
     </div>
-    <button className="btn primary flow-bottom-cta">ادامه و ساخت پیش‌نویس</button>
+    <button className="btn primary flow-bottom-cta" onClick={() => go('/contract-review')}>ادامه و ساخت پیش‌نویس</button>
   </Phone>
 }

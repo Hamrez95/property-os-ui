@@ -4,6 +4,7 @@ import {
   Users, Wrench
 } from 'lucide-react'
 import { Phone, Status } from './ui'
+import { go } from './navigation'
 
 export function BuildingExpenses() {
   const rows=[['سرویس آسانسور','۱۲,۵۰۰,۰۰۰','پرداخت‌شده','verified'],['نظافت شهریور','۶,۸۰۰,۰۰۰','پرداخت‌شده','verified'],['تعمیر پمپ آب','۱۸,۴۰۰,۰۰۰','در انتظار تصویب','warning'],['بیمه ساختمان','۲۴,۰۰۰,۰۰۰','سررسید ۵ روز','warning']] as const
@@ -13,7 +14,7 @@ export function BuildingExpenses() {
       <small>+۸٪ نسبت به ماه قبل</small>
     </div>
     <div className="bt-kpis"><div><span>بودجه ماه</span><strong>۷۵ م</strong></div><div><span>پرداخت‌شده</span><strong>۴۳.۳ م</strong></div><div><span>در انتظار</span><strong>۱۸.۴ م</strong></div></div>
-    <div className="bt-section-title"><h3>ریز هزینه‌ها</h3><button>گزارش کامل</button></div>
+    <div className="bt-section-title"><h3>ریز هزینه‌ها</h3><button onClick={() => go('/property-finance')}>گزارش کامل</button></div>
     <div className="bt-list">{rows.map(r=><div className="bt-row" key={r[0]}><div><strong>{r[0]}</strong><span>{r[1]} تومان</span></div><Status tone={r[3]}>{r[2]}</Status></div>)}</div>
   </Phone>
 }
@@ -25,11 +26,11 @@ export function BuildingAnnouncements() {
     ['سرویس آسانسور انجام شد','امروز · شرکت سرویس‌کار','verified']
   ] as const
   return <Phone title="اعلان‌های ساختمان">
-    <div className="bt-action-hero"><Megaphone size={23}/><div><strong>اطلاع‌رسانی به ساکنین</strong><span>اعلان، پیام و اطلاعیه‌های عملیاتی</span></div><button className="icon-button"><Plus size={15}/></button></div>
+    <div className="bt-action-hero"><Megaphone size={23}/><div><strong>اطلاع‌رسانی به ساکنین</strong><span>اعلان، پیام و اطلاعیه‌های عملیاتی</span></div><button className="icon-button" onClick={() => go('/messages')} aria-label="پیام جدید"><Plus size={15}/></button></div>
     <div className="bt-list announcement-list">{notes.map((n,i)=><div className="announcement-row" key={n[0]}>
       <div className={'announcement-icon n'+i}><Bell size={16}/></div><div><strong>{n[0]}</strong><span>{n[1]}</span></div><Status tone={n[2]}>{n[2]==='verified'?'انجام شد':n[2]==='warning'?'مهم':'اطلاعیه'}</Status>
     </div>)}</div>
-    <div className="bt-audience-card"><Users size={18}/><div><strong>مخاطب پیش‌فرض</strong><span>همه ساکنین و مالکان ساختمان نیاوران</span></div><ChevronLeft size={16}/></div>
+    <button className="bt-audience-card interactive-row" onClick={() => go('/building-units')}><Users size={18}/><div><strong>مخاطب پیش‌فرض</strong><span>همه ساکنین و مالکان ساختمان نیاوران</span></div><ChevronLeft size={16}/></button>
   </Phone>
 }
 
@@ -43,7 +44,7 @@ export function MaintenanceRequest() {
       <div><i>4</i><span><strong>ثبت هزینه و نتیجه</strong><small>پایان کار</small></span></div>
     </div>
     <div className="maintenance-detail"><div><span>ثبت‌کننده</span><strong>مدیر ساختمان</strong></div><div><span>بودجه اولیه</span><strong>۱۵–۲۰ میلیون</strong></div><div><span>دسترسی</span><strong>موتورخانه</strong></div></div>
-    <button className="btn primary bt-bottom-cta">مشاهده سرویس‌کارها</button>
+    <button className="btn primary bt-bottom-cta" onClick={() => go('/support')}>مشاهده سرویس‌کارها</button>
   </Phone>
 }
 
@@ -73,7 +74,7 @@ export function VerifiedPassport() {
       <div><CheckCircle2/><span>پارکینگ</span><strong>Inspector</strong></div>
       <div><CheckCircle2/><span>تصاویر</span><strong>Inspector</strong></div>
     </div>
-    <div className="provenance-card"><FileCheck2 size={18}/><div><strong>چرا این وضعیت قابل اعتماد است؟</strong><span>برای هر Claim منبع و زمان آخرین تأیید قابل مشاهده است.</span></div><ChevronLeft size={16}/></div>
+    <button className="provenance-card interactive-row" onClick={() => go('/claim-evidence')}><FileCheck2 size={18}/><div><strong>چرا این وضعیت قابل اعتماد است؟</strong><span>برای هر Claim منبع و زمان آخرین تأیید قابل مشاهده است.</span></div><ChevronLeft size={16}/></button>
     <div className="bt-info warning"><AlertTriangle size={17}/><span>تأیید Property OS جایگزین استعلام رسمی مراجع قانونی نیست.</span></div>
   </Phone>
 }
