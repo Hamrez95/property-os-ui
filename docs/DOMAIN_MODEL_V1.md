@@ -72,6 +72,29 @@ PropertyRecord
 
 ---
 
+## 2.1 Modeling ERD — conceptual
+
+```mermaid
+erDiagram
+  PARTY ||--o{ ROLE_ASSIGNMENT : receives
+  PROPERTY_RECORD ||--o{ PARCEL : contains
+  PROPERTY_RECORD ||--o{ STRUCTURE : contains
+  STRUCTURE ||--o{ SPACE : contains
+  SPACE ||--o{ ASSET : contains
+  PROPERTY_RECORD ||--o{ PROPERTY_RIGHT : has
+  PARTY ||--o{ OWNERSHIP_INTEREST : holds
+  PROPERTY_RIGHT ||--o{ OWNERSHIP_INTEREST : allocates
+  PROPERTY_RECORD ||--o{ DOCUMENT : evidenced_by
+  PROPERTY_RECORD ||--o{ CLAIM : has
+  CLAIM ||--o{ EVIDENCE : supported_by
+  CLAIM ||--o{ VERIFICATION : evaluated_by
+  PROPERTY_RECORD ||--o{ LEASE : operated_by
+  PROPERTY_RECORD ||--o{ LISTING : projected_as
+  PROPERTY_RECORD ||--o{ STAY_OFFERING : optionally_hosted_as
+  STRUCTURE ||--o{ CHARGE_SCHEME : managed_by
+  PROPERTY_RECORD ||--o{ INSPECTION : inspected_by
+```
+
 ## 3. Aggregate boundaries
 
 ### 3.1 Property aggregate
@@ -408,6 +431,33 @@ Parking/storage references are relation rows to Space, not booleans.
 - geometry
 
 Planning density/setback/buildability remain claims until evidence exists.
+
+### Agricultural / Garden
+- total land area
+- cultivated area
+- operation type (garden/farm/greenhouse/etc)
+- crop/orchard profile
+- water source
+- irrigation type
+- well/water-right claim/evidence
+- electricity/power profile
+- greenhouse/storage/worker-space relations
+- road/vehicle access
+- soil/quality observations as inspection/claim
+
+### Industrial / Warehouse
+- land area
+- hall/warehouse area
+- office area
+- clear height
+- construction/roof/floor profile
+- power phase and capacity
+- gas/water/telecom utilities
+- truck access
+- loading doors
+- overhead crane profile
+- fire/safety evidence
+- operational permit claim/evidence
 
 ### Old / Teardown
 - parcel area
@@ -914,6 +964,88 @@ Important resources with history:
 - official integration state
 
 ---
+
+## 18.5 PostgreSQL implementation boundaries
+
+WORKING recommendation: use explicit database schemas/modules rather than one flat namespace.
+
+```text
+core
+  properties
+  parcels
+  structures
+  spaces
+  assets
+  parties
+  role_assignments
+  ownership_interests
+  registry_identities
+  property_rights
+
+trust
+  claims
+  evidence
+  verifications
+  inspections
+  findings
+
+ops
+  leases
+  lease_parties
+  building_management_mandates
+  charge_schemes
+  charge_assessments
+  charge_allocations
+  expenses
+  maintenance_tickets
+  work_orders
+  announcements
+
+market
+  listings
+  listing_terms
+  visit_requests
+  offers
+  offer_versions
+  deals
+
+hospitality
+  stay_offerings
+  availability_days
+  rate_rules
+  house_rules
+  reservations
+
+platform
+  documents
+  media
+  notifications
+  audit_events
+  external_integration_refs
+```
+
+### Relational rules
+
+- FK constraints by default.
+- Historical/financial/legal rows should rarely cascade-delete.
+- Use lifecycle/status + archival rather than destructive deletion for business records.
+- Every mutable aggregate should have optimistic concurrency/version metadata.
+- JSONB only for explicitly versioned payloads where the shape is intentionally extensible (for example Claim payload or immutable calculation snapshot).
+- Search indexes and read models may denormalize; the canonical write model should remain normalized.
+- External-provider payloads belong in integration/audit storage, not as canonical domain columns.
+- Use unique constraints to protect one-active-role/one-current-identity rules where applicable.
+
+### IDs
+
+Use opaque server-generated UUIDs. Prefer time-sortable UUID generation if the selected PostgreSQL/.NET version supports it cleanly; do not expose sequential database integers as public resource identity.
+
+### Units
+
+- canonical length: meter
+- canonical area: square meter
+- coordinates: WGS84 decimal degrees
+- electrical capacity: store value + unit
+- money: amount + currency; no float
 
 ## 19. Suggested production modules
 
