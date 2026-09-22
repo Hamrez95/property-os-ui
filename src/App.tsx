@@ -15,6 +15,7 @@ import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, Proper
 import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PROTOTYPE_SCREENS, type PrototypeGroup } from './navigation'
 import { ProjectBenchmarkPage, ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
 import { ProjectModelingPage } from './ModelingBlueprint'
+import { ModelingDecisionsPage, ModelingDictionaryPage } from './ModelingReviewCenter'
 import { RelationshipPortfolio, RoleAwareHome } from './RoleAwareScreens'
 import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
 
@@ -689,6 +690,8 @@ function App() {
   if (route === '/guide') return <ProjectGuidePage/>
   if (route === '/roadmap') return <ProjectRoadmapPage/>
   if (route === '/modeling') return <ProjectModelingPage/>
+  if (route === '/modeling/dictionary') return <ModelingDictionaryPage/>
+  if (route === '/modeling/decisions') return <ModelingDecisionsPage/>
   if (route === '/benchmark') return <ProjectBenchmarkPage/>
   if (route === '/operations') return <ProjectOperationsPage/>
   if (route === '/design') return <ReviewBoard/>
