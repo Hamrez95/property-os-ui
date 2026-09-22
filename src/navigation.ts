@@ -20,6 +20,8 @@ export const PROTOTYPE_SCREENS: PrototypeScreen[] = [
   { path: '/property/commercial', label: 'تجاری — مشخصات تخصصی', group: 'mobile' },
   { path: '/property/office', label: 'اداری — مشخصات تخصصی', group: 'mobile' },
   { path: '/property/land', label: 'زمین — مشخصات تخصصی', group: 'mobile' },
+  { path: '/property/agricultural', label: 'باغ / کشاورزی — مشخصات تخصصی', group: 'mobile' },
+  { path: '/property/industrial', label: 'صنعتی / سوله — مشخصات تخصصی', group: 'mobile' },
   { path: '/property/teardown', label: 'کلنگی — مشخصات تخصصی', group: 'mobile' },
   { path: '/passport', label: 'پاسپورت ملک', group: 'mobile' },
   { path: '/property-timeline', label: 'تاریخچه ملک', group: 'mobile' },
