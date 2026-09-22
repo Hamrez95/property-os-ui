@@ -497,6 +497,76 @@ function TransactionTracker() {
   </Phone>
 }
 
+
+function NotificationsScreen() {
+  const items = [
+    ['قرارداد شما ۲۷ روز دیگر پایان می‌یابد','آپارتمان نیاوران','warning'],
+    ['پرداخت شارژ شهریور ثبت شد','ساختمان نیاوران','verified'],
+    ['درخواست بازدید جدید دارید','آپارتمان فرمانیه','info'],
+    ['مدرک جدید به Property Passport اضافه شد','پارکینگ P-21','neutral']
+  ] as const
+  return <Phone title="اعلان‌ها" active="messages">
+    <div className="notification-tabs"><span className="active">همه</span><span>املاک</span><span>قرارداد</span><span>مالی</span></div>
+    <div className="notification-list">{items.map((n,i)=><div className="notification-row" key={i}>
+      <div className={'notice-dot '+n[2]}/><div><strong>{n[0]}</strong><span>{n[1]}</span><small>{i===0?'امروز، ۱۰:۳۲':'دیروز'}</small></div><ChevronLeft size={16}/>
+    </div>)}</div>
+  </Phone>
+}
+
+function MessagesScreen() {
+  const chats=[['علی محمدی','درباره تمدید قرارداد صحبت کنیم؟','۱۰:۴۲','2'],['پشتیبانی Property OS','درخواست شما بررسی شد','دیروز',''],['بازرس نیاوران','گزارش بازرسی آماده است','شنبه','1']] as const
+  return <Phone title="پیام‌ها" active="messages">
+    <div className="messages-search"><Search size={15}/><span>جستجو در گفتگوها...</span></div>
+    <div className="chat-list">{chats.map((c,i)=><div className="chat-row" key={i}>
+      <div className="avatar">{c[0][0]}</div><div><strong>{c[0]}</strong><span>{c[1]}</span></div><div className="chat-meta"><small>{c[2]}</small>{c[3]&&<b>{c[3]}</b>}</div>
+    </div>)}</div>
+  </Phone>
+}
+
+function ProfileRoles() {
+  return <Phone title="حساب من" active="account">
+    <div className="profile-hero"><div className="avatar profile-avatar">ح</div><div><h3>حمیدرضا پاکپور</h3><span>0912 345 6789</span></div><button className="btn secondary compact">ویرایش</button></div>
+    <div className="role-section"><h3>نقش‌های من</h3>
+      <div className="role-card"><div><Home size={18}/><span><strong>مالک</strong><small>۵ ملک</small></span></div><Status tone="verified">فعال</Status></div>
+      <div className="role-card"><div><Building2 size={18}/><span><strong>مدیر ساختمان</strong><small>ساختمان نیاوران</small></span></div><Status tone="verified">فعال</Status></div>
+    </div>
+    <div className="account-menu"><div><ShieldCheck/><span>امنیت و دستگاه‌ها</span><ChevronLeft/></div><div><WalletCards/><span>اشتراک و پرداخت</span><ChevronLeft/></div><div><Bell/><span>تنظیمات اعلان</span><ChevronLeft/></div><div><MessageSquare/><span>پشتیبانی</span><ChevronLeft/></div></div>
+  </Phone>
+}
+
+function SubscriptionScreen() {
+  return <Phone title="اشتراک">
+    <div className="plan-hero"><span>پلن فعلی</span><h2>Owner Pro</h2><p>برای مدیریت حرفه‌ای سبد املاک</p><Status tone="verified">فعال</Status></div>
+    <div className="plan-usage">
+      <div><span>املاک فعال</span><strong>5 / 10</strong></div><i><em style={{width:'50%'}}/></i>
+      <div><span>فضای اسناد</span><strong>1.8 / 5 GB</strong></div><i><em style={{width:'36%'}}/></i>
+    </div>
+    <div className="plan-features"><h3>امکانات فعال</h3><div>✓ مدیریت Portfolio</div><div>✓ Property Passport</div><div>✓ یادآوری قراردادها</div><div>✓ گزارش مالی پایه</div></div>
+    <div className="renewal-card"><div><span>تمدید بعدی</span><strong>۱۴۰۵/۰۷/۲۲</strong></div><button className="btn secondary compact">مدیریت پلن</button></div>
+  </Phone>
+}
+
+function SecurityDevices() {
+  return <Phone title="امنیت و دستگاه‌ها">
+    <div className="security-score"><ShieldCheck size={28}/><div><h3>امنیت حساب خوب است</h3><p>ورود دومرحله‌ای و دستگاه‌های مورد اعتماد فعال‌اند.</p></div></div>
+    <div className="security-section"><h3>دستگاه‌های فعال</h3>
+      <div className="device-row"><div className="device-icon">A55</div><div><strong>Galaxy A55</strong><span>تهران · همین دستگاه</span></div><Status tone="verified">فعال</Status></div>
+      <div className="device-row"><div className="device-icon">PC</div><div><strong>Windows Desktop</strong><span>آخرین فعالیت: ۲ ساعت قبل</span></div><Status tone="neutral">معتبر</Status></div>
+    </div>
+    <div className="security-options"><div><span>ورود دومرحله‌ای</span><Status tone="verified">روشن</Status></div><div><span>هشدار ورود جدید</span><Status tone="verified">روشن</Status></div><div><span>خروج از همه دستگاه‌ها</span><button>اجرا</button></div></div>
+  </Phone>
+}
+
+function SupportCenter() {
+  return <Phone title="پشتیبانی">
+    <div className="support-hero"><MessageSquare size={27}/><div><h3>چطور می‌تونیم کمک کنیم؟</h3><p>موضوع را انتخاب کنید یا درخواست جدید بسازید.</p></div></div>
+    <div className="support-actions"><div><FileCheck2/><span>قرارداد و معامله</span></div><div><CircleDollarSign/><span>پرداخت و صورتحساب</span></div><div><ShieldCheck/><span>اعتماد و بازرسی</span></div><div><Settings/><span>حساب و تنظیمات</span></div></div>
+    <div className="support-ticket"><div><strong>#2481 — اصلاح اطلاعات Property Passport</strong><span>آخرین پاسخ: ۲ ساعت قبل</span></div><Status tone="info">در حال بررسی</Status></div>
+    <button className="btn primary support-cta"><Plus size={15}/>درخواست جدید</button>
+    <p className="privacy-note">حریم خصوصی و داده‌های حساس فقط در محدوده لازم برای رسیدگی به درخواست نمایش داده می‌شوند.</p>
+  </Phone>
+}
+
 function DesignSystem() {
   const colors = [
     ['Primary','#13233F'],['Action','#315EFB'],['Success','#12A47A'],['Warning','#F59E0B'],['Error','#E5484D'],
@@ -549,6 +619,15 @@ function ReviewBoard() {
       <div className="screen-wrap"><DealSummary/><label>26. Deal Summary</label></div>
       <div className="screen-wrap"><TransactionTracker/><label>27. Transaction Tracker</label></div>
     </div>
+    <div className="review-section-head flow-heading"><div><span>Communication + Account</span><h2>Messages / Profile / Security</h2></div><small>Personal · Clear · Controlled</small></div>
+    <div className="mobile-grid">
+      <div className="screen-wrap"><NotificationsScreen/><label>28. Notifications</label></div>
+      <div className="screen-wrap"><MessagesScreen/><label>29. Messages</label></div>
+      <div className="screen-wrap"><ProfileRoles/><label>30. Profile & Roles</label></div>
+      <div className="screen-wrap"><SubscriptionScreen/><label>31. Subscription</label></div>
+      <div className="screen-wrap"><SecurityDevices/><label>32. Security & Devices</label></div>
+      <div className="screen-wrap"><SupportCenter/><label>33. Support</label></div>
+    </div>
     <div className="review-section-head admin-heading"><div><span>Operations</span><h2>Admin — Calm Premium</h2></div><small>Dense · Clear · Trustworthy</small></div>
     <div className="admin-grid">
       <div className="screen-wrap admin-wrap"><AdminDashboard/><label>7. Admin Dashboard</label></div>
@@ -572,6 +651,9 @@ function App() {
   if (route === '/marketplace') return <div className="single-screen"><MarketplaceSearch/></div>
   if (route === '/listing') return <div className="single-screen"><ListingDetail/></div>
   if (route === '/deal') return <div className="single-screen"><DealSummary/></div>
+  if (route === '/notifications') return <div className="single-screen"><NotificationsScreen/></div>
+  if (route === '/account') return <div className="single-screen"><ProfileRoles/></div>
+  if (route === '/security') return <div className="single-screen"><SecurityDevices/></div>
   return <ReviewBoard/>
 }
 
