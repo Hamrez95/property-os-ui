@@ -13,6 +13,7 @@ type DecisionState = 'locked' | 'working' | 'open'
 const nav = [
   { path: '/guide', label: 'راهنمای توسعه', icon: BookOpen },
   { path: '/roadmap', label: 'نقشه راه', icon: Flag },
+  { path: '/modeling', label: 'مدلینگ', icon: Database },
   { path: '/benchmark', label: 'Benchmark بازار', icon: Search },
   { path: '/operations', label: 'آمادگی لانچ', icon: Rocket },
   { path: '/design', label: 'Design Board', icon: LayoutDashboard },
@@ -31,7 +32,7 @@ function StatusPill({state}:{state:DecisionState}) {
   return <span className={'hub-status '+state}><b>{map[state][0]}</b><small>{map[state][1]}</small></span>
 }
 
-export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'benchmark'|'operations'|'design'}) {
+export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'modeling'|'benchmark'|'operations'|'design'}) {
   const [open,setOpen]=useState(false)
   return <header className="project-site-header" dir="rtl">
     <div className="project-site-header-inner">
@@ -58,7 +59,7 @@ export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'benchmark'
   </header>
 }
 
-function HubPage({active,children}:{active:'guide'|'roadmap'|'benchmark'|'operations'|'design',children:ReactNode}) {
+function HubPage({active,children}:{active:'guide'|'roadmap'|'modeling'|'benchmark'|'operations'|'design',children:ReactNode}) {
   return <div className="hub-page" dir="rtl"><ProjectSiteHeader active={active}/><main className="hub-main">{children}</main></div>
 }
 
