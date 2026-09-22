@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { AdminShell, Brand, Phone, PropertyCard, Stat, Status, type Tone } from './ui'
 import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, InspectorDiscrepancy, InspectorDocumentEvidence, InspectorEarnings, InspectorLogin, InspectorMediaCapture, InspectorSpaceVerification, InspectorSubmitReport } from './InspectorScreens'
+import { AdminBuildings, AdminDeals, AdminFeatureFlags, AdminInspectors, AdminListings, AdminPayments, AdminReports, AdminSecurityAudit, AdminSupport, AdminTrustQueue } from './AdminExtendedScreens'
 import { PublishListing, NegotiationThread, ContractReview, SecurePayment, NotificationSettings } from './MarketplaceAccountScreens'
 import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
@@ -597,6 +598,16 @@ function ReviewBoard() {
       <div className="screen-wrap admin-wrap"><AdminDashboard/><label>7. Admin Dashboard</label></div>
       <div className="screen-wrap admin-wrap"><UsersManagement/><label>8. Users Management</label></div>
       <div className="screen-wrap admin-wrap"><PropertyManagement/><label>9. Property Management</label></div>
+      <div className="screen-wrap admin-wrap"><AdminBuildings/><label>9A. Buildings</label></div>
+      <div className="screen-wrap admin-wrap"><AdminListings/><label>9B. Listings</label></div>
+      <div className="screen-wrap admin-wrap"><AdminDeals/><label>9C. Deals</label></div>
+      <div className="screen-wrap admin-wrap"><AdminTrustQueue/><label>9D. Trust Queue</label></div>
+      <div className="screen-wrap admin-wrap"><AdminInspectors/><label>9E. Inspectors</label></div>
+      <div className="screen-wrap admin-wrap"><AdminPayments/><label>9F. Payments</label></div>
+      <div className="screen-wrap admin-wrap"><AdminSupport/><label>9G. Support</label></div>
+      <div className="screen-wrap admin-wrap"><AdminReports/><label>9H. Reports</label></div>
+      <div className="screen-wrap admin-wrap"><AdminFeatureFlags/><label>9I. Feature Flags</label></div>
+      <div className="screen-wrap admin-wrap"><AdminSecurityAudit/><label>9J. Security & Audit</label></div>
     </div>
   </div>
 }
@@ -634,6 +645,16 @@ function App() {
   if (route === '/notifications') return <div className="single-screen"><NotificationsScreen/></div>
   if (route === '/account') return <div className="single-screen"><ProfileRoles/></div>
   if (route === '/security') return <div className="single-screen"><SecurityDevices/></div>
+  if (route === '/admin-buildings') return <div className="single-screen admin-single"><AdminBuildings/></div>
+  if (route === '/admin-listings') return <div className="single-screen admin-single"><AdminListings/></div>
+  if (route === '/admin-deals') return <div className="single-screen admin-single"><AdminDeals/></div>
+  if (route === '/admin-trust') return <div className="single-screen admin-single"><AdminTrustQueue/></div>
+  if (route === '/admin-inspectors') return <div className="single-screen admin-single"><AdminInspectors/></div>
+  if (route === '/admin-payments') return <div className="single-screen admin-single"><AdminPayments/></div>
+  if (route === '/admin-support') return <div className="single-screen admin-single"><AdminSupport/></div>
+  if (route === '/admin-reports') return <div className="single-screen admin-single"><AdminReports/></div>
+  if (route === '/admin-flags') return <div className="single-screen admin-single"><AdminFeatureFlags/></div>
+  if (route === '/admin-security') return <div className="single-screen admin-single"><AdminSecurityAudit/></div>
   if (route === '/inspector-spaces') return <div className="single-screen"><InspectorSpaceVerification/></div>
   if (route === '/inspector-evidence') return <div className="single-screen"><InspectorDocumentEvidence/></div>
   if (route === '/inspector') return <div className="single-screen"><InspectorAssignments/></div>
