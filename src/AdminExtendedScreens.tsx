@@ -51,7 +51,28 @@ export function AdminPayments() {
 
 export function AdminSupport() {
   const rows:Row[]=[['#2481','اصلاح Property Passport','۲ ساعت','در حال بررسی','info'],['#2479','پرداخت اشتراک','۴ ساعت','پاسخ داده شد','verified'],['#2471','گزارش آگهی','دیروز','اولویت بالا','warning'],['#2466','تغییر شماره موبایل','دیروز','بسته شد','verified']]
-  return <AdminShell section="پشتیبانی"><div className="admin-page-head"><div><h2>پشتیبانی</h2><p>درخواست‌ها، SLA و ارجاع داخلی</p></div></div><Toolbar placeholder="شماره تیکت یا کاربر..."/><SimpleTable columns={['تیکت','موضوع','سن','وضعیت']} rows={rows} rowRoute="/messages"/></AdminShell>
+  return <AdminShell section="پشتیبانی"><div className="admin-page-head"><div><h2>پشتیبانی</h2><p>درخواست‌ها، SLA و ارجاع داخلی</p></div></div><Toolbar placeholder="شماره تیکت یا کاربر..."/><SimpleTable columns={['تیکت','موضوع','سن','وضعیت']} rows={rows} rowRoute="/admin-support-ticket"/></AdminShell>
+}
+
+export function AdminSupportTicket() {
+  return <AdminShell section="پشتیبانی">
+    <div className="admin-page-head"><div><h2>تیکت #2481</h2><p>اصلاح اطلاعات Property Passport · کاربر: علی رضایی</p></div><Status tone="info">در حال بررسی</Status></div>
+    <div className="admin-support-detail-grid">
+      <section className="admin-support-thread">
+        <div className="admin-support-event customer"><span>کاربر · دیروز ۱۸:۲۲</span><strong>سال ساخت نمایش‌داده‌شده با مدرک من یکی نیست.</strong><p>درخواست کرده‌ام Property Passport دوباره بررسی شود.</p></div>
+        <div className="admin-support-event internal"><span>یادداشت داخلی · امروز ۰۸:۴۰</span><strong>Evidence موجود است</strong><p>سند برای تیم Trust ارجاع شده و Claim مرتبط باید re-check شود.</p></div>
+        <div className="admin-support-event agent"><span>پشتیبانی · امروز ۰۹:۱۰</span><strong>پاسخ ثبت‌شده</strong><p>مدرک دریافت شد و نتیجه پس از بررسی Trust در همین تیکت ثبت می‌شود.</p></div>
+      </section>
+      <aside className="admin-support-meta">
+        <div><span>Owner</span><strong>Support Tier 1</strong></div>
+        <div><span>Linked Property</span><strong>آپارتمان نیاوران</strong></div>
+        <div><span>Linked workflow</span><strong>Trust / Passport</strong></div>
+        <div><span>SLA</span><strong>تا فردا ۱۲:۰۰</strong></div>
+        <button className="btn secondary" onClick={() => go('/admin-trust')}>باز کردن Trust Queue</button>
+        <button className="btn primary" onClick={() => go('/admin-support')}>ثبت و بازگشت به صف</button>
+      </aside>
+    </div>
+  </AdminShell>
 }
 
 export function AdminReports() {
