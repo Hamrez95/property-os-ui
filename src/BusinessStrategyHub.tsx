@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type CSSProperties, type ReactNode } from 'react'
 import {
   AlertTriangle, ArrowUpLeft, BarChart3, Building2, CalendarRange, CheckCircle2,
   CircleDollarSign, FileText, Gauge, Globe2, HeartHandshake, KeyRound, Landmark,
@@ -8,7 +8,7 @@ import {
 import { ProjectSiteHeader } from './ProjectHub'
 
 type StrategyState='evidence'|'hypothesis'|'decision'
-function State({kind,children}:{kind:StrategyState,children:React.ReactNode}){
+function State({kind,children}:{kind:StrategyState,children:ReactNode}){
   return <span className={'biz-state '+kind}>{children}</span>
 }
 function jump(id:string){ document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}) }
@@ -194,7 +194,7 @@ export function BusinessStrategyHub(){
       <section className="biz-section">
         <div className="hub-section-head"><span>08 · COMPETITIVE STRATEGY</span><h2>Moat در روز اول نداریم؛ باید آن را بسازیم</h2><p>AI، UI یا تعداد feature به تنهایی moat نیستند.</p></div>
         <div className="moat-wheel">
-          {['Property History','Relationship Graph','Trust Graph','Workflow Habit','Collaboration','Integration Depth','Brand Trust'].map((x,i)=><div key={x} style={{'--i':i} as React.CSSProperties}><span>{String(i+1).padStart(2,'0')}</span><strong>{x}</strong></div>)}
+          {['Property History','Relationship Graph','Trust Graph','Workflow Habit','Collaboration','Integration Depth','Brand Trust'].map((x,i)=><div key={x} style={{'--i':i} as CSSProperties}><span>{String(i+1).padStart(2,'0')}</span><strong>{x}</strong></div>)}
         </div>
         <div className="forces-grid">
           {forces.map(([name,level,desc])=><article key={name}><div><strong>{name}</strong><span>{level}</span></div><p>{desc}</p></article>)}
