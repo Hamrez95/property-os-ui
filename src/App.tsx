@@ -108,7 +108,7 @@ function MyCity() {
       <div className="selected-building"/>
       <div className="map-pin red"/><div className="map-pin blue"/><div className="map-pin amber"/>
       <button className="map-card interactive-card" onClick={() => go('/building')}><strong>ساختمان نیاوران</strong><span>۱۲ واحد · تهران</span><small>میانگین قیمت: ۲۶۰ میلیون / متر</small></button>
-      <div className="map-switch"><span className="active"><Map size={14}/>نقشه</span><span><Menu size={14}/>لیست</span></div>
+      <div className="map-switch"><button className="active" onClick={() => go('/city')}><Map size={14}/>نقشه</button><button onClick={() => go('/portfolio')}><Menu size={14}/>لیست</button></div>
     </div>
   </Phone>
 }
@@ -143,7 +143,7 @@ function UsersManagement() {
     <div className="table-toolbar"><div className="global-search"><Search size={15}/><span>جستجو در کاربران...</span></div></div>
     <div className="data-table">
       <div className="table-row header"><span>نام</span><span>موبایل</span><span>نقش</span><span>وضعیت</span><span/></div>
-      {users.map((u,i)=><div className="table-row" key={u[0]}><span className="user-cell"><div className="avatar small">{u[0][0]}</div>{u[0]}</span><span>{u[1]}</span><span>{u[2]}</span><span><Status tone={u[3]==='فعال'?'verified':'danger'}>{u[3]}</Status></span><span><MoreVertical size={16}/></span></div>)}
+      {users.map((u,i)=><button className="table-row interactive-row" key={u[0]} onClick={() => go('/admin-security')}><span className="user-cell"><div className="avatar small">{u[0][0]}</div>{u[0]}</span><span>{u[1]}</span><span>{u[2]}</span><span><Status tone={u[3]==='فعال'?'verified':'danger'}>{u[3]}</Status></span><span><MoreVertical size={16}/></span></button>)}
     </div>
   </AdminShell>
 }
@@ -162,7 +162,7 @@ function PropertyManagement() {
     <div className="table-toolbar"><div className="global-search"><Search size={15}/><span>جستجو در املاک...</span></div><div className="filter-pills"><span className="active">همه</span><span>فعال</span><span>خالی</span></div></div>
     <div className="data-table property-table">
       <div className="table-row header"><span>عنوان</span><span>نوع</span><span>موقعیت</span><span>وضعیت</span><span/></div>
-      {adminProperties.map((p,i)=><div className="table-row" key={p[0]}><span className="user-cell"><div className="property-mini">{i+1}</div>{p[0]}</span><span>{p[1]}</span><span>{p[2]}</span><span><Status tone={p[4] as Tone}>{p[3]}</Status></span><span><MoreVertical size={16}/></span></div>)}
+      {adminProperties.map((p,i)=><button className="table-row interactive-row" key={p[0]} onClick={() => go('/property')}><span className="user-cell"><div className="property-mini">{i+1}</div>{p[0]}</span><span>{p[1]}</span><span>{p[2]}</span><span><Status tone={p[4] as Tone}>{p[3]}</Status></span><span><MoreVertical size={16}/></span></button>)}
     </div>
   </AdminShell>
 }
@@ -217,10 +217,10 @@ function PropertyTimeline() {
   return <Phone title="تاریخچه ملک">
     <div className="timeline-filter"><span className="active">همه</span><span>قرارداد</span><span>تعمیرات</span><span>بازرسی</span></div>
     <div className="timeline-list">
-      {events.map((e,i)=><div className="timeline-item" key={i}>
+      {events.map((e,i)=><button className="timeline-item interactive-row" key={i} onClick={() => go(i===0?'/maintenance':i===1?'/property-lease':i===2?'/inspection-status':'/property')}>
         <div className={'timeline-dot '+e[3]} />
         <div className="timeline-copy"><span>{e[0]}</span><strong>{e[1]}</strong><small>{e[2]}</small></div>
-      </div>)}
+      </button>)}
     </div>
   </Phone>
 }
@@ -286,9 +286,9 @@ function BuildingDashboard() {
     </div>
     <section className="mobile-section">
       <div className="section-head"><h3>آخرین فعالیت‌ها</h3><button onClick={() => go('/building-expenses')}>همه</button></div>
-      <div className="activity-row"><CheckCircle2 size={16}/><div><strong>شارژ شهریور ثبت شد</strong><span>۱۰ واحد پرداخت کرده‌اند</span></div><small>امروز</small></div>
-      <div className="activity-row"><Wrench size={16}/><div><strong>تیکت آسانسور</strong><span>در انتظار تأیید مدیر</span></div><small>دیروز</small></div>
-      <div className="activity-row"><FileCheck2 size={16}/><div><strong>فاکتور نظافت</strong><span>۲,۸۰۰,۰۰۰ تومان</span></div><small>۳ روز</small></div>
+      <button className="activity-row interactive-row" onClick={() => go('/charges')}><CheckCircle2 size={16}/><div><strong>شارژ شهریور ثبت شد</strong><span>۱۰ واحد پرداخت کرده‌اند</span></div><small>امروز</small></button>
+      <button className="activity-row interactive-row" onClick={() => go('/maintenance')}><Wrench size={16}/><div><strong>تیکت آسانسور</strong><span>در انتظار تأیید مدیر</span></div><small>دیروز</small></button>
+      <button className="activity-row interactive-row" onClick={() => go('/building-expenses')}><FileCheck2 size={16}/><div><strong>فاکتور نظافت</strong><span>۲,۸۰۰,۰۰۰ تومان</span></div><small>۳ روز</small></button>
     </section>
   </Phone>
 }
@@ -296,10 +296,10 @@ function BuildingDashboard() {
 function BuildingUnits() {
   const units=[['واحد ۱','مالک: محمد رضایی','بدون بدهی','verified'],['واحد ۲','مستأجر: سارا محمدی','۱.۲ م بدهی','warning'],['واحد ۳','مالک: نرگس اکبری','بدون بدهی','verified'],['واحد ۴','مستأجر: علی محمدی','۸۵۰ ه بدهی','warning'],['واحد ۵','خالی','بدون بدهی','neutral']] as const
   return <Phone title="واحدها و ساکنین">
-    <div className="units-top"><div className="searchbox"><Search size={15}/><span>جستجو در واحدها...</span></div><button className="icon-button"><Plus size={16}/></button></div>
-    <div className="units-list">{units.map((u,i)=><div className="unit-row" key={i}>
+    <div className="units-top"><div className="searchbox"><Search size={15}/><span>جستجو در واحدها...</span></div><button className="icon-button" onClick={() => go('/property-people')} aria-label="افزودن ساکن"><Plus size={16}/></button></div>
+    <div className="units-list">{units.map((u,i)=><button className="unit-row interactive-row" key={i} onClick={() => go(i===3?'/property':'/charges')}>
       <div className="unit-no">{i+1}</div><div><strong>{u[0]}</strong><span>{u[1]}</span></div><Status tone={u[3] as Tone}>{u[2]}</Status>
-    </div>)}</div>
+    </button>)}</div>
   </Phone>
 }
 
@@ -364,7 +364,7 @@ function MarketplaceSearch() {
   return <Phone title="بازار ملک" active="search">
     <div className="market-search"><Search size={15}/><span>محله، خیابان یا نوع ملک...</span></div>
     <div className="market-filter-row"><span className="active">همه</span><span>فروش</span><span>اجاره</span><span>تأییدشده</span></div>
-    <div className="market-map-strip"><Map size={17}/><span>مشاهده روی نقشه</span><b>۳۲ نتیجه</b></div>
+    <button className="market-map-strip interactive-row" onClick={() => go('/city')}><Map size={17}/><span>مشاهده روی نقشه</span><b>۳۲ نتیجه</b></button>
     <div className="listing-stack">
       {cards.map((c,i)=><button className="listing-card interactive-card" key={i} onClick={() => go('/listing')}>
         <div className="listing-image"><div className={'listing-house h'+i}/><Status tone={c[4] as Tone}>{c[2]}</Status></div>
@@ -428,11 +428,11 @@ function TransactionTracker() {
   return <Phone title="پیگیری معامله">
     <div className="transaction-hero"><FileCheck2 size={24}/><div><span>شناسه معامله</span><strong>TX-1405-0921-1842</strong></div></div>
     <div className="transaction-list">
-      <div className="done"><CheckCircle2/><div><strong>توافق اولیه</strong><span>تکمیل‌شده · ۱۴۰۵/۰۶/۳۰</span></div></div>
-      <div className="done"><CheckCircle2/><div><strong>احراز طرفین</strong><span>تکمیل‌شده · ۱۴۰۵/۰۶/۳۱</span></div></div>
-      <div className="current"><FileCheck2/><div><strong>قرارداد</strong><span>در انتظار تأیید طرفین</span></div></div>
-      <div><WalletCards/><div><strong>پرداخت امن</strong><span>بعد از قرارداد فعال می‌شود</span></div></div>
-      <div><KeyRound/><div><strong>تحویل و ثبت نهایی</strong><span>در انتظار مراحل قبل</span></div></div>
+      <button className="done" onClick={() => go('/deal')}><CheckCircle2/><div><strong>توافق اولیه</strong><span>تکمیل‌شده · ۱۴۰۵/۰۶/۳۰</span></div></button>
+      <button className="done" onClick={() => go('/account')}><CheckCircle2/><div><strong>احراز طرفین</strong><span>تکمیل‌شده · ۱۴۰۵/۰۶/۳۱</span></div></button>
+      <button className="current" onClick={() => go('/contract-review')}><FileCheck2/><div><strong>قرارداد</strong><span>در انتظار تأیید طرفین</span></div></button>
+      <button onClick={() => go('/secure-payment')}><WalletCards/><div><strong>پرداخت امن</strong><span>بعد از قرارداد فعال می‌شود</span></div></button>
+      <button onClick={() => go('/transaction')}><KeyRound/><div><strong>تحویل و ثبت نهایی</strong><span>در انتظار مراحل قبل</span></div></button>
     </div>
     <div className="transaction-note"><AlertTriangle size={16}/><span>قابلیت‌های رسمی/مجوزمحور تا زمان فعال‌شدن Capability Gate ممکن است در حالت آزمایشی باقی بمانند.</span></div>
   </Phone>
@@ -468,8 +468,8 @@ function ProfileRoles() {
   return <Phone title="حساب من" active="account">
     <div className="profile-hero"><div className="avatar profile-avatar">ح</div><div><h3>حمیدرضا پاکپور</h3><span>0912 345 6789</span></div><button className="btn secondary compact" onClick={() => go('/security')}>ویرایش</button></div>
     <div className="role-section"><h3>نقش‌های من</h3>
-      <div className="role-card"><div><Home size={18}/><span><strong>مالک</strong><small>۵ ملک</small></span></div><Status tone="verified">فعال</Status></div>
-      <div className="role-card"><div><Building2 size={18}/><span><strong>مدیر ساختمان</strong><small>ساختمان نیاوران</small></span></div><Status tone="verified">فعال</Status></div>
+      <button className="role-card interactive-row" onClick={() => go('/portfolio')}><div><Home size={18}/><span><strong>مالک</strong><small>۵ ملک</small></span></div><Status tone="verified">فعال</Status></button>
+      <button className="role-card interactive-row" onClick={() => go('/building')}><div><Building2 size={18}/><span><strong>مدیر ساختمان</strong><small>ساختمان نیاوران</small></span></div><Status tone="verified">فعال</Status></button>
     </div>
     <div className="account-menu"><button onClick={() => go('/security')}><ShieldCheck/><span>امنیت و دستگاه‌ها</span><ChevronLeft/></button><button onClick={() => go('/subscription')}><WalletCards/><span>اشتراک و پرداخت</span><ChevronLeft/></button><button onClick={() => go('/notification-settings')}><Bell/><span>تنظیمات اعلان</span><ChevronLeft/></button><button onClick={() => go('/support')}><MessageSquare/><span>پشتیبانی</span><ChevronLeft/></button></div>
   </Phone>
@@ -502,7 +502,7 @@ function SupportCenter() {
   return <Phone title="پشتیبانی">
     <div className="support-hero"><MessageSquare size={27}/><div><h3>چطور می‌تونیم کمک کنیم؟</h3><p>موضوع را انتخاب کنید یا درخواست جدید بسازید.</p></div></div>
     <div className="support-actions"><button onClick={() => go('/transaction')}><FileCheck2/><span>قرارداد و معامله</span></button><button onClick={() => go('/secure-payment')}><CircleDollarSign/><span>پرداخت و صورتحساب</span></button><button onClick={() => go('/trust')}><ShieldCheck/><span>اعتماد و بازرسی</span></button><button onClick={() => go('/account')}><Settings/><span>حساب و تنظیمات</span></button></div>
-    <div className="support-ticket"><div><strong>#2481 — اصلاح اطلاعات Property Passport</strong><span>آخرین پاسخ: ۲ ساعت قبل</span></div><Status tone="info">در حال بررسی</Status></div>
+    <button className="support-ticket interactive-row" onClick={() => go('/messages')}><div><strong>#2481 — اصلاح اطلاعات Property Passport</strong><span>آخرین پاسخ: ۲ ساعت قبل</span></div><Status tone="info">در حال بررسی</Status></button>
     <button className="btn primary support-cta" onClick={() => go('/messages')}><Plus size={15}/>درخواست جدید</button>
     <p className="privacy-note">حریم خصوصی و داده‌های حساس فقط در محدوده لازم برای رسیدگی به درخواست نمایش داده می‌شوند.</p>
   </Phone>
