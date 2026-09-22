@@ -7,6 +7,7 @@ import './design-system/foundation.css'
 import './design-system/reference-screens.css'
 import './design-system/property-spaces.css'
 import './design-system/building-trust.css'
+import './design-system/marketplace-account.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode><App /></React.StrictMode>
