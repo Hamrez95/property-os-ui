@@ -1,3 +1,4 @@
+import { useEffect, useState, type ReactNode } from 'react'
 import {
   Bell, Building2, CalendarDays, CheckCircle2, ChevronLeft, CircleDollarSign,
   FileCheck2, Home, KeyRound, Map, MessageSquare, Plus, Search, ShieldCheck,
@@ -11,6 +12,7 @@ import { QualityGallery } from './QualityGallery'
 import { PublishListing, NegotiationThread, ContractReview, SecurePayment, NotificationSettings } from './MarketplaceAccountScreens'
 import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
+import { go, goDesignBoard, isPrototypeRoute, normalizeRoute } from './navigation'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -24,8 +26,8 @@ function Splash() {
       <Brand/>
       <div className="hero-city"><div/><div/><div/></div>
       <div className="splash-copy"><h2>همه‌چیز درباره املاک<br/>در یک مکان</h2><p>مدیریت، خرید، فروش، اجاره<br/>با اعتماد و شفافیت</p></div>
-      <button className="btn primary dark">شروع کنید</button>
-      <button className="btn ghost">ورود به حساب</button>
+      <button className="btn primary dark" onClick={() => go('/login')}>شروع کنید</button>
+      <button className="btn ghost" onClick={() => go('/login')}>ورود به حساب</button>
     </div>
   </div>
 }
@@ -37,7 +39,7 @@ function Login() {
       <div className="auth-copy"><h2>ورود / ثبت‌نام</h2><p>لطفاً شماره موبایل خود را وارد کنید تا کد تأیید برای شما ارسال شود.</p></div>
       <label className="field-label">شماره موبایل</label>
       <div className="phone-input"><span>🇮🇷 +98</span><input defaultValue="912 345 6789" aria-label="شماره موبایل"/></div>
-      <button className="btn primary">ارسال کد تأیید</button>
+      <button className="btn primary" onClick={() => go('/otp')}>ارسال کد تأیید</button>
       <p className="legal">با ورود، <b>قوانین و مقررات</b> و <b>حریم خصوصی</b> را می‌پذیرید.</p>
     </div>
   </Phone>
@@ -50,7 +52,7 @@ function Otp() {
       <div className="auth-copy"><h2>کد تأیید</h2><p>کد ۶ رقمی ارسال‌شده به<br/><b>0912 345 6789</b> را وارد کنید.</p></div>
       <div className="otp">{[1,2,3,4,5,6].map(i=><span key={i}/>)}</div>
       <div className="otp-meta"><span>0:52</span><button>ارسال مجدد کد</button></div>
-      <button className="btn primary">تأیید و ادامه</button>
+      <button className="btn primary" onClick={() => go('/home')}>تأیید و ادامه</button>
       <div className="keypad">{[1,2,3,4,5,6,7,8,9,'',0,'⌫'].map((n,i)=><span key={i}>{n}</span>)}</div>
     </div>
   </Phone>
@@ -62,12 +64,14 @@ function HomeScreen() {
       <div className="hello"><div className="avatar">ح</div><div><strong>سلام حمیدرضا</strong><span>امروز چه کاری انجام می‌دهید؟</span></div></div>
       <div className="searchbox"><Search size={15}/><span>جستجو در املاک، محله‌ها ...</span></div>
       <div className="quick-grid">
-        <div><Home/><span>افزودن ملک</span></div><div><FileCheck2/><span>ایجاد قرارداد</span></div>
-        <div><ShieldCheck/><span>درخواست بررسی</span></div><div><Wrench/><span>درخواست خدمت</span></div>
+        <button onClick={() => go('/property-add')}><Home/><span>افزودن ملک</span></button>
+        <button onClick={() => go('/property-lease')}><FileCheck2/><span>مدیریت قرارداد</span></button>
+        <button onClick={() => go('/inspection')}><ShieldCheck/><span>درخواست بررسی</span></button>
+        <button onClick={() => go('/maintenance')}><Wrench/><span>درخواست خدمت</span></button>
       </div>
     </div>
     <section className="mobile-section">
-      <div className="section-head"><h3>املاک من</h3><button>مشاهده همه</button></div>
+      <div className="section-head"><h3>املاک من</h3><button onClick={() => go('/portfolio')}>مشاهده همه</button></div>
       {properties.map((p,i)=><PropertyCard key={i} {...p}/>)}
       <div className="attention"><CalendarDays size={18}/><div><strong>یادآوری مهم</strong><span>قرارداد آپارتمان نیاوران ۲۷ روز دیگر پایان می‌یابد.</span></div></div>
     </section>
@@ -90,7 +94,7 @@ function PropertyDetail() {
       <div className="kv"><span>پایان قرارداد</span><b>۱۴۰۶/۰۳/۲۱</b></div>
       <div className="kv"><span>مبلغ اجاره</span><b>۸۵,۰۰۰,۰۰۰ تومان</b></div>
     </div>
-    <div className="detail-actions"><button className="btn secondary">ویرایش</button><button className="btn primary">مدیریت قرارداد</button></div>
+    <div className="detail-actions"><button className="btn secondary" onClick={() => go('/property-add')}>ویرایش</button><button className="btn primary" onClick={() => go('/property-lease')}>مدیریت قرارداد</button></div>
   </Phone>
 }
 
@@ -518,7 +522,10 @@ function DesignSystem() {
 
 function ReviewBoard() {
   return <div className="review-page">
-    <header className="review-header"><div><h1>مدیریت هوشمند املاک و ساختمان‌ها</h1><p>ساختاری · امن‌تر · ارزشمندتر</p></div><Brand/></header>
+    <header className="review-header">
+      <div><h1>مدیریت هوشمند املاک و ساختمان‌ها</h1><p>ساختاری · امن‌تر · ارزشمندتر</p></div>
+      <div className="review-header-actions"><button className="prototype-launch" onClick={() => go('/splash')}>مشاهده پروتوتایپ تعاملی</button><Brand/></div>
+    </header>
     <DesignSystem/>
     <QualityGallery/>
     <div className="review-section-head"><div><span>Reference screens</span><h2>Mobile — Calm Premium</h2></div><small>RTL first · LTR ready</small></div>
@@ -614,52 +621,86 @@ function ReviewBoard() {
   </div>
 }
 
+function PrototypeShell({children, admin=false}:{children:ReactNode, admin?:boolean}) {
+  return <div className={'prototype-page '+(admin?'admin-mode':'mobile-mode')}>
+    <div className="prototype-toolbar" dir="rtl">
+      <button onClick={goDesignBoard}>بازگشت به Design Board</button>
+      <div><strong>Property OS — Interactive Prototype</strong><span>روی دکمه‌های داخل اپ کلیک کنید.</span></div>
+    </div>
+    <div className="prototype-stage">{children}</div>
+  </div>
+}
+
 function App() {
-  const route = window.location.hash.replace('#','')
-  if (route === '/splash') return <div className="single-screen"><Splash/></div>
-  if (route === '/login') return <div className="single-screen"><Login/></div>
-  if (route === '/home') return <div className="single-screen"><HomeScreen/></div>
-  if (route === '/portfolio') return <div className="single-screen"><PortfolioOverview/></div>
-  if (route === '/passport') return <div className="single-screen"><PropertyPassport/></div>
-  if (route === '/spaces') return <div className="single-screen"><SpacesOverview/></div>
-  if (route === '/property-add') return <div className="single-screen"><AddProperty/></div>
-  if (route === '/property-documents') return <div className="single-screen"><PropertyDocuments/></div>
-  if (route === '/property-people') return <div className="single-screen"><PropertyPeople/></div>
-  if (route === '/property-finance') return <div className="single-screen"><PropertyFinance/></div>
-  if (route === '/property-lease') return <div className="single-screen"><PropertyLease/></div>
-  if (route === '/space-lease') return <div className="single-screen"><SpaceLease/></div>
-  if (route === '/building') return <div className="single-screen"><BuildingDashboard/></div>
-  if (route === '/trust') return <div className="single-screen"><TrustCenter/></div>
-  if (route === '/inspection') return <div className="single-screen"><InspectionRequest/></div>
-  if (route === '/building-expenses') return <div className="single-screen"><BuildingExpenses/></div>
-  if (route === '/building-announcements') return <div className="single-screen"><BuildingAnnouncements/></div>
-  if (route === '/maintenance') return <div className="single-screen"><MaintenanceRequest/></div>
-  if (route === '/inspection-status') return <div className="single-screen"><InspectionStatus/></div>
-  if (route === '/verified-passport') return <div className="single-screen"><VerifiedPassport/></div>
-  if (route === '/marketplace') return <div className="single-screen"><MarketplaceSearch/></div>
-  if (route === '/listing') return <div className="single-screen"><ListingDetail/></div>
-  if (route === '/deal') return <div className="single-screen"><DealSummary/></div>
-  if (route === '/publish-listing') return <div className="single-screen"><PublishListing/></div>
-  if (route === '/negotiation') return <div className="single-screen"><NegotiationThread/></div>
-  if (route === '/contract-review') return <div className="single-screen"><ContractReview/></div>
-  if (route === '/secure-payment') return <div className="single-screen"><SecurePayment/></div>
-  if (route === '/notification-settings') return <div className="single-screen"><NotificationSettings/></div>
-  if (route === '/notifications') return <div className="single-screen"><NotificationsScreen/></div>
-  if (route === '/account') return <div className="single-screen"><ProfileRoles/></div>
-  if (route === '/security') return <div className="single-screen"><SecurityDevices/></div>
-  if (route === '/admin-buildings') return <div className="single-screen admin-single"><AdminBuildings/></div>
-  if (route === '/admin-listings') return <div className="single-screen admin-single"><AdminListings/></div>
-  if (route === '/admin-deals') return <div className="single-screen admin-single"><AdminDeals/></div>
-  if (route === '/admin-trust') return <div className="single-screen admin-single"><AdminTrustQueue/></div>
-  if (route === '/admin-inspectors') return <div className="single-screen admin-single"><AdminInspectors/></div>
-  if (route === '/admin-payments') return <div className="single-screen admin-single"><AdminPayments/></div>
-  if (route === '/admin-support') return <div className="single-screen admin-single"><AdminSupport/></div>
-  if (route === '/admin-reports') return <div className="single-screen admin-single"><AdminReports/></div>
-  if (route === '/admin-flags') return <div className="single-screen admin-single"><AdminFeatureFlags/></div>
-  if (route === '/admin-security') return <div className="single-screen admin-single"><AdminSecurityAudit/></div>
-  if (route === '/inspector-spaces') return <div className="single-screen"><InspectorSpaceVerification/></div>
-  if (route === '/inspector-evidence') return <div className="single-screen"><InspectorDocumentEvidence/></div>
-  if (route === '/inspector') return <div className="single-screen"><InspectorAssignments/></div>
+  const [hash, setHash] = useState(() => window.location.hash || '#/design')
+
+  useEffect(() => {
+    const onHashChange = () => setHash(window.location.hash || '#/design')
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+
+  const route = normalizeRoute(hash)
+  const prototype = isPrototypeRoute(hash)
+  const mobile = (screen:ReactNode) => prototype
+    ? <PrototypeShell>{screen}</PrototypeShell>
+    : <div className="single-screen">{screen}</div>
+  const admin = (screen:ReactNode) => prototype
+    ? <PrototypeShell admin>{screen}</PrototypeShell>
+    : <div className="single-screen admin-single">{screen}</div>
+
+  if (route === '/splash') return mobile(<Splash/>)
+  if (route === '/login') return mobile(<Login/>)
+  if (route === '/otp') return mobile(<Otp/>)
+  if (route === '/home') return mobile(<HomeScreen/>)
+  if (route === '/portfolio') return mobile(<PortfolioOverview/>)
+  if (route === '/property') return mobile(<PropertyDetail/>)
+  if (route === '/passport') return mobile(<PropertyPassport/>)
+  if (route === '/spaces') return mobile(<SpacesOverview/>)
+  if (route === '/property-add') return mobile(<AddProperty/>)
+  if (route === '/property-documents') return mobile(<PropertyDocuments/>)
+  if (route === '/property-people') return mobile(<PropertyPeople/>)
+  if (route === '/property-finance') return mobile(<PropertyFinance/>)
+  if (route === '/property-lease') return mobile(<PropertyLease/>)
+  if (route === '/space-lease') return mobile(<SpaceLease/>)
+  if (route === '/building') return mobile(<BuildingDashboard/>)
+  if (route === '/trust') return mobile(<TrustCenter/>)
+  if (route === '/inspection') return mobile(<InspectionRequest/>)
+  if (route === '/building-expenses') return mobile(<BuildingExpenses/>)
+  if (route === '/building-announcements') return mobile(<BuildingAnnouncements/>)
+  if (route === '/maintenance') return mobile(<MaintenanceRequest/>)
+  if (route === '/inspection-status') return mobile(<InspectionStatus/>)
+  if (route === '/verified-passport') return mobile(<VerifiedPassport/>)
+  if (route === '/marketplace') return mobile(<MarketplaceSearch/>)
+  if (route === '/listing') return mobile(<ListingDetail/>)
+  if (route === '/deal') return mobile(<DealSummary/>)
+  if (route === '/publish-listing') return mobile(<PublishListing/>)
+  if (route === '/negotiation') return mobile(<NegotiationThread/>)
+  if (route === '/contract-review') return mobile(<ContractReview/>)
+  if (route === '/secure-payment') return mobile(<SecurePayment/>)
+  if (route === '/notification-settings') return mobile(<NotificationSettings/>)
+  if (route === '/notifications') return mobile(<NotificationsScreen/>)
+  if (route === '/messages') return mobile(<MessagesScreen/>)
+  if (route === '/account') return mobile(<ProfileRoles/>)
+  if (route === '/security') return mobile(<SecurityDevices/>)
+  if (route === '/inspector-spaces') return mobile(<InspectorSpaceVerification/>)
+  if (route === '/inspector-evidence') return mobile(<InspectorDocumentEvidence/>)
+  if (route === '/inspector') return mobile(<InspectorAssignments/>)
+
+  if (route === '/admin') return admin(<AdminDashboard/>)
+  if (route === '/admin-users') return admin(<UsersManagement/>)
+  if (route === '/admin-properties') return admin(<PropertyManagement/>)
+  if (route === '/admin-buildings') return admin(<AdminBuildings/>)
+  if (route === '/admin-listings') return admin(<AdminListings/>)
+  if (route === '/admin-deals') return admin(<AdminDeals/>)
+  if (route === '/admin-trust') return admin(<AdminTrustQueue/>)
+  if (route === '/admin-inspectors') return admin(<AdminInspectors/>)
+  if (route === '/admin-payments') return admin(<AdminPayments/>)
+  if (route === '/admin-support') return admin(<AdminSupport/>)
+  if (route === '/admin-reports') return admin(<AdminReports/>)
+  if (route === '/admin-flags') return admin(<AdminFeatureFlags/>)
+  if (route === '/admin-security') return admin(<AdminSecurityAudit/>)
+
   return <ReviewBoard/>
 }
 
