@@ -534,6 +534,15 @@ function ReviewBoard() {
       <div><h1>مدیریت هوشمند املاک و ساختمان‌ها</h1><p>ساختاری · امن‌تر · ارزشمندتر</p></div>
       <div className="review-header-actions"><button className="prototype-launch" onClick={() => go('/splash')}>مشاهده پروتوتایپ تعاملی</button><Brand/></div>
     </header>
+    <div className="release-legend">
+      <div><strong>Build Priority</strong><span>کد کنار هر Screen ترتیب توسعه را نشان می‌دهد.</span></div>
+      <span className="legend-pill r1">R1 · Private Beta</span>
+      <span className="legend-pill r2">R2 · Trust</span>
+      <span className="legend-pill r3">R3 · Marketplace</span>
+      <span className="legend-pill r4">R4 · Transaction</span>
+      <span className="legend-pill r5">R5 · Growth</span>
+      <button onClick={()=>window.location.hash='/roadmap'}>جزئیات Roadmap</button>
+    </div>
     <DesignSystem/>
     <QualityGallery/>
     <div className="review-section-head"><div><span>Reference screens</span><h2>Mobile — Calm Premium</h2></div><small>RTL first · LTR ready</small></div>
