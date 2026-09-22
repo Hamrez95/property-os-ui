@@ -226,6 +226,111 @@ function PropertyManagement() {
   </AdminShell>
 }
 
+
+function PortfolioOverview() {
+  return <Phone title="سبد املاک">
+    <div className="portfolio-summary">
+      <div><span>ارزش تقریبی سبد</span><strong>۴۲.۸ میلیارد</strong><small>تومان</small></div>
+      <div className="portfolio-metrics"><span><b>۵</b> ملک</span><span><b>۳</b> اجاره‌شده</span><span><b>۱</b> خالی</span></div>
+    </div>
+    <div className="portfolio-toolbar"><div className="searchbox"><Search size={15}/><span>جستجو در سبد...</span></div><button className="icon-button"><Plus size={16}/></button></div>
+    <div className="chips portfolio-chips"><span className="active">همه</span><span>مسکونی</span><span>تجاری</span><span>فضاها</span></div>
+    <section className="mobile-section portfolio-list">
+      <PropertyCard title="آپارتمان نیاوران" meta="۱۴۰ متر · طبقه ۴" status="اجاره‌شده" tone="verified"/>
+      <PropertyCard title="ویلای لواسان" meta="۴۲۰ متر · ۳ خواب" status="در فروش" tone="info"/>
+      <PropertyCard title="پارکینگ ونک" meta="P-21 · طبقه -۱" status="خالی" tone="neutral"/>
+      <PropertyCard title="تجاری جردن" meta="۸۵ متر · همکف" status="اجاره‌شده" tone="verified"/>
+    </section>
+  </Phone>
+}
+
+function PropertyPassport() {
+  return <Phone title="پاسپورت ملک">
+    <div className="passport-score">
+      <div className="score-ring"><strong>82</strong><span>/100</span></div>
+      <div><h3>اعتماد بالا</h3><p>بخش زیادی از اطلاعات این ملک دارای مدرک یا تأیید معتبر است.</p></div>
+    </div>
+    <div className="verification-matrix">
+      <div><span>هویت مالک</span><Status tone="verified">تأییدشده</Status></div>
+      <div><span>اختیار عرضه</span><Status tone="verified">تأییدشده</Status></div>
+      <div><span>متراژ</span><Status tone="info">سند پشتیبان</Status></div>
+      <div><span>پارکینگ</span><Status tone="verified">بازرس مشاهده کرد</Status></div>
+      <div><span>بازسازی</span><Status tone="warning">مدرک ناقص</Status></div>
+      <div><span>رسانه</span><Status tone="verified">توسط بازرس</Status></div>
+    </div>
+    <div className="passport-actions">
+      <button className="btn secondary"><FileCheck2 size={15}/>افزودن مدرک</button>
+      <button className="btn primary"><ShieldCheck size={15}/>افزایش سطح اعتماد</button>
+    </div>
+  </Phone>
+}
+
+function PropertyTimeline() {
+  const events = [
+    ['امروز','سرویس موتورخانه ثبت شد','ارائه‌دهنده تأییدشده','verified'],
+    ['۱۴۰۵/۰۵/۱۷','قرارداد اجاره تمدید شد','سند پشتیبان','info'],
+    ['۱۴۰۵/۰۳/۰۴','بازرسی دوره‌ای انجام شد','بازرس Property OS','verified'],
+    ['۱۴۰۴/۱۱/۲۳','تعویض پکیج ثبت شد','ثبت توسط مالک','neutral'],
+    ['۱۴۰۴/۰۸/۱۲','ملک به سبد اضافه شد','ثبت توسط مالک','neutral']
+  ] as const
+  return <Phone title="تاریخچه ملک">
+    <div className="timeline-filter"><span className="active">همه</span><span>قرارداد</span><span>تعمیرات</span><span>بازرسی</span></div>
+    <div className="timeline-list">
+      {events.map((e,i)=><div className="timeline-item" key={i}>
+        <div className={'timeline-dot '+e[3]} />
+        <div className="timeline-copy"><span>{e[0]}</span><strong>{e[1]}</strong><small>{e[2]}</small></div>
+      </div>)}
+    </div>
+  </Phone>
+}
+
+function SpacesOverview() {
+  return <Phone title="فضاها و متعلقات">
+    <div className="spaces-hero"><div><strong>۳ فضای مستقل</strong><span>هر فضا می‌تواند lifecycle اجاره و تاریخچه مستقل داشته باشد.</span></div><button className="icon-button"><Plus size={16}/></button></div>
+    <div className="space-card">
+      <div className="space-icon"><Home size={18}/></div><div><strong>واحد مسکونی ۴</strong><span>۱۴۰ متر · طبقه ۴</span></div><Status tone="verified">اشغال</Status>
+    </div>
+    <div className="space-card">
+      <div className="space-icon"><KeyRound size={18}/></div><div><strong>پارکینگ P-21</strong><span>طبقه -۱ · دسترسی مستقل</span></div><Status tone="neutral">خالی</Status>
+    </div>
+    <div className="space-card">
+      <div className="space-icon"><Building2 size={18}/></div><div><strong>انباری A4</strong><span>۶ متر · زیرزمین</span></div><Status tone="warning">رزرو</Status>
+    </div>
+    <div className="space-rule"><ShieldCheck size={17}/><div><strong>Scope-aware</strong><span>اجاره یا آگهی می‌تواند کل ملک، یک فضا یا Bundle چند فضا را هدف بگیرد.</span></div></div>
+  </Phone>
+}
+
+function SpaceDetail() {
+  return <Phone title="پارکینگ P-21">
+    <div className="space-detail-visual"><div className="parking-mark">P21</div></div>
+    <div className="space-detail-title"><div><h2>پارکینگ P-21</h2><p>ساختمان نیاوران · طبقه -۱</p></div><Status tone="neutral">خالی</Status></div>
+    <div className="space-facts"><div><span>نوع حق</span><strong>اختصاصی</strong></div><div><span>دسترسی</span><strong>ریموت</strong></div><div><span>آخرین بررسی</span><strong>۲۱ روز قبل</strong></div></div>
+    <div className="detail-panel">
+      <div className="panel-head"><strong>Trust</strong><Status tone="info">Document-backed</Status></div>
+      <div className="kv"><span>وجود فیزیکی</span><b>تأیید بازرس</b></div>
+      <div className="kv"><span>شماره / موقعیت</span><b>P-21 / B1</b></div>
+      <div className="kv"><span>حق استفاده</span><b>سند پشتیبان</b></div>
+    </div>
+    <div className="detail-actions"><button className="btn secondary">ویرایش</button><button className="btn primary">اجاره این فضا</button></div>
+  </Phone>
+}
+
+function BundleBuilder() {
+  const rows = [
+    ['واحد مسکونی ۴','۱۴۰ متر','selected'],
+    ['پارکینگ P-21','طبقه -۱','selected'],
+    ['انباری A4','۶ متر','']
+  ]
+  return <Phone title="ساخت Bundle">
+    <div className="bundle-intro"><h3>موضوع قرارداد را انتخاب کنید</h3><p>یک یا چند Space را برای آگهی یا قرارداد مشترک انتخاب کنید.</p></div>
+    <div className="bundle-list">{rows.map((r,i)=><div className={'bundle-row '+r[2]} key={i}>
+      <div className="check-box">{r[2] ? '✓' : ''}</div><div><strong>{r[0]}</strong><span>{r[1]}</span></div>
+    </div>)}</div>
+    <div className="bundle-summary"><span>Bundle فعلی</span><strong>واحد ۴ + پارکینگ P-21</strong><small>۲ فضای انتخاب‌شده</small></div>
+    <button className="btn primary bundle-cta">ادامه برای شرایط اجاره</button>
+  </Phone>
+}
+
 function DesignSystem() {
   const colors = [
     ['Primary','#13233F'],['Action','#315EFB'],['Success','#12A47A'],['Warning','#F59E0B'],['Error','#E5484D'],
@@ -251,6 +356,15 @@ function ReviewBoard() {
       <div className="screen-wrap"><PropertyDetail/><label>5. Property Detail</label></div>
       <div className="screen-wrap"><MyCity/><label>6. My City</label></div>
     </div>
+    <div className="review-section-head flow-heading"><div><span>Domain-driven mobile</span><h2>Portfolio / Property / Spaces</h2></div><small>Property → Structure → Space → History</small></div>
+    <div className="mobile-grid">
+      <div className="screen-wrap"><PortfolioOverview/><label>10. Portfolio</label></div>
+      <div className="screen-wrap"><PropertyPassport/><label>11. Property Passport</label></div>
+      <div className="screen-wrap"><PropertyTimeline/><label>12. Property Timeline</label></div>
+      <div className="screen-wrap"><SpacesOverview/><label>13. Spaces</label></div>
+      <div className="screen-wrap"><SpaceDetail/><label>14. Space Detail</label></div>
+      <div className="screen-wrap"><BundleBuilder/><label>15. Bundle Builder</label></div>
+    </div>
     <div className="review-section-head admin-heading"><div><span>Operations</span><h2>Admin — Calm Premium</h2></div><small>Dense · Clear · Trustworthy</small></div>
     <div className="admin-grid">
       <div className="screen-wrap admin-wrap"><AdminDashboard/><label>7. Admin Dashboard</label></div>
@@ -265,6 +379,9 @@ function App() {
   if (route === '/splash') return <div className="single-screen"><Splash/></div>
   if (route === '/login') return <div className="single-screen"><Login/></div>
   if (route === '/home') return <div className="single-screen"><HomeScreen/></div>
+  if (route === '/portfolio') return <div className="single-screen"><PortfolioOverview/></div>
+  if (route === '/passport') return <div className="single-screen"><PropertyPassport/></div>
+  if (route === '/spaces') return <div className="single-screen"><SpacesOverview/></div>
   return <ReviewBoard/>
 }
 
