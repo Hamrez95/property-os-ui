@@ -5,6 +5,7 @@ import {
   ArrowLeft, House, Menu, Settings, Landmark, ClipboardCheck
 } from 'lucide-react'
 import { AdminShell, Brand, Phone, PropertyCard, Stat, Status, type Tone } from './ui'
+import { AnalyticsAdmin, AuditAdmin, BuildingsAdmin, ComplianceAdmin, DealsAdmin, FeatureFlagsAdmin, InspectorsAdmin, ListingsAdmin, MessagingAdmin, PaymentsAdmin, ServicePartnersAdmin, SupportAdmin, TrustQueueAdmin } from './AdminScreens'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -565,6 +566,22 @@ function ReviewBoard() {
       <div className="screen-wrap admin-wrap"><UsersManagement/><label>8. Users Management</label></div>
       <div className="screen-wrap admin-wrap"><PropertyManagement/><label>9. Property Management</label></div>
     </div>
+    <div className="review-section-head admin-subheading"><div><span>Admin modules</span><h2>Operations / Trust / Governance</h2></div><small>Reusable admin shell</small></div>
+    <div className="admin-grid">
+      <div className="screen-wrap admin-wrap"><BuildingsAdmin/><label>42. Buildings</label></div>
+      <div className="screen-wrap admin-wrap"><ListingsAdmin/><label>43. Listings</label></div>
+      <div className="screen-wrap admin-wrap"><DealsAdmin/><label>44. Deals</label></div>
+      <div className="screen-wrap admin-wrap"><TrustQueueAdmin/><label>45. Trust Queue</label></div>
+      <div className="screen-wrap admin-wrap"><InspectorsAdmin/><label>46. Inspectors</label></div>
+      <div className="screen-wrap admin-wrap"><PaymentsAdmin/><label>47. Payments</label></div>
+      <div className="screen-wrap admin-wrap"><MessagingAdmin/><label>48. Communications</label></div>
+      <div className="screen-wrap admin-wrap"><SupportAdmin/><label>49. Support</label></div>
+      <div className="screen-wrap admin-wrap"><ComplianceAdmin/><label>50. Compliance</label></div>
+      <div className="screen-wrap admin-wrap"><FeatureFlagsAdmin/><label>51. Feature Flags</label></div>
+      <div className="screen-wrap admin-wrap"><AuditAdmin/><label>52. Security & Audit</label></div>
+      <div className="screen-wrap admin-wrap"><ServicePartnersAdmin/><label>53. Service Partners</label></div>
+      <div className="screen-wrap admin-wrap"><AnalyticsAdmin/><label>54. Analytics</label></div>
+    </div>
   </div>
 }
 
@@ -585,6 +602,9 @@ function App() {
   if (route === '/notifications') return <div className="single-screen"><NotificationsScreen/></div>
   if (route === '/account') return <div className="single-screen"><ProfileRoles/></div>
   if (route === '/security') return <div className="single-screen"><SecurityDevices/></div>
+  if (route === '/admin/buildings') return <div className="single-admin"><BuildingsAdmin/></div>
+  if (route === '/admin/trust') return <div className="single-admin"><TrustQueueAdmin/></div>
+  if (route === '/admin/analytics') return <div className="single-admin"><AnalyticsAdmin/></div>
   return <ReviewBoard/>
 }
 
