@@ -13,7 +13,7 @@ import { PublishListing, NegotiationThread, ContractReview, SecurePayment, Notif
 import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PROTOTYPE_SCREENS, type PrototypeGroup } from './navigation'
-import { ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
+import { ProjectBenchmarkPage, ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
 import { RelationshipPortfolio, RoleAwareHome } from './RoleAwareScreens'
 import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
 
@@ -683,6 +683,7 @@ function App() {
 
   if (route === '/guide') return <ProjectGuidePage/>
   if (route === '/roadmap') return <ProjectRoadmapPage/>
+  if (route === '/benchmark') return <ProjectBenchmarkPage/>
   if (route === '/operations') return <ProjectOperationsPage/>
   if (route === '/design') return <ReviewBoard/>
 

@@ -1,8 +1,8 @@
 import { useState, type ReactNode } from 'react'
 import {
-  Activity, ArrowUpLeft, Blocks, BookOpen, Boxes, CheckCircle2, ChevronLeft,
+  Activity, ArrowUpLeft, Blocks, BookOpen, Boxes, CalendarDays, CheckCircle2, ChevronLeft,
   CircleDot, Cloud, Code2, Database, FileCode2, FileText, Flag, GitBranch,
-  Globe2, HardDrive, KeyRound, Landmark, LayoutDashboard, LockKeyhole, Menu,
+  Globe2, HardDrive, KeyRound, Landmark, LayoutDashboard, LockKeyhole, Menu, Search,
   MessageSquareText, Network, PackageCheck, PanelTop, Rocket, ServerCog,
   ShieldCheck, Smartphone, Sparkles, Users, WalletCards, X, Zap
 } from 'lucide-react'
@@ -13,6 +13,7 @@ type DecisionState = 'locked' | 'working' | 'open'
 const nav = [
   { path: '/guide', label: 'راهنمای توسعه', icon: BookOpen },
   { path: '/roadmap', label: 'نقشه راه', icon: Flag },
+  { path: '/benchmark', label: 'Benchmark بازار', icon: Search },
   { path: '/operations', label: 'آمادگی لانچ', icon: Rocket },
   { path: '/design', label: 'Design Board', icon: LayoutDashboard },
 ]
@@ -30,7 +31,7 @@ function StatusPill({state}:{state:DecisionState}) {
   return <span className={'hub-status '+state}><b>{map[state][0]}</b><small>{map[state][1]}</small></span>
 }
 
-export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'operations'|'design'}) {
+export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'benchmark'|'operations'|'design'}) {
   const [open,setOpen]=useState(false)
   return <header className="project-site-header" dir="rtl">
     <div className="project-site-header-inner">
@@ -57,7 +58,7 @@ export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'operations
   </header>
 }
 
-function HubPage({active,children}:{active:'guide'|'roadmap'|'operations'|'design',children:ReactNode}) {
+function HubPage({active,children}:{active:'guide'|'roadmap'|'benchmark'|'operations'|'design',children:ReactNode}) {
   return <div className="hub-page" dir="rtl"><ProjectSiteHeader active={active}/><main className="hub-main">{children}</main></div>
 }
 
@@ -177,6 +178,81 @@ const r5 = ['My City','Advanced Analytics','Service Network','Automation','Recom
 
 function RoadmapList({start,items,release}:{start:number,items:string[],release:string}) {
   return <div className="roadmap-list">{items.map((item,i)=><div key={item}><span className="priority-no">{String(start+i).padStart(2,'0')}</span><span className="release-code">{release}</span><strong>{item}</strong><small>{start+i<=20?'Beta critical':release==='R2'?'Trust milestone':release==='R3'?'Marketplace milestone':release==='R4'?'Regulated / gated':'Growth'}</small></div>)}</div>
+}
+
+const benchmarkSources = [
+  {name:'Divar',group:'Marketplace',signal:'پوشش آگهی‌های عمومی ایران',learn:'متراژ، سن بنا، اتاق، طبقه، پارکینگ/انباری/آسانسور، قیمت/رهن/اجاره و توضیحات آزاد؛ باید از Listing جدا بماند.'},
+  {name:'Sheypoor',group:'Marketplace',signal:'آگهی ملک و زمین',learn:'ابعاد زمین، عرض بر/گذر، سند، امکانات مسکونی و وضعیت سکونت در داده‌های آگهی مهم‌اند.'},
+  {name:'Kilid',group:'Property Search',signal:'جست‌وجوی تخصصی ملک',learn:'فیلتر منطقه/محله/متراژ/سن بنا، نقشه، تخمین قیمت، روند قیمت و draw-on-map ایده‌های مناسب لایه Marketplace/Analytics هستند.'},
+  {name:'Otaghak',group:'Short Stay',signal:'مهمان + میزبان',learn:'نوع اقامتگاه، قیمت/امکانات/موقعیت/نظر، رزرو آنی، تقویم قیمت، تراکنش، کیف پول و مدیریت درخواست برای Host profile.'},
+  {name:'Shab',group:'Short Stay',signal:'رزرو روزانه',learn:'ساحلی/استخردار/جنگلی/دربست/مناسب مراسم، متراژ، اتاق، دسترسی محلی، مدارک لازم، چت قبل پرداخت و تقویم پر/خالی.'},
+  {name:'Jabama',group:'Short Stay',signal:'رزرو + امکانات',learn:'استخر/جکوزی/سرگرمی، آشپزخانه، اینترنت، پارکینگ، گرمایش/سرمایش، دسترس‌پذیری، حیوان خانگی، دورهمی، امتیاز و قیمت پویا.'},
+  {name:'Jajiga',group:'Short Stay',signal:'نقشه + فیلتر اقامتگاه',learn:'جست‌وجو روی نقشه/اطراف من و فیلتر ظرفیت، نوع اقامتگاه، اجاره‌بها و اقلیم؛ کیف پول و تراکنش هم در لایه Hosting مفید است.'},
+]
+
+const fieldMatrix = [
+  {type:'آپارتمان',core:'متراژ، اتاق، طبقه/کل طبقات، سال ساخت، جهت/نور، واحد در طبقه، آسانسور، بالکن، گرمایش/سرمایش',special:'پارکینگ و انباری به‌صورت Space، تعداد واحد، لابی/نگهبانی، بازسازی، پنجره/کف/کابینت',market:'فروش/رهن/اجاره، قیمت کل/متری، ودیعه/اجاره، تخلیه، زمان بازدید'},
+  {type:'ویلا / خانه',core:'زمین، زیربنا، طبقات، خواب/مستر، سرویس، حیاط/باغ، پارکینگ، انشعابات، سازه',special:'استخر، جکوزی، تراس/روف، آلاچیق، BBQ، حریم خصوصی، مسیر دسترسی، پایان‌کار',market:'فروش/اجاره بلندمدت؛ Short‑Stay به‌صورت Offering جدا: ظرفیت، تخت، ورود/خروج، تقویم، قوانین، رزرو آنی'},
+  {type:'تجاری',core:'متراژ، کاربری، طبقه، عرض بر/ویترین، دهنه، ارتفاع سقف، انبار، سرویس، برق',special:'مالکیت/سرقفلی/حق کسب، امکان تابلو، بارگیری، پارکینگ، دسترسی خیابانی',market:'فروش/اجاره/حق؛ ودیعه و اجاره، قیمت مالکیت، کاربری پیشنهادی به‌عنوان Claim'},
+  {type:'اداری',core:'متراژ، اتاق، طبقه، کاربری، آسانسور، پارکینگ، انباری، آبدارخانه، HVAC',special:'اتاق جلسه، لابی/پذیرش، شبکه/فیبر، امنیت، ساعات دسترسی، پارکینگ مراجع',market:'فروش/اجاره، موقعیت اداری، قیمت/اجاره، suitability به‌عنوان Claim'},
+  {type:'زمین',core:'مساحت، ابعاد، بر، جهت، تعداد بر، عرض گذر، شکل/شیب، کاربری ثبت‌شده، دسترسی',special:'آب/برق/گاز، دیوارکشی، مختصات، داخل/خارج محدوده، سند و سهم دانگ',market:'قیمت کل/متری؛ تراکم، سطح اشغال، عقب‌نشینی و ساخت‌پذیری فقط با Evidence/استعلام'},
+  {type:'کلنگی',core:'مساحت زمین، بنای فعلی، سن/وضعیت سازه، طبقات/واحد، بر، گذر، تعداد بر، سکونت',special:'انشعابات، پایان‌کار قدیم، دسترسی تخریب، سند/سهم، وضعیت تخلیه',market:'فروش کلنگی، قیمت زمین/متر، مشارکت در ساخت = Offering؛ پتانسیل ساخت = Claim'},
+]
+
+const layerModel = [
+  ['Property Record','واقعیت نسبتاً پایدار','ابعاد، سازه، فضاها، انشعابات، موقعیت، مدارک'],
+  ['Relationship','چه کسی چه نقشی دارد؟','Owner / Tenant / Manager + Scope + Time + Share'],
+  ['Listing Projection','چطور عرضه شده؟','فروش/اجاره، قیمت، عنوان، عکس منتخب، شرایط بازدید'],
+  ['Short‑Stay Offering','چطور میزبانی می‌شود؟','تقویم، قیمت شب، ظرفیت، قوانین، رزرو آنی، امتیاز'],
+  ['Claim + Evidence','چه چیزی هنوز نیاز به اثبات دارد؟','تراکم، عقب‌نشینی، ساخت‌پذیری، مجوز، verification'],
+]
+
+export function ProjectBenchmarkPage() {
+  return <HubPage active="benchmark">
+    <section className="hub-subhero">
+      <span>IRAN MARKET BENCHMARK · 2026-09-22</span>
+      <h1>از بازار ایده می‌گیریم، ولی Property OS را Listing-first نمی‌کنیم</h1>
+      <p>این صفحه پوشش فیلد و الگوهای محصول را از بازارهای عمومی ملک و سرویس‌های اقامت کوتاه‌مدت جمع می‌کند. هدف کپی UI نیست؛ هدف این است که قبل از مدل دیتابیس، چیزی مهم از قلم نیفتد.</p>
+    </section>
+
+    <section className="benchmark-principle">
+      <ShieldCheck size={20}/><div><strong>اصل طراحی Domain</strong><span>Property Record هسته است. Listing، Short‑Stay و Marketplace فقط projection / operation روی همان دارایی‌اند.</span></div>
+    </section>
+
+    <SectionHead eyebrow="01 · SOURCES" title="چه چیزهایی از هر سرویس ارزش یادگیری دارد؟" desc="مشاهده‌ها به عنوان research signal ثبت می‌شوند؛ نه الزام محصول و نه کپی مستقیم."/>
+    <section className="benchmark-source-grid">
+      {benchmarkSources.map(source=><article key={source.name}><header><strong>{source.name}</strong><span>{source.group}</span></header><b>{source.signal}</b><p>{source.learn}</p></article>)}
+    </section>
+
+    <SectionHead eyebrow="02 · DATA LAYERS" title="فیلدها را در یک جدول غول‌پیکر نریزیم" desc="بزرگ‌ترین نتیجه benchmark همین separation است؛ داده فیزیکی ملک با داده آگهی و رزرو یک چیز نیست."/>
+    <section className="layer-model">
+      {layerModel.map(([name,why,examples],i)=><article key={name}><span>{String(i+1).padStart(2,'0')}</span><div><strong>{name}</strong><b>{why}</b><p>{examples}</p></div></article>)}
+    </section>
+
+    <SectionHead eyebrow="03 · PROPERTY FIELD MATRIX" title="پوشش پیشنهادی برای انواع ملک و اراضی" desc="این ماتریس ورودی مستقیم طراحی فرم، OpenAPI و مدل دیتابیس production خواهد بود."/>
+    <section className="field-matrix">
+      <div className="field-matrix-row header"><span>نوع</span><span>Core Property</span><span>ویژگی تخصصی</span><span>Projection / Offering</span></div>
+      {fieldMatrix.map(row=><div className="field-matrix-row" key={row.type}><strong>{row.type}</strong><p>{row.core}</p><p>{row.special}</p><p>{row.market}</p></div>)}
+    </section>
+
+    <SectionHead eyebrow="04 · VILLA / SHORT-STAY" title="ویلا دو شخصیت دارد: Property و Hospitality" desc="اتاقک، شب، جاباما و جاجیگا نشان می‌دهند ظرفیت و قوانین رزرو مهم‌اند؛ اما نباید Property Record را آلوده کنند."/>
+    <section className="hospitality-model">
+      <article><Landmark size={20}/><strong>Villa Property</strong><p>زمین، زیربنا، طبقات، اتاق، حیاط، استخر، انشعابات، پارکینگ، سند، پایان‌کار و مالکیت.</p></article>
+      <article><CalendarDays size={20}/><strong>Short‑Stay Offering</strong><p>ظرفیت استاندارد/حداکثر، تخت و تشک، ورود/خروج، حداقل اقامت، قیمت روزانه، تقویم، رزرو آنی و قوانین.</p></article>
+      <article><Sparkles size={20}/><strong>Experience & Amenities</strong><p>استخر آبگرم/روباز، جکوزی، BBQ، آلاچیق، سرگرمی، اینترنت، نزدیکی به ساحل/جنگل و دسترس‌پذیری.</p></article>
+      <article><ShieldCheck size={20}/><strong>Trust</strong><p>تصاویر واقعی، نظافت، هویت میزبان، مدارک، امتیاز مهمان، claims و evidence تاریخ‌دار.</p></article>
+    </section>
+
+    <SectionHead eyebrow="05 · IDEAS BACKLOG" title="ایده‌هایی که ارزش نگه‌داشتن دارند" desc="این‌ها به ترتیب فاز وارد scope می‌شوند؛ قرار نیست R1 را سنگین کنند."/>
+    <section className="benchmark-ideas">
+      <article><span>R3/R5</span><strong>Map draw + heatmap</strong><p>الهام از Kilid برای جست‌وجوی محدوده و درک بازار؛ مناسب Marketplace/Analytics.</p></article>
+      <article><span>R3</span><strong>Comparable listings</strong><p>مقایسه Property با Listingهای مشابه بدون تبدیل estimate به fact رسمی.</p></article>
+      <article><span>R5</span><strong>Owner intelligence</strong><p>روند ارزش، occupancy، درآمد و هزینه در سطح Portfolio.</p></article>
+      <article><span>R5</span><strong>Host calendar</strong><p>قیمت روزانه، پر/خالی، رزرو آنی و تراکنش برای ویلا/اقامت کوتاه‌مدت.</p></article>
+      <article><span>R2/R3</span><strong>Evidence-first badges</strong><p>«سندی»، «بازرسی‌شده»، «Host claim» و «Official» به‌جای یک تیک سبز مبهم.</p></article>
+      <article><span>R1</span><strong>Context-aware forms</strong><p>نوع ملک و Role کاربر تعیین کند کدام فیلدها و عملیات واقعاً لازم‌اند.</p></article>
+    </section>
+  </HubPage>
 }
 
 export function ProjectRoadmapPage() {
