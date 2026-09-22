@@ -12,6 +12,7 @@ import './design-system/inspector.css'
 import './design-system/admin-extended.css'
 import './design-system/qa.css'
 import './design-system/interactive.css'
+import './design-system/project-hub.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode><App /></React.StrictMode>
