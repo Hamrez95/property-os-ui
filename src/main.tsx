@@ -11,6 +11,7 @@ import './design-system/marketplace-account.css'
 import './design-system/inspector.css'
 import './design-system/admin-extended.css'
 import './design-system/qa.css'
+import './design-system/interactive.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode><App /></React.StrictMode>
