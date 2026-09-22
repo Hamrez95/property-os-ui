@@ -99,3 +99,208 @@
   background-repeat: no-repeat;
   background-attachment: local, local, scroll, scroll;
 }
+
+
+/* Purpose-specific flows that replace accidental generic-chat navigation. */
+.announcement-form,
+.support-form,
+.support-reply {
+  margin: 0 12px 10px;
+  display: grid;
+  gap: 8px;
+}
+.announcement-form label,
+.support-form label,
+.support-reply {
+  display: grid;
+  gap: 5px;
+}
+.announcement-form label > span,
+.support-form label > span,
+.support-reply > label {
+  font-size: 7px;
+  color: var(--color-text-secondary);
+  font-weight: 700;
+}
+.announcement-form input,
+.announcement-form textarea,
+.announcement-form select,
+.support-form textarea,
+.support-form select,
+.support-reply textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: #fff;
+  padding: 9px;
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 7px;
+  outline: none;
+}
+.announcement-form textarea,
+.support-form textarea,
+.support-reply textarea {
+  min-height: 82px;
+  resize: vertical;
+}
+.announcement-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.announcement-submit {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 6px;
+  margin: 0 12px 14px;
+}
+.announcement-submit .btn {
+  width: 100%;
+  font-size: 7px;
+}
+.support-ticket-hero,
+.support-new-intro {
+  margin: 9px 12px 10px;
+  padding: 11px;
+  border: 1px solid #D8E4FF;
+  border-radius: 12px;
+  background: #F8FAFF;
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  color: var(--color-action);
+}
+.support-new-intro { grid-template-columns: 28px 1fr; }
+.support-ticket-hero > div,
+.support-new-intro > div {
+  display: flex;
+  flex-direction: column;
+}
+.support-ticket-hero span,
+.support-new-intro span,
+.support-ticket-hero small {
+  font-size: 5px;
+  color: var(--color-text-secondary);
+}
+.support-ticket-hero strong,
+.support-new-intro strong {
+  font-size: 8px;
+  color: var(--pos-navy-900);
+}
+.support-thread {
+  margin: 0 12px 10px;
+  display: grid;
+  gap: 6px;
+}
+.support-event {
+  border-radius: 10px;
+  padding: 9px;
+  border: 1px solid var(--color-border);
+  background: #fff;
+}
+.support-event.user {
+  background: #F5F8FF;
+  border-color: #D8E4FF;
+}
+.support-event span {
+  font-size: 5px;
+  color: var(--color-text-secondary);
+}
+.support-event p {
+  font-size: 7px;
+  line-height: 1.75;
+  margin: 4px 0 0;
+  color: var(--color-text-primary);
+}
+.support-ticket-meta {
+  margin: 0 12px 10px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 5px;
+}
+.support-ticket-meta > div {
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  padding: 7px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.support-ticket-meta span {
+  font-size: 5px;
+  color: var(--color-text-secondary);
+}
+.support-ticket-meta strong {
+  font-size: 6px;
+}
+.support-upload {
+  min-height: 42px;
+  border: 1px dashed #AAB8CC;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  color: var(--color-action);
+  font-size: 7px;
+  background: #FBFCFE;
+}
+
+/* Admin support detail stays in the admin context. */
+.admin-support-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0,1.4fr) minmax(280px,.6fr);
+  gap: 16px;
+}
+.admin-support-thread,
+.admin-support-meta {
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: #fff;
+  padding: 14px;
+}
+.admin-support-thread {
+  display: grid;
+  gap: 10px;
+}
+.admin-support-event {
+  border: 1px solid #E9EDF2;
+  border-radius: 11px;
+  padding: 11px;
+}
+.admin-support-event.customer { background: #F8FAFF; }
+.admin-support-event.internal { background: #FFF9EE; }
+.admin-support-event.agent { background: #F5FBF8; }
+.admin-support-event span {
+  display: block;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+}
+.admin-support-event strong { font-size: 13px; }
+.admin-support-event p {
+  margin: 5px 0 0;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+}
+.admin-support-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.admin-support-meta > div {
+  padding: 9px;
+  border-radius: 9px;
+  background: #F8FAFC;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.admin-support-meta span { font-size: 10px; color: var(--color-text-secondary); }
+.admin-support-meta strong { font-size: 11px; }
+.admin-support-meta .btn { width: 100%; }
+
+@media (max-width: 900px) {
+  .admin-support-detail-grid { grid-template-columns: 1fr; }
+}
