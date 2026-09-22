@@ -25,7 +25,7 @@ export function Status({ tone='neutral', children }: { tone?: Tone, children: Re
   </span>
 }
 
-export function Phone({ title, children, active='home' }: { title?: string, children: ReactNode, active?: string }) {
+export function Phone({ title, children, active='auto' }: { title?: string, children: ReactNode, active?: string }) {
   return <div className="phone" dir="rtl" lang="fa">
     <div className="phone-status" aria-hidden="true"><span>9:41</span><span>▮▮◒</span></div>
     {title && <header className="mobile-header"><button className="header-back" onClick={() => goBack()} aria-label="بازگشت"><ChevronLeft size={20}/></button><strong>{title}</strong><span className="header-spacer"/></header>}
@@ -34,9 +34,16 @@ export function Phone({ title, children, active='home' }: { title?: string, chil
   </div>
 }
 
-export function BottomNav({ active='home' }: { active?: string }) {
+export function BottomNav({ active='auto' }: { active?: string }) {
+  const route = window.location.hash.replace(/^#\/app/,'').replace(/^#/,'')
+  const inferred = route==='/home'||route==='/city' ? 'home'
+    : route.startsWith('/property')||route==='/portfolio'||route==='/spaces'||route==='/space'||route==='/bundle'||route.startsWith('/building')||route==='/charges'||route==='/maintenance'||route==='/trust'||route.startsWith('/inspection')||route==='/verified-passport' ? 'properties'
+    : route==='/messages'||route==='/notifications' ? 'messages'
+    : route==='/account'||route==='/subscription'||route==='/security'||route==='/support'||route==='/notification-settings' ? 'account'
+    : 'home'
+  const current = active==='auto' ? inferred : active
   const items = [
-    ['home', Home, 'خانه', '/home'], ['search', Search, 'جستجو', '/marketplace'], ['add', Plus, 'افزودن', '/property-add'],
+    ['home', Home, 'خانه', '/home'], ['properties', Building2, 'املاک', '/portfolio'], ['add', Plus, 'افزودن', '/property-add'],
     ['messages', MessageSquare, 'پیام‌ها', '/messages'], ['account', UserRound, 'حساب', '/account']
   ] as const
   return <nav className="bottom-nav" aria-label="ناوبری اصلی">
@@ -44,9 +51,9 @@ export function BottomNav({ active='home' }: { active?: string }) {
       key={key}
       type="button"
       onClick={() => go(path)}
-      aria-current={active===key ? 'page' : undefined}
+      aria-current={current===key ? 'page' : undefined}
       aria-label={label}
-      className={'nav-item ' + (active===key ? 'active' : '') + (key==='add' ? ' add' : '')}>
+      className={'nav-item ' + (current===key ? 'active' : '') + (key==='add' ? ' add' : '')}>
       <span className="nav-icon" aria-hidden="true"><Icon size={17}/></span><span>{label}</span>
     </button>)}
   </nav>
