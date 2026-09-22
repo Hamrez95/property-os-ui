@@ -22,3 +22,5 @@ import './design-system/business-strategy.css'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode><App /></React.StrictMode>
 )
+
+import './design-system/prototype-shell.css'
