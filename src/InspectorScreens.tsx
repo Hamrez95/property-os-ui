@@ -3,14 +3,15 @@ import {
   Home, MapPin, MoreVertical, Search, ShieldCheck, Upload, UserRound, WalletCards, FileText, KeyRound
 } from 'lucide-react'
 import { Status } from './ui'
+import { go, goBack } from './navigation'
 
 export function InspectorPhone({title,children,active='tasks'}:{title?:string,children:React.ReactNode,active?:string}) {
-  const nav=[['tasks',ClipboardCheck,'ماموریت‌ها'],['capture',Camera,'ثبت'],['profile',UserRound,'حساب']] as const
+  const nav=[['tasks',ClipboardCheck,'ماموریت‌ها','/inspector'],['capture',Camera,'ثبت','/inspector-media'],['profile',UserRound,'حساب','/inspector-earnings']] as const
   return <div className="phone inspector-phone">
     <div className="phone-status"><span>9:41</span><span>▮▮◒</span></div>
-    {title && <div className="mobile-header inspector-header"><ChevronLeft size={20}/><strong>{title}</strong><span className="header-spacer"/></div>}
+    {title && <div className="mobile-header inspector-header"><button className="header-back" onClick={() => goBack('/inspector')} aria-label="بازگشت"><ChevronLeft size={20}/></button><strong>{title}</strong><span className="header-spacer"/></div>}
     <div className="phone-body">{children}</div>
-    <div className="inspector-nav">{nav.map(([key,Icon,label])=><div key={key} className={active===key?'active':''}><Icon size={17}/><span>{label}</span></div>)}</div>
+    <div className="inspector-nav">{nav.map(([key,Icon,label,path])=><button type="button" onClick={() => go(path)} key={key} className={active===key?'active':''}><Icon size={17}/><span>{label}</span></button>)}</div>
   </div>
 }
 
@@ -23,7 +24,7 @@ export function InspectorLogin() {
       <p>ماموریت‌ها، چک‌لیست و رسانه‌های تأییدشده را از اینجا مدیریت کنید.</p>
       <label>شماره موبایل</label>
       <div className="phone-input"><span>🇮🇷 +98</span><input defaultValue="912 345 6789"/></div>
-      <button className="btn primary">دریافت کد ورود</button>
+      <button className="btn primary" onClick={() => go('/inspector')}>دریافت کد ورود</button>
       <small>دسترسی فقط برای بازرسان تأییدشده فعال است.</small>
     </div>
   </div>
@@ -38,11 +39,11 @@ export function InspectorAssignments() {
   return <InspectorPhone title="ماموریت‌ها">
     <div className="inspector-summary"><div><span>امروز</span><strong>۳ ماموریت</strong></div><Status tone="verified">آنلاین</Status></div>
     <div className="messages-search"><Search size={15}/><span>جستجو در ماموریت‌ها...</span></div>
-    <div className="assignment-list">{items.map((x,i)=><div className="assignment-card" key={i}>
+    <div className="assignment-list">{items.map((x,i)=><button className="assignment-card interactive-card" onClick={() => go('/inspector-assignment')} key={i}>
       <div className="assignment-index">{i+1}</div>
       <div><strong>{x[0]}</strong><span><MapPin size={11}/>{x[1]}</span><small>{x[2]}</small></div>
       <Status tone={x[3] as any}>{i===0?'آماده':'برنامه‌ریزی‌شده'}</Status>
-    </div>)}</div>
+    </button>)}</div>
   </InspectorPhone>
 }
 
@@ -55,7 +56,7 @@ export function InspectorAssignmentDetail() {
     <div className="assignment-block"><h3>دامنه بررسی</h3><div>✓ واحد مسکونی ۴</div><div>✓ پارکینگ P-21</div><div>✓ انباری A4</div></div>
     <div className="assignment-block"><h3>هدف</h3><p>بررسی وضعیت قابل مشاهده، ثبت رسانه معتبر، تطبیق امکانات و capture کردن مدارک ارائه‌شده.</p></div>
     <div className="route-card"><MapPin size={18}/><div><strong>۱۲ دقیقه تا مقصد</strong><span>مسیر پیشنهادی از موقعیت فعلی</span></div><button>مسیریابی</button></div>
-    <button className="btn primary inspector-cta">شروع بازرسی</button>
+    <button className="btn primary inspector-cta" onClick={() => go('/inspector-checklist')}>شروع بازرسی</button>
   </InspectorPhone>
 }
 
@@ -66,9 +67,9 @@ export function InspectorChecklist() {
   ] as const
   return <InspectorPhone title="چک‌لیست بازرسی">
     <div className="check-progress"><div><span>پیشرفت</span><strong>۲ از ۶</strong></div><i><em/></i></div>
-    <div className="check-list">{rows.map((r,i)=><div className={'check-row '+r[1]} key={i}>
+    <div className="check-list">{rows.map((r,i)=><button className={'check-row '+r[1]} key={i} onClick={() => go(i===3?'/inspector-spaces':i===5?'/inspector-evidence':'/inspector-media')}>
       <div className="check-state">{r[1]==='done'?'✓':i+1}</div><span>{r[0]}</span><ChevronLeft size={16}/>
-    </div>)}</div>
+    </button>)}</div>
     <div className="inspector-note"><AlertTriangle size={15}/><span>موارد تخصصی سازه، برق و تأسیسات پنهان نیازمند کارشناس تخصصی هستند.</span></div>
   </InspectorPhone>
 }
@@ -85,7 +86,7 @@ export function InspectorSpaceVerification() {
       <div className="space-number">{i+1}</div><div><strong>{r[0]}</strong><span>{r[1]}</span></div><Status tone={r[2]}>{r[2]==='verified'?'تأیید شد':r[2]==='info'?'در حال بررسی':'نیاز به مدرک'}</Status>
     </div>)}</div>
     <div className="inspector-note"><ShieldCheck size={15}/><span>پارکینگ و انباری به‌عنوان Space مستقل بررسی می‌شوند؛ نتیجه با واحد مسکونی ادغام نمی‌شود.</span></div>
-    <button className="btn primary inspector-cta">ثبت نتیجه فضاها</button>
+    <button className="btn primary inspector-cta" onClick={() => go('/inspector-evidence')}>ثبت نتیجه فضاها</button>
   </InspectorPhone>
 }
 
@@ -100,7 +101,7 @@ export function InspectorDocumentEvidence() {
     <div className="evidence-doc-list">{docs.map((d,i)=><div className="evidence-doc-row" key={d[0]}>
       <div className="doc-index">{i+1}</div><div><strong>{d[0]}</strong><span>{d[1]}</span></div><Status tone={d[2]}>{d[2]==='verified'?'خوانا':d[2]==='info'?'ثبت شد':'تکمیل شود'}</Status>
     </div>)}</div>
-    <div className="evidence-capture-card"><Upload size={20}/><div><strong>ثبت مدرک جدید</strong><span>تصویر کامل، بدون crop و با نور کافی</span></div></div>
+    <button className="evidence-capture-card interactive-card" onClick={() => go('/inspector-media')}><Upload size={20}/><div><strong>ثبت مدرک جدید</strong><span>تصویر کامل، بدون crop و با نور کافی</span></div></button>
     <div className="capture-meta"><div><span>زمان</span><strong>16:52:08</strong></div><div><span>ماموریت</span><strong>INS-3281</strong></div><div><span>Audit</span><strong>فعال</strong></div></div>
   </InspectorPhone>
 }
@@ -114,6 +115,7 @@ export function InspectorMediaCapture() {
     </div>
     <div className="capture-meta"><div><span>موقعیت</span><strong>تأیید شد</strong></div><div><span>زمان</span><strong>16:42:18</strong></div><div><span>اصل فایل</span><strong>حفظ می‌شود</strong></div></div>
     <div className="capture-tips"><h3>راهنمای ثبت</h3><span>• نور کافی و کادر کامل</span><span>• بدون فیلتر یا ویرایش</span><span>• فضای خواسته‌شده را کامل پوشش دهید</span></div>
+    <button className="btn primary inspector-cta" onClick={() => go('/inspector-discrepancy')}>ادامه و بررسی مغایرت</button>
   </InspectorPhone>
 }
 
@@ -124,7 +126,7 @@ export function InspectorDiscrepancy() {
     <div className="discrepancy-field"><label>نوع مغایرت</label><div>شماره / موقعیت متفاوت</div></div>
     <div className="discrepancy-field"><label>توضیح بازرس</label><textarea defaultValue="شماره درج‌شده روی محل پارک با اطلاعات Listing مطابقت ندارد."/></div>
     <div className="evidence-upload"><Upload size={18}/><span>افزودن عکس یا مدرک</span></div>
-    <button className="btn primary inspector-cta">ثبت مغایرت</button>
+    <button className="btn primary inspector-cta" onClick={() => go('/inspector-submit')}>ثبت مغایرت</button>
   </InspectorPhone>
 }
 
@@ -134,7 +136,7 @@ export function InspectorSubmitReport() {
     <div className="report-stats"><div><strong>۲۴</strong><span>رسانه</span></div><div><strong>۳</strong><span>مدرک</span></div><div><strong>۱</strong><span>مغایرت</span></div></div>
     <div className="report-items"><div><FileCheck2/><span>چک‌لیست کامل</span><Status tone="verified">کامل</Status></div><div><Camera/><span>رسانه‌های لازم</span><Status tone="verified">کامل</Status></div><div><AlertTriangle/><span>مغایرت‌ها</span><Status tone="warning">۱ مورد</Status></div></div>
     <div className="submit-warning">بعد از ارسال، تغییرات اصلی فقط با Audit Trail ثبت می‌شوند.</div>
-    <button className="btn primary inspector-cta">ارسال نهایی گزارش</button>
+    <button className="btn primary inspector-cta" onClick={() => go('/inspector-earnings')}>ارسال نهایی گزارش</button>
   </InspectorPhone>
 }
 
