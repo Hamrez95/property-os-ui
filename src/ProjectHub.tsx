@@ -3,7 +3,7 @@ import {
   Activity, ArrowUpLeft, Blocks, BookOpen, Boxes, CalendarDays, CheckCircle2, ChevronLeft,
   CircleDot, Cloud, Code2, Database, FileCode2, FileText, Flag, GitBranch,
   Globe2, HardDrive, KeyRound, Landmark, LayoutDashboard, LockKeyhole, Menu, Search,
-  MessageSquareText, Network, PackageCheck, PanelTop, Rocket, ServerCog,
+  MessageSquareText, Network, PackageCheck, PanelTop, Rocket, ServerCog, Target,
   ShieldCheck, Smartphone, Sparkles, Users, WalletCards, X, Zap
 } from 'lucide-react'
 import { Brand } from './ui'
@@ -13,6 +13,7 @@ type DecisionState = 'locked' | 'working' | 'open'
 const nav = [
   { path: '/guide', label: 'راهنمای توسعه', icon: BookOpen },
   { path: '/roadmap', label: 'نقشه راه', icon: Flag },
+  { path: '/business', label: 'بیزینس و استراتژی', icon: Target },
   { path: '/modeling', label: 'مدلینگ', icon: Database },
   { path: '/benchmark', label: 'Benchmark بازار', icon: Search },
   { path: '/operations', label: 'آمادگی لانچ', icon: Rocket },
@@ -32,7 +33,7 @@ function StatusPill({state}:{state:DecisionState}) {
   return <span className={'hub-status '+state}><b>{map[state][0]}</b><small>{map[state][1]}</small></span>
 }
 
-export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'modeling'|'benchmark'|'operations'|'design'}) {
+export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'business'|'modeling'|'benchmark'|'operations'|'design'}) {
   const [open,setOpen]=useState(false)
   return <header className="project-site-header" dir="rtl">
     <div className="project-site-header-inner">
@@ -59,7 +60,7 @@ export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'modeling'|
   </header>
 }
 
-function HubPage({active,children}:{active:'guide'|'roadmap'|'modeling'|'benchmark'|'operations'|'design',children:ReactNode}) {
+function HubPage({active,children}:{active:'guide'|'roadmap'|'business'|'modeling'|'benchmark'|'operations'|'design',children:ReactNode}) {
   return <div className="hub-page" dir="rtl"><ProjectSiteHeader active={active}/><main className="hub-main">{children}</main></div>
 }
 
