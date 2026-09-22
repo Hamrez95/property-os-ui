@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { AdminShell, Brand, Phone, PropertyCard, Stat, Status, type Tone } from './ui'
 import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, InspectorDiscrepancy, InspectorEarnings, InspectorLogin, InspectorMediaCapture, InspectorSubmitReport } from './InspectorScreens'
+import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -532,6 +533,12 @@ function ReviewBoard() {
       <div className="screen-wrap"><SpacesOverview/><label>13. Spaces</label></div>
       <div className="screen-wrap"><SpaceDetail/><label>14. Space Detail</label></div>
       <div className="screen-wrap"><BundleBuilder/><label>15. Bundle Builder</label></div>
+      <div className="screen-wrap"><AddProperty/><label>15A. Add Property</label></div>
+      <div className="screen-wrap"><PropertyDocuments/><label>15B. Property Documents</label></div>
+      <div className="screen-wrap"><PropertyPeople/><label>15C. People & Roles</label></div>
+      <div className="screen-wrap"><PropertyFinance/><label>15D. Property Finance</label></div>
+      <div className="screen-wrap"><PropertyLease/><label>15E. Property Lease</label></div>
+      <div className="screen-wrap"><SpaceLease/><label>15F. Space Lease</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Operations + Trust</span><h2>Building / Trust / Verification</h2></div><small>Capture freely → Verify selectively → Label clearly</small></div>
     <div className="mobile-grid">
@@ -588,6 +595,12 @@ function App() {
   if (route === '/portfolio') return <div className="single-screen"><PortfolioOverview/></div>
   if (route === '/passport') return <div className="single-screen"><PropertyPassport/></div>
   if (route === '/spaces') return <div className="single-screen"><SpacesOverview/></div>
+  if (route === '/property-add') return <div className="single-screen"><AddProperty/></div>
+  if (route === '/property-documents') return <div className="single-screen"><PropertyDocuments/></div>
+  if (route === '/property-people') return <div className="single-screen"><PropertyPeople/></div>
+  if (route === '/property-finance') return <div className="single-screen"><PropertyFinance/></div>
+  if (route === '/property-lease') return <div className="single-screen"><PropertyLease/></div>
+  if (route === '/space-lease') return <div className="single-screen"><SpaceLease/></div>
   if (route === '/building') return <div className="single-screen"><BuildingDashboard/></div>
   if (route === '/trust') return <div className="single-screen"><TrustCenter/></div>
   if (route === '/inspection') return <div className="single-screen"><InspectionRequest/></div>
