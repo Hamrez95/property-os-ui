@@ -413,6 +413,90 @@ function InspectionRequest() {
   </Phone>
 }
 
+
+function MarketplaceSearch() {
+  const cards = [
+    ['آپارتمان فرمانیه','۱۶۰ متر · ۳ خواب','فروش','۱۲.۸ میلیارد','verified'],
+    ['ویلا لواسان','۴۲۰ متر · ۴ خواب','فروش','۲۹ میلیارد','info'],
+    ['آپارتمان زعفرانیه','۱۳۵ متر · ۲ خواب','اجاره','۳۰۰ / ۴۵','neutral']
+  ] as const
+  return <Phone title="بازار ملک" active="search">
+    <div className="market-search"><Search size={15}/><span>محله، خیابان یا نوع ملک...</span></div>
+    <div className="market-filter-row"><span className="active">همه</span><span>فروش</span><span>اجاره</span><span>تأییدشده</span></div>
+    <div className="market-map-strip"><Map size={17}/><span>مشاهده روی نقشه</span><b>۳۲ نتیجه</b></div>
+    <div className="listing-stack">
+      {cards.map((c,i)=><div className="listing-card" key={i}>
+        <div className="listing-image"><div className={'listing-house h'+i}/><Status tone={c[4] as Tone}>{c[2]}</Status></div>
+        <div className="listing-copy"><strong>{c[0]}</strong><span>{c[1]}</span><b>{c[3]} تومان</b></div>
+        <ChevronLeft size={17}/>
+      </div>)}
+    </div>
+  </Phone>
+}
+
+function ListingDetail() {
+  return <Phone title="">
+    <div className="listing-hero">
+      <div className="hero-building premium"><i/><i/><i/><i/></div>
+      <div className="hero-actions"><button>↗</button><button>☆</button></div>
+      <span className="hero-count">5/18</span>
+    </div>
+    <div className="listing-detail-head"><div><h2>آپارتمان فرمانیه</h2><p>تهران، فرمانیه · ۱۶۰ متر · ۳ خواب</p></div><Status tone="verified">Verified</Status></div>
+    <div className="price-row"><div><span>قیمت کل</span><strong>۱۲.۸ میلیارد</strong></div><div><span>هر متر</span><strong>۸۰ میلیون</strong></div></div>
+    <div className="listing-trust"><ShieldCheck size={18}/><div><strong>Trust Passport</strong><span>هویت، موقعیت و ۶ Claim تأیید شده</span></div><ChevronLeft size={17}/></div>
+    <div className="detail-actions sticky-actions"><button className="btn secondary">درخواست بازدید</button><button className="btn primary">ثبت پیشنهاد</button></div>
+  </Phone>
+}
+
+function VisitBooking() {
+  return <Phone title="رزرو بازدید">
+    <div className="visit-property"><div className="property-thumb"><div className="mini-building"><i/><i/><i/></div></div><div><strong>آپارتمان فرمانیه</strong><span>تهران، فرمانیه</span></div></div>
+    <div className="visit-section"><h3>روز مناسب</h3><div className="date-pills"><span>امروز<br/><b>۳۱</b></span><span className="active">فردا<br/><b>۱</b></span><span>پنجشنبه<br/><b>۲</b></span><span>جمعه<br/><b>۳</b></span></div></div>
+    <div className="visit-section"><h3>ساعت</h3><div className="time-grid"><span>۱۰:۳۰</span><span className="active">۱۲:۰۰</span><span>۱۴:۳۰</span><span>۱۶:۰۰</span><span>۱۷:۳۰</span><span>۱۹:۰۰</span></div></div>
+    <div className="visit-note"><CalendarDays size={18}/><div><strong>هماهنگی بازدید</strong><span>بعد از تأیید مالک، جزئیات ورود برای شما ارسال می‌شود.</span></div></div>
+    <button className="btn primary visit-cta">ارسال درخواست بازدید</button>
+  </Phone>
+}
+
+function OfferBuilder() {
+  return <Phone title="ثبت پیشنهاد">
+    <div className="offer-summary"><span>قیمت پیشنهادی فروشنده</span><strong>۱۲.۸ میلیارد تومان</strong><small>قیمت هر متر ۸۰ میلیون</small></div>
+    <div className="offer-field"><label>مبلغ پیشنهادی شما</label><div><input defaultValue="12,300,000,000"/><span>تومان</span></div></div>
+    <div className="offer-field"><label>شرایط پرداخت</label><div className="select-like">۳۰٪ هنگام قرارداد · الباقی در انتقال <ChevronLeft size={15}/></div></div>
+    <div className="offer-field"><label>اعتبار پیشنهاد</label><div className="select-like">۴۸ ساعت <ChevronLeft size={15}/></div></div>
+    <div className="offer-note"><ShieldCheck size={17}/><span>پیشنهاد شما برای طرف مقابل ثبت و در timeline معامله نگهداری می‌شود.</span></div>
+    <button className="btn primary offer-cta">ارسال پیشنهاد</button>
+  </Phone>
+}
+
+function DealSummary() {
+  return <Phone title="خلاصه معامله">
+    <div className="deal-status"><CheckCircle2 size={27}/><div><h3>پیشنهاد پذیرفته شد</h3><p>فرایند معامله آماده ورود به مرحله قرارداد است.</p></div></div>
+    <div className="deal-property"><strong>آپارتمان فرمانیه</strong><span>فروش · ۱۲.۳ میلیارد تومان</span></div>
+    <div className="deal-steps">
+      <div className="done"><i>✓</i><span><strong>پیشنهاد</strong><small>توافق روی مبلغ و شرایط</small></span></div>
+      <div className="active"><i>2</i><span><strong>قرارداد</strong><small>در حال آماده‌سازی</small></span></div>
+      <div><i>3</i><span><strong>پرداخت</strong><small>پس از قرارداد</small></span></div>
+      <div><i>4</i><span><strong>تحویل و ثبت</strong><small>مرحله نهایی</small></span></div>
+    </div>
+    <button className="btn primary deal-cta">ادامه به قرارداد</button>
+  </Phone>
+}
+
+function TransactionTracker() {
+  return <Phone title="پیگیری معامله">
+    <div className="transaction-hero"><FileCheck2 size={24}/><div><span>شناسه معامله</span><strong>TX-1405-0921-1842</strong></div></div>
+    <div className="transaction-list">
+      <div className="done"><CheckCircle2/><div><strong>توافق اولیه</strong><span>تکمیل‌شده · ۱۴۰۵/۰۶/۳۰</span></div></div>
+      <div className="done"><CheckCircle2/><div><strong>احراز طرفین</strong><span>تکمیل‌شده · ۱۴۰۵/۰۶/۳۱</span></div></div>
+      <div className="current"><FileCheck2/><div><strong>قرارداد</strong><span>در انتظار تأیید طرفین</span></div></div>
+      <div><WalletCards/><div><strong>پرداخت امن</strong><span>بعد از قرارداد فعال می‌شود</span></div></div>
+      <div><KeyRound/><div><strong>تحویل و ثبت نهایی</strong><span>در انتظار مراحل قبل</span></div></div>
+    </div>
+    <div className="transaction-note"><AlertTriangle size={16}/><span>قابلیت‌های رسمی/مجوزمحور تا زمان فعال‌شدن Capability Gate ممکن است در حالت آزمایشی باقی بمانند.</span></div>
+  </Phone>
+}
+
 function DesignSystem() {
   const colors = [
     ['Primary','#13233F'],['Action','#315EFB'],['Success','#12A47A'],['Warning','#F59E0B'],['Error','#E5484D'],
@@ -456,6 +540,15 @@ function ReviewBoard() {
       <div className="screen-wrap"><ClaimEvidence/><label>20. Claim Evidence</label></div>
       <div className="screen-wrap"><InspectionRequest/><label>21. Inspection Request</label></div>
     </div>
+    <div className="review-section-head flow-heading"><div><span>Marketplace + Transaction</span><h2>Search / Offer / Deal</h2></div><small>Property → Listing → Visit → Offer → Transaction</small></div>
+    <div className="mobile-grid">
+      <div className="screen-wrap"><MarketplaceSearch/><label>22. Marketplace Search</label></div>
+      <div className="screen-wrap"><ListingDetail/><label>23. Listing Detail</label></div>
+      <div className="screen-wrap"><VisitBooking/><label>24. Visit Booking</label></div>
+      <div className="screen-wrap"><OfferBuilder/><label>25. Offer</label></div>
+      <div className="screen-wrap"><DealSummary/><label>26. Deal Summary</label></div>
+      <div className="screen-wrap"><TransactionTracker/><label>27. Transaction Tracker</label></div>
+    </div>
     <div className="review-section-head admin-heading"><div><span>Operations</span><h2>Admin — Calm Premium</h2></div><small>Dense · Clear · Trustworthy</small></div>
     <div className="admin-grid">
       <div className="screen-wrap admin-wrap"><AdminDashboard/><label>7. Admin Dashboard</label></div>
@@ -476,6 +569,9 @@ function App() {
   if (route === '/building') return <div className="single-screen"><BuildingDashboard/></div>
   if (route === '/trust') return <div className="single-screen"><TrustCenter/></div>
   if (route === '/inspection') return <div className="single-screen"><InspectionRequest/></div>
+  if (route === '/marketplace') return <div className="single-screen"><MarketplaceSearch/></div>
+  if (route === '/listing') return <div className="single-screen"><ListingDetail/></div>
+  if (route === '/deal') return <div className="single-screen"><DealSummary/></div>
   return <ReviewBoard/>
 }
 
