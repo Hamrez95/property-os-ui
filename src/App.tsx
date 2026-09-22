@@ -616,6 +616,7 @@ function ReviewBoard() {
       <div className="screen-wrap" data-priority="R2-24" data-release="Trust"><InspectionRequest/><label>21. Inspection Request</label></div>
       <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingExpenses/><label>21A. Building Expenses</label></div>
       <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingAnnouncements/><label>21B. Announcements</label></div>
+      <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingAnnouncementComposer/><label>21B.1 New Announcement</label></div>
       <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingGovernance/><label>21C. Building Governance</label></div>
       <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><MaintenanceRequest/><label>21D. Maintenance</label></div>
       <div className="screen-wrap" data-priority="R2-25" data-release="Trust"><InspectionStatus/><label>21E. Inspection Status</label></div>
@@ -642,6 +643,8 @@ function ReviewBoard() {
       <div className="screen-wrap" data-priority="R5-52" data-release="Growth"><SubscriptionScreen/><label>31. Subscription</label></div>
       <div className="screen-wrap" data-priority="R1-17" data-release="Private Beta"><SecurityDevices/><label>32. Security & Devices</label></div>
       <div className="screen-wrap" data-priority="R1-16" data-release="Private Beta"><SupportCenter/><label>33. Support</label></div>
+      <div className="screen-wrap" data-priority="R1-16" data-release="Private Beta"><SupportTicketDetail/><label>33.1 Support Ticket</label></div>
+      <div className="screen-wrap" data-priority="R1-16" data-release="Private Beta"><SupportNewRequest/><label>33.2 New Support Request</label></div>
       <div className="screen-wrap" data-priority="R1-15" data-release="Private Beta"><NotificationSettings/><label>33A. Notification Settings</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Field operations</span><h2>Inspector App</h2></div><small>Fast · Auditable · Evidence-first</small></div>
@@ -669,6 +672,7 @@ function ReviewBoard() {
       <div className="screen-wrap admin-wrap" data-priority="R2-28" data-release="Trust"><AdminInspectors/><label>9E. Inspectors</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R4-49" data-release="Transaction"><AdminPayments/><label>9F. Payments</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R1-16" data-release="Private Beta"><AdminSupport/><label>9G. Support</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R1-16" data-release="Private Beta"><AdminSupportTicket/><label>9G.1 Support Ticket</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R5-53" data-release="Growth"><AdminReports/><label>9H. Reports</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R1-18" data-release="Private Beta"><AdminFeatureFlags/><label>9I. Feature Flags</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R1-17" data-release="Private Beta"><AdminSecurityAudit/><label>9J. Security & Audit</label></div>
