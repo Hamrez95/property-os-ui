@@ -30,7 +30,7 @@ export function Phone({ title, children, active='auto' }: { title?: string, chil
     <div className="phone-status" aria-hidden="true"><span>9:41</span><span>▮▮◒</span></div>
     {title && <header className="mobile-header"><button className="header-back" onClick={() => goBack()} aria-label="بازگشت"><ChevronLeft size={20}/></button><strong>{title}</strong><span className="header-spacer"/></header>}
     <main className="phone-body">{children}</main>
-    <BottomNav active={active}/>
+    {active!=='none' && <BottomNav active={active}/>}
   </div>
 }
 

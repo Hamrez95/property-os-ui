@@ -36,7 +36,7 @@ function Splash() {
 }
 
 function Login() {
-  return <Phone active="">
+  return <Phone active="none">
     <div className="auth-layout">
       <ArrowLeft className="auth-back" size={20}/>
       <div className="auth-copy"><h2>ورود / ثبت‌نام</h2><p>لطفاً شماره موبایل خود را وارد کنید تا کد تأیید برای شما ارسال شود.</p></div>
@@ -49,7 +49,7 @@ function Login() {
 }
 
 function Otp() {
-  return <Phone active="">
+  return <Phone active="none">
     <div className="auth-layout">
       <ArrowLeft className="auth-back" size={20}/>
       <div className="auth-copy"><h2>کد تأیید</h2><p>کد ۶ رقمی ارسال‌شده به<br/><b>0912 345 6789</b> را وارد کنید.</p></div>
@@ -549,8 +549,9 @@ function ReviewBoard() {
       <div className="screen-wrap"><PropertyTypeDetail type="apartment"/><label>10B. Apartment Detail</label></div>
       <div className="screen-wrap"><PropertyTypeDetail type="villa"/><label>10C. Villa Detail</label></div>
       <div className="screen-wrap"><PropertyTypeDetail type="commercial"/><label>10D. Commercial Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="land"/><label>10E. Land Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="teardown"/><label>10F. Teardown Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="office"/><label>10E. Office Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="land"/><label>10F. Land Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="teardown"/><label>10G. Teardown Detail</label></div>
       <div className="screen-wrap"><PropertyPassport/><label>11. Property Passport</label></div>
       <div className="screen-wrap"><PropertyTimeline/><label>12. Property Timeline</label></div>
       <div className="screen-wrap"><SpacesOverview/><label>13. Spaces</label></div>
