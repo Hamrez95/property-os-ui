@@ -37,3 +37,7 @@ Every major business assumption should be labeled:
 - Review date
 
 The Business & Strategy Hub is a decision system, not a static pitch deck.
+
+
+## Latest Research Handoff
+- `docs/DEEP_RESEARCH_HANDOFF_2026-09-23.md` — research-derived product, domain, UX and launch guardrails (2026-09-23)
