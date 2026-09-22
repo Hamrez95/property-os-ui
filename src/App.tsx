@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { AdminShell, Brand, Phone, PropertyCard, Stat, Status, type Tone } from './ui'
 import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, InspectorDiscrepancy, InspectorEarnings, InspectorLogin, InspectorMediaCapture, InspectorSubmitReport } from './InspectorScreens'
+import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 
 const properties = [
@@ -548,6 +549,11 @@ function ReviewBoard() {
       <div className="screen-wrap"><TrustCenter/><label>19. Trust Center</label></div>
       <div className="screen-wrap"><ClaimEvidence/><label>20. Claim Evidence</label></div>
       <div className="screen-wrap"><InspectionRequest/><label>21. Inspection Request</label></div>
+      <div className="screen-wrap"><BuildingExpenses/><label>21A. Building Expenses</label></div>
+      <div className="screen-wrap"><BuildingAnnouncements/><label>21B. Announcements</label></div>
+      <div className="screen-wrap"><MaintenanceRequest/><label>21C. Maintenance</label></div>
+      <div className="screen-wrap"><InspectionStatus/><label>21D. Inspection Status</label></div>
+      <div className="screen-wrap"><VerifiedPassport/><label>21E. Verified Passport</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Marketplace + Transaction</span><h2>Search / Offer / Deal</h2></div><small>Property → Listing → Visit → Offer → Transaction</small></div>
     <div className="mobile-grid">
@@ -604,6 +610,11 @@ function App() {
   if (route === '/building') return <div className="single-screen"><BuildingDashboard/></div>
   if (route === '/trust') return <div className="single-screen"><TrustCenter/></div>
   if (route === '/inspection') return <div className="single-screen"><InspectionRequest/></div>
+  if (route === '/building-expenses') return <div className="single-screen"><BuildingExpenses/></div>
+  if (route === '/building-announcements') return <div className="single-screen"><BuildingAnnouncements/></div>
+  if (route === '/maintenance') return <div className="single-screen"><MaintenanceRequest/></div>
+  if (route === '/inspection-status') return <div className="single-screen"><InspectionStatus/></div>
+  if (route === '/verified-passport') return <div className="single-screen"><VerifiedPassport/></div>
   if (route === '/marketplace') return <div className="single-screen"><MarketplaceSearch/></div>
   if (route === '/listing') return <div className="single-screen"><ListingDetail/></div>
   if (route === '/deal') return <div className="single-screen"><DealSummary/></div>
