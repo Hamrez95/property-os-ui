@@ -7,6 +7,7 @@ import {
 import { AdminShell, Brand, Phone, PropertyCard, Stat, Status, type Tone } from './ui'
 import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, InspectorDiscrepancy, InspectorDocumentEvidence, InspectorEarnings, InspectorLogin, InspectorMediaCapture, InspectorSpaceVerification, InspectorSubmitReport } from './InspectorScreens'
 import { AdminBuildings, AdminDeals, AdminFeatureFlags, AdminInspectors, AdminListings, AdminPayments, AdminReports, AdminSecurityAudit, AdminSupport, AdminTrustQueue } from './AdminExtendedScreens'
+import { QualityGallery } from './QualityGallery'
 import { PublishListing, NegotiationThread, ContractReview, SecurePayment, NotificationSettings } from './MarketplaceAccountScreens'
 import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
@@ -519,6 +520,7 @@ function ReviewBoard() {
   return <div className="review-page">
     <header className="review-header"><div><h1>مدیریت هوشمند املاک و ساختمان‌ها</h1><p>ساختاری · امن‌تر · ارزشمندتر</p></div><Brand/></header>
     <DesignSystem/>
+    <QualityGallery/>
     <div className="review-section-head"><div><span>Reference screens</span><h2>Mobile — Calm Premium</h2></div><small>RTL first · LTR ready</small></div>
     <div className="mobile-grid">
       <div className="screen-wrap"><Splash/><label>1. Splash</label></div>
