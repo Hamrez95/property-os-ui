@@ -1,10 +1,39 @@
 import {
   AlertTriangle, Bell, CalendarDays, CheckCircle2, ChevronLeft,
-  ClipboardCheck, CircleDollarSign, FileCheck2, Megaphone, Plus, ShieldCheck,
-  Users, Wrench
+  ClipboardCheck, CircleDollarSign, FileCheck2, Landmark, Megaphone, Plus, ShieldCheck,
+  Users, Vote, WalletCards, Wrench
 } from 'lucide-react'
 import { Phone, Status } from './ui'
 import { go } from './navigation'
+
+export function BuildingGovernance() {
+  const resolutions=[
+    ['بودجه تعمیر پمپ آب','تصویب‌شده · مجمع شهریور','verified'],
+    ['افزایش اندوخته تعمیرات','در انتظار رأی مجمع','warning'],
+    ['قرارداد سرویس آسانسور','تصویب‌شده تا اسفند','verified'],
+  ] as const
+  return <Phone title="مدیریت و مصوبات ساختمان">
+    <div className="governance-hero"><Landmark size={24}/><div><span>Mandate فعال</span><strong>مدیریت ساختمان نیاوران</strong><small>مدیر: نرگس اکبری · تا ۱۴۰۶/۰۶/۳۱</small></div><Status tone="verified">فعال</Status></div>
+    <div className="governance-kpis">
+      <button onClick={()=>go('/building-announcements')}><CalendarDays/><span>مجمع بعدی</span><b>۲۸ مهر</b></button>
+      <button onClick={()=>go('/building-expenses')}><WalletCards/><span>اندوخته</span><b>۴۸ م</b></button>
+      <button onClick={()=>go('/charges')}><CircleDollarSign/><span>روش شارژ</span><b>ترکیبی</b></button>
+    </div>
+    <section className="governance-card">
+      <div className="governance-title"><Vote size={17}/><div><strong>آخرین مصوبات</strong><span>صورت‌جلسه و نسخه قاعده باید نگهداری شود.</span></div></div>
+      {resolutions.map(r=><button className="governance-resolution" key={r[0]} onClick={()=>go('/building-expenses')}><div><strong>{r[0]}</strong><span>{r[1]}</span></div><Status tone={r[2]}>{r[2]==='verified'?'معتبر':'باز'}</Status></button>)}
+    </section>
+    <section className="governance-card">
+      <div className="governance-title"><ShieldCheck size={17}/><div><strong>تعهدات پایه مدیر</strong><span>برای prototype، به‌صورت reminder عملیاتی نمایش داده شده‌اند.</span></div></div>
+      <div className="governance-checks">
+        <div><CheckCircle2/><span>بیمه آتش‌سوزی کل بنا</span><b>سررسید ۵ روز</b></div>
+        <div><CheckCircle2/><span>دفتر درآمد / هزینه و اسناد</span><b>بروزشده</b></div>
+        <div><CheckCircle2/><span>اطلاع‌رسانی مصوبات به غایبین</span><b>۱ مورد باز</b></div>
+      </div>
+    </section>
+    <div className="bt-info warning"><AlertTriangle size={17}/><span>روش تقسیم شارژ از یک فرمول ثابت نمی‌آید؛ Rule و دوره اثر باید ثبت شود و مبنای محاسبه هر بدهی snapshot داشته باشد.</span></div>
+  </Phone>
+}
 
 export function BuildingExpenses() {
   const rows=[['سرویس آسانسور','۱۲,۵۰۰,۰۰۰','پرداخت‌شده','verified'],['نظافت شهریور','۶,۸۰۰,۰۰۰','پرداخت‌شده','verified'],['تعمیر پمپ آب','۱۸,۴۰۰,۰۰۰','در انتظار تصویب','warning'],['بیمه ساختمان','۲۴,۰۰۰,۰۰۰','سررسید ۵ روز','warning']] as const
