@@ -55,11 +55,31 @@ export function BuildingAnnouncements() {
     ['سرویس آسانسور انجام شد','امروز · شرکت سرویس‌کار','verified']
   ] as const
   return <Phone title="اعلان‌های ساختمان">
-    <div className="bt-action-hero"><Megaphone size={23}/><div><strong>اطلاع‌رسانی به ساکنین</strong><span>اعلان، پیام و اطلاعیه‌های عملیاتی</span></div><button className="icon-button" onClick={() => go('/messages')} aria-label="پیام جدید"><Plus size={15}/></button></div>
+    <div className="bt-action-hero"><Megaphone size={23}/><div><strong>اطلاع‌رسانی به ساکنین</strong><span>اعلان، پیام و اطلاعیه‌های عملیاتی</span></div><button className="icon-button" onClick={() => go('/building-announcement-new')} aria-label="اعلان جدید"><Plus size={15}/></button></div>
     <div className="bt-list announcement-list">{notes.map((n,i)=><div className="announcement-row" key={n[0]}>
       <div className={'announcement-icon n'+i}><Bell size={16}/></div><div><strong>{n[0]}</strong><span>{n[1]}</span></div><Status tone={n[2]}>{n[2]==='verified'?'انجام شد':n[2]==='warning'?'مهم':'اطلاعیه'}</Status>
     </div>)}</div>
     <button className="bt-audience-card interactive-row" onClick={() => go('/building-units')}><Users size={18}/><div><strong>مخاطب پیش‌فرض</strong><span>همه ساکنین و مالکان ساختمان نیاوران</span></div><ChevronLeft size={16}/></button>
+  </Phone>
+}
+
+export function BuildingAnnouncementComposer() {
+  return <Phone title="اعلان جدید ساختمان">
+    <div className="bt-action-hero"><Megaphone size={23}/><div><strong>اطلاعیه عملیاتی</strong><span>مستقل از چت شخصی؛ با مخاطب و زمان‌بندی مشخص</span></div><Status tone="info">Draft</Status></div>
+    <div className="announcement-form">
+      <label><span>عنوان</span><input defaultValue="جلسه ماهانه ساختمان"/></label>
+      <label><span>متن اعلان</span><textarea defaultValue="جلسه ماهانه ساختمان پنجشنبه ساعت ۱۹ در لابی برگزار می‌شود."/></label>
+      <div className="announcement-form-row">
+        <label><span>مخاطب</span><select defaultValue="all"><option value="all">همه ساکنین و مالکان</option><option>فقط مالکان</option><option>فقط ساکنین</option><option>واحدهای منتخب</option></select></label>
+        <label><span>اولویت</span><select defaultValue="normal"><option value="normal">عادی</option><option>مهم</option><option>فوری</option></select></label>
+      </div>
+      <label><span>زمان انتشار</span><input defaultValue="همین حالا"/></label>
+    </div>
+    <div className="bt-info"><Users size={17}/><span>این اعلان برای ۱۲ واحد و ۱۷ Party مجاز نمایش داده می‌شود. پیام خصوصی یا Chat ایجاد نمی‌شود.</span></div>
+    <div className="announcement-submit">
+      <button className="btn secondary" onClick={() => go('/building-announcements')}>انصراف</button>
+      <button className="btn primary" onClick={() => go('/building-announcements')}><CheckCircle2 size={15}/>انتشار اعلان</button>
+    </div>
   </Phone>
 }
 

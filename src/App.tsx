@@ -7,10 +7,10 @@ import {
 } from 'lucide-react'
 import { AdminShell, Brand, Phone, PropertyCard, Stat, Status, type Tone } from './ui'
 import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, InspectorDiscrepancy, InspectorDocumentEvidence, InspectorEarnings, InspectorLogin, InspectorMediaCapture, InspectorSpaceVerification, InspectorSubmitReport } from './InspectorScreens'
-import { AdminBuildings, AdminDeals, AdminFeatureFlags, AdminInspectors, AdminListings, AdminPayments, AdminReports, AdminSecurityAudit, AdminSupport, AdminTrustQueue } from './AdminExtendedScreens'
+import { AdminBuildings, AdminDeals, AdminFeatureFlags, AdminInspectors, AdminListings, AdminPayments, AdminReports, AdminSecurityAudit, AdminSupport, AdminSupportTicket, AdminTrustQueue } from './AdminExtendedScreens'
 import { QualityGallery } from './QualityGallery'
 import { PublishListing, NegotiationThread, ContractReview, SecurePayment, NotificationSettings } from './MarketplaceAccountScreens'
-import { BuildingExpenses, BuildingAnnouncements, BuildingGovernance, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
+import { BuildingExpenses, BuildingAnnouncements, BuildingAnnouncementComposer, BuildingGovernance, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PROTOTYPE_SCREENS, type PrototypeGroup } from './navigation'
 import { ProjectBenchmarkPage, ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
@@ -509,9 +509,36 @@ function SupportCenter() {
   return <Phone title="پشتیبانی">
     <div className="support-hero"><MessageSquare size={27}/><div><h3>چطور می‌تونیم کمک کنیم؟</h3><p>موضوع را انتخاب کنید یا درخواست جدید بسازید.</p></div></div>
     <div className="support-actions"><button onClick={() => go('/transaction')}><FileCheck2/><span>قرارداد و معامله</span></button><button onClick={() => go('/secure-payment')}><CircleDollarSign/><span>پرداخت و صورتحساب</span></button><button onClick={() => go('/trust')}><ShieldCheck/><span>اعتماد و بازرسی</span></button><button onClick={() => go('/account')}><Settings/><span>حساب و تنظیمات</span></button></div>
-    <button className="support-ticket interactive-row" onClick={() => go('/messages')}><div><strong>#2481 — اصلاح اطلاعات Property Passport</strong><span>آخرین پاسخ: ۲ ساعت قبل</span></div><Status tone="info">در حال بررسی</Status></button>
-    <button className="btn primary support-cta" onClick={() => go('/messages')}><Plus size={15}/>درخواست جدید</button>
+    <button className="support-ticket interactive-row" onClick={() => go('/support-ticket')}><div><strong>#2481 — اصلاح اطلاعات Property Passport</strong><span>آخرین بروزرسانی: ۲ ساعت قبل</span></div><Status tone="info">در حال بررسی</Status></button>
+    <button className="btn primary support-cta" onClick={() => go('/support-new')}><Plus size={15}/>درخواست جدید</button>
     <p className="privacy-note">حریم خصوصی و داده‌های حساس فقط در محدوده لازم برای رسیدگی به درخواست نمایش داده می‌شوند.</p>
+  </Phone>
+}
+
+function SupportTicketDetail() {
+  return <Phone title="درخواست #2481">
+    <div className="support-ticket-hero"><MessageSquare size={24}/><div><span>پشتیبانی Property OS</span><strong>اصلاح اطلاعات Property Passport</strong><small>آخرین بروزرسانی: ۲ ساعت قبل</small></div><Status tone="info">در حال بررسی</Status></div>
+    <div className="support-thread">
+      <div className="support-event user"><span>شما · دیروز ۱۸:۲۲</span><p>سال ساخت نمایش‌داده‌شده با مدرکی که آپلود کردم یکی نیست. لطفاً بررسی شود.</p></div>
+      <div className="support-event agent"><span>پشتیبانی · امروز ۰۹:۱۰</span><p>مدرک دریافت شد و درخواست برای تیم Trust ارسال شده است. نتیجه از همین تیکت اعلام می‌شود.</p></div>
+    </div>
+    <div className="support-ticket-meta"><div><span>Property</span><strong>آپارتمان نیاوران</strong></div><div><span>Category</span><strong>Trust / Passport</strong></div><div><span>SLA</span><strong>تا فردا</strong></div></div>
+    <div className="support-reply"><label>افزودن توضیح به همین تیکت</label><textarea placeholder="توضیح یا اطلاعات تکمیلی..."/></div>
+    <button className="btn primary support-cta" onClick={() => go('/support')}><CheckCircle2 size={15}/>ثبت بروزرسانی</button>
+  </Phone>
+}
+
+function SupportNewRequest() {
+  return <Phone title="درخواست پشتیبانی جدید">
+    <div className="support-new-intro"><MessageSquare size={25}/><div><strong>یک موضوع مشخص انتخاب کنید</strong><span>درخواست پشتیبانی تیکت است؛ Chat عمومی ایجاد نمی‌شود.</span></div></div>
+    <div className="support-form">
+      <label><span>موضوع</span><select defaultValue="property"><option value="property">ملک و Property Passport</option><option>قرارداد و اجاره</option><option>پرداخت و اشتراک</option><option>Trust / Inspection</option><option>حساب و امنیت</option></select></label>
+      <label><span>Property مرتبط</span><select defaultValue="niavaran"><option value="niavaran">آپارتمان نیاوران</option><option>ویلای لواسان</option><option>بدون Property</option></select></label>
+      <label><span>شرح درخواست</span><textarea defaultValue="لطفاً اطلاعات ثبت‌شده را بررسی کنید."/></label>
+      <label><span>پیوست</span><div className="support-upload">+ افزودن تصویر یا سند</div></label>
+    </div>
+    <div className="bt-info"><ShieldCheck size={17}/><span>داده‌های حساس فقط برای تیمی که این تیکت را رسیدگی می‌کند قابل مشاهده خواهد بود.</span></div>
+    <button className="btn primary support-cta" onClick={() => go('/support')}>ثبت درخواست</button>
   </Phone>
 }
 
@@ -589,6 +616,7 @@ function ReviewBoard() {
       <div className="screen-wrap" data-priority="R2-24" data-release="Trust"><InspectionRequest/><label>21. Inspection Request</label></div>
       <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingExpenses/><label>21A. Building Expenses</label></div>
       <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingAnnouncements/><label>21B. Announcements</label></div>
+      <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingAnnouncementComposer/><label>21B.1 New Announcement</label></div>
       <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingGovernance/><label>21C. Building Governance</label></div>
       <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><MaintenanceRequest/><label>21D. Maintenance</label></div>
       <div className="screen-wrap" data-priority="R2-25" data-release="Trust"><InspectionStatus/><label>21E. Inspection Status</label></div>
@@ -615,6 +643,8 @@ function ReviewBoard() {
       <div className="screen-wrap" data-priority="R5-52" data-release="Growth"><SubscriptionScreen/><label>31. Subscription</label></div>
       <div className="screen-wrap" data-priority="R1-17" data-release="Private Beta"><SecurityDevices/><label>32. Security & Devices</label></div>
       <div className="screen-wrap" data-priority="R1-16" data-release="Private Beta"><SupportCenter/><label>33. Support</label></div>
+      <div className="screen-wrap" data-priority="R1-16" data-release="Private Beta"><SupportTicketDetail/><label>33.1 Support Ticket</label></div>
+      <div className="screen-wrap" data-priority="R1-16" data-release="Private Beta"><SupportNewRequest/><label>33.2 New Support Request</label></div>
       <div className="screen-wrap" data-priority="R1-15" data-release="Private Beta"><NotificationSettings/><label>33A. Notification Settings</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Field operations</span><h2>Inspector App</h2></div><small>Fast · Auditable · Evidence-first</small></div>
@@ -642,6 +672,7 @@ function ReviewBoard() {
       <div className="screen-wrap admin-wrap" data-priority="R2-28" data-release="Trust"><AdminInspectors/><label>9E. Inspectors</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R4-49" data-release="Transaction"><AdminPayments/><label>9F. Payments</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R1-16" data-release="Private Beta"><AdminSupport/><label>9G. Support</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R1-16" data-release="Private Beta"><AdminSupportTicket/><label>9G.1 Support Ticket</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R5-53" data-release="Growth"><AdminReports/><label>9H. Reports</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R1-18" data-release="Private Beta"><AdminFeatureFlags/><label>9I. Feature Flags</label></div>
       <div className="screen-wrap admin-wrap" data-priority="R1-17" data-release="Private Beta"><AdminSecurityAudit/><label>9J. Security & Audit</label></div>
@@ -739,6 +770,7 @@ function App() {
   if (route === '/charges') return mobile(<ChargesLedger/>)
   if (route === '/building-expenses') return mobile(<BuildingExpenses/>)
   if (route === '/building-announcements') return mobile(<BuildingAnnouncements/>)
+  if (route === '/building-announcement-new') return mobile(<BuildingAnnouncementComposer/>)
   if (route === '/building-governance') return mobile(<BuildingGovernance/>)
   if (route === '/maintenance') return mobile(<MaintenanceRequest/>)
   if (route === '/trust') return mobile(<TrustCenter/>)
@@ -762,6 +794,8 @@ function App() {
   if (route === '/subscription') return mobile(<SubscriptionScreen/>)
   if (route === '/security') return mobile(<SecurityDevices/>)
   if (route === '/support') return mobile(<SupportCenter/>)
+  if (route === '/support-ticket') return mobile(<SupportTicketDetail/>)
+  if (route === '/support-new') return mobile(<SupportNewRequest/>)
   if (route === '/notification-settings') return mobile(<NotificationSettings/>)
 
   if (route === '/inspector-login') return mobile(<InspectorLogin/>)
@@ -785,6 +819,7 @@ function App() {
   if (route === '/admin-inspectors') return admin(<AdminInspectors/>)
   if (route === '/admin-payments') return admin(<AdminPayments/>)
   if (route === '/admin-support') return admin(<AdminSupport/>)
+  if (route === '/admin-support-ticket') return admin(<AdminSupportTicket/>)
   if (route === '/admin-reports') return admin(<AdminReports/>)
   if (route === '/admin-flags') return admin(<AdminFeatureFlags/>)
   if (route === '/admin-security') return admin(<AdminSecurityAudit/>)
