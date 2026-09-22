@@ -12,7 +12,7 @@ function SectionTitle({title, action}:{title:string,action?:string}) {
 }
 
 export function AddProperty() {
-  type Kind='apartment'|'villa'|'commercial'|'office'|'land'|'teardown'
+  type Kind='apartment'|'villa'|'commercial'|'office'|'land'|'agricultural'|'industrial'|'teardown'
   const [kind,setKind]=useState<Kind>('apartment')
   const kinds:{key:Kind,label:string,icon:any}[]=[
     {key:'apartment',label:'آپارتمان',icon:Home},
@@ -20,6 +20,8 @@ export function AddProperty() {
     {key:'commercial',label:'تجاری',icon:Building2},
     {key:'office',label:'اداری',icon:Building2},
     {key:'land',label:'زمین',icon:FileText},
+    {key:'agricultural',label:'کشاورزی / باغ',icon:FileText},
+    {key:'industrial',label:'صنعتی / سوله',icon:Building2},
     {key:'teardown',label:'کلنگی',icon:Wrench},
   ]
   const fields:Record<Kind,[string,string,string?][]> = {
@@ -28,9 +30,11 @@ export function AddProperty() {
     commercial:[['متراژ','۸۵','متر'],['عرض بر','۶.۲','متر'],['ارتفاع سقف','۴.۸','متر'],['کاربری','تجاری'],['دهنه','۲'],['نوع حق','ملکیت + سرقفلی'],['برق','سه‌فاز'],['انباری','۱۲ متر']],
     office:[['متراژ','۱۱۰','متر'],['اتاق','۳'],['طبقه','۵ از ۸'],['کاربری','اداری'],['پارکینگ','۱ سندی'],['آسانسور','۲'],['آبدارخانه','دارد'],['دسترسی','۲۴ ساعته']],
     land:[['مساحت زمین','۶۳۴','متر'],['عرض بر','۱۲','متر'],['عرض گذر','۱۰','متر'],['ابعاد','۲۱ × ۳۰'],['کاربری','مسکونی'],['موقعیت','دو نبش'],['آب/برق/گاز','لب مرز'],['پروانه','ثبت نشده']],
+    agricultural:[['مساحت زمین','۳۲۰۰','متر'],['سطح زیر کشت','۲۴۰۰','متر'],['نوع بهره‌برداری','باغ'],['منبع آب','چاه + سهم آب'],['آبیاری','قطره‌ای'],['برق','سه‌فاز'],['راه دسترسی','آسفالت'],['کاربری','کشاورزی']],
+    industrial:[['مساحت زمین','۱۰۰۰','متر'],['متراژ سالن','۴۷۰','متر'],['ارتفاع','۷','متر'],['اداری','۱۰۰ متر'],['برق','سه‌فاز ۱۲۵A'],['گاز','صنعتی'],['دسترسی','تریلی‌رو'],['کف','بتن صنعتی']],
     teardown:[['مساحت زمین','۲۸۰','متر'],['بنای فعلی','۱۶۰','متر'],['عرض بر','۱۲','متر'],['سال بنا','۱۳۵۸'],['تعداد بر','۲'],['عرض گذر','۱۲ / ۸ متر'],['سکونت','خالی'],['وضعیت بنا','فرسوده']],
   }
-  const target:Record<Kind,string>={apartment:'/property/apartment',villa:'/property/villa',commercial:'/property/commercial',office:'/property/office',land:'/property/land',teardown:'/property/teardown'}
+  const target:Record<Kind,string>={apartment:'/property/apartment',villa:'/property/villa',commercial:'/property/commercial',office:'/property/office',land:'/property/land',agricultural:'/property/agricultural',industrial:'/property/industrial',teardown:'/property/teardown'}
   return <Phone title="افزودن Property Record" active="properties">
     <div className="flow-progress"><i className="done"/><i className="active"/><i/><span>مرحله ۲ از ۳</span></div>
     <div className="form-card">
@@ -39,7 +43,7 @@ export function AddProperty() {
         {kinds.map(item=>{const Icon=item.icon;return <button key={item.key} className={kind===item.key?'active':''} onClick={()=>setKind(item.key)}><Icon size={17}/>{item.label}</button>})}
       </div>
       <label>عنوان ملک</label>
-      <div className="field-like">{kind==='land'?'زمین دماوند':kind==='teardown'?'خانه کلنگی یوسف‌آباد':kind==='villa'?'ویلای لواسان':kind==='commercial'?'تجاری جردن':kind==='office'?'دفتر سعادت‌آباد':'آپارتمان نیاوران'}</div>
+      <div className="field-like">{kind==='land'?'زمین دماوند':kind==='agricultural'?'باغ و زمین کشاورزی لواسانات':kind==='industrial'?'سوله صنعتی جاده مخصوص':kind==='teardown'?'خانه کلنگی یوسف‌آباد':kind==='villa'?'ویلای لواسان':kind==='commercial'?'تجاری جردن':kind==='office'?'دفتر سعادت‌آباد':'آپارتمان نیاوران'}</div>
       <label>موقعیت</label>
       <div className="field-like">تهران / نمونه داده <ChevronLeft size={15}/></div>
     </div>

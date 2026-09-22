@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
-  Building2, ChevronLeft, FileCheck2, Home, KeyRound, Landmark, MapPin,
-  Ruler, ShieldCheck, Store, TreePine, Users, Wrench
+  Building2, ChevronLeft, Factory, FileCheck2, Home, KeyRound, Landmark, MapPin,
+  Ruler, ShieldCheck, Sprout, Store, TreePine, Users, Wrench
 } from 'lucide-react'
 import { Phone, Status } from './ui'
 import { go } from './navigation'
@@ -9,7 +9,7 @@ import { go } from './navigation'
 type DetailField = { label:string; value:string; private?:boolean; evidence?:string }
 type PropertyType = {
   key:string; title:string; kind:string; location:string; relation:string; status:string;
-  icon:'apartment'|'villa'|'commercial'|'office'|'land'|'teardown';
+  icon:'apartment'|'villa'|'commercial'|'office'|'land'|'teardown'|'agricultural'|'industrial';
   headline:[string,string][];
   base:DetailField[]; specialist:DetailField[]; ownership:DetailField[]; services:string[];
   market?:DetailField[]; shortStay?:DetailField[]; stayRules?:string[];
@@ -130,6 +130,47 @@ const data:Record<string,PropertyType>={
     ],
     services:['استعلام و مدارک','مالکیت مشترک','بازدید زمین','آگهی فروش']
   },
+  agricultural:{
+    key:'agricultural',title:'باغ و زمین کشاورزی لواسانات',kind:'باغ / زمین کشاورزی',location:'حومه تهران · نمونه تحقیق',relation:'مالک ۶/۶ دانگ',status:'فعال',icon:'agricultural',
+    headline:[['۳۲۰۰','متر زمین'],['۱۸۰','متر بنا'],['۱','چاه'],['آسفالت','دسترسی']],
+    base:[
+      {label:'نوع بهره‌برداری',value:'باغ میوه'},{label:'کاربری ثبتی',value:'کشاورزی'},{label:'سطح زیر کشت',value:'۲۴۰۰ متر'},{label:'نوع محصول',value:'درخت میوه'},
+      {label:'منبع آب',value:'چاه + سهم آب'},{label:'روش آبیاری',value:'قطره‌ای'},{label:'برق',value:'سه‌فاز'},{label:'راه دسترسی',value:'آسفالت'}
+    ],
+    specialist:[
+      {label:'مجوز چاه',value:'نیازمند سند/استعلام',evidence:'Claim'},{label:'دبی / سهم آب',value:'ثبت بهره‌بردار',evidence:'Evidence required'},
+      {label:'انبار / اتاق کارگر',value:'۶۰ متر'},{label:'گلخانه',value:'ندارد'},{label:'دیوارکشی',value:'کامل'},{label:'ماشین‌رو',value:'بله'},
+      {label:'شیب زمین',value:'ملایم'},{label:'خاک / کیفیت',value:'ثبت نشده',evidence:'Inspection/Claim'}
+    ],
+    market:[
+      {label:'نوع عرضه',value:'فروش / اجاره بهره‌برداری'},{label:'قیمت کل',value:'Listing projection'},{label:'تجهیزات همراه',value:'Offering terms'},{label:'نوع محصول',value:'برای جست‌وجو / توضیح'}
+    ],
+    ownership:[
+      {label:'نوع سند',value:'تک‌برگ / نمونه',private:true},{label:'سهم مالکیت',value:'۶ از ۶ دانگ',private:true},
+      {label:'حقوق آب',value:'باید مستقل مستند شود',private:true},{label:'محدودیت تغییر کاربری',value:'نیازمند استعلام',private:true}
+    ],
+    services:['مدارک و استعلام','مالکیت و حقوق آب','تعمیر تجهیزات','آگهی فروش']
+  },
+  industrial:{
+    key:'industrial',title:'سوله صنعتی جاده مخصوص',kind:'سوله / انبار / کارگاه صنعتی',location:'تهران · محور صنعتی',relation:'مالک ۶/۶ دانگ',status:'فعال',icon:'industrial',
+    headline:[['۱۰۰۰','زمین'],['۴۷۰','سوله'],['۷','متر ارتفاع'],['۱۲۵A','برق']],
+    base:[
+      {label:'متراژ زمین',value:'۱۰۰۰ متر'},{label:'متراژ سالن',value:'۴۷۰ متر'},{label:'اداری',value:'۱۰۰ متر'},{label:'ارتفاع مفید',value:'۷ متر'},
+      {label:'کف سالن',value:'بتن صنعتی'},{label:'سقف',value:'سوله فلزی'},{label:'برق',value:'سه‌فاز ۱۲۵ آمپر'},{label:'گاز',value:'صنعتی'}
+    ],
+    specialist:[
+      {label:'دسترسی تریلی',value:'دارد'},{label:'درب بارگیری',value:'۲'},{label:'جرثقیل سقفی',value:'ندارد'},{label:'آتش‌نشانی',value:'نیازمند تأیید'},
+      {label:'آب',value:'شهری'},{label:'فاضلاب',value:'شبکه / نمونه'},{label:'پارکینگ',value:'۸ خودرو'},{label:'نگهبانی',value:'مجموعه صنعتی'}
+    ],
+    market:[
+      {label:'نوع عرضه',value:'فروش / اجاره'},{label:'اجاره / ودیعه',value:'Listing projection'},{label:'قابلیت تقسیم',value:'Offering term'},{label:'مناسب فعالیت',value:'Claim / مجوز محور'}
+    ],
+    ownership:[
+      {label:'نوع سند',value:'تک‌برگ صنعتی',private:true},{label:'سهم مالکیت',value:'۶ از ۶ دانگ',private:true},
+      {label:'کاربری / مجوز',value:'صنعتی',private:true},{label:'پایان‌کار / بهره‌برداری',value:'نیازمند evidence',private:true}
+    ],
+    services:['مدارک و مجوز','انشعابات صنعتی','تعمیر تجهیزات','آگهی / اجاره']
+  },
   teardown:{
     key:'teardown',title:'خانه کلنگی یوسف‌آباد',kind:'ملک کلنگی / زمین دارای بنا',location:'تهران، یوسف‌آباد · دو نبش',relation:'مالک ۶/۶ دانگ',status:'نیاز به تصمیم',icon:'teardown',
     headline:[['۲۸۰','زمین'],['۱۶۰','بنای فعلی'],['۱۲','متر بر'],['۱۳۵۸','سال بنا']],
@@ -154,7 +195,7 @@ const data:Record<string,PropertyType>={
 }
 
 function TypeIcon({type}:{type:PropertyType['icon']}) {
-  const Icon=type==='villa'?TreePine:type==='commercial'?Store:type==='office'?Building2:type==='land'?MapPin:type==='teardown'?Wrench:Home
+  const Icon=type==='villa'?TreePine:type==='commercial'?Store:type==='office'?Building2:type==='land'?MapPin:type==='agricultural'?Sprout:type==='industrial'?Factory:type==='teardown'?Wrench:Home
   return <Icon size={24}/>
 }
 

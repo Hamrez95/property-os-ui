@@ -1,0 +1,37 @@
+erDiagram
+  PARTY ||--o{ ROLE_ASSIGNMENT : receives
+  PROPERTY_RECORD ||--o{ PARCEL : contains
+  PROPERTY_RECORD ||--o{ STRUCTURE : contains
+  STRUCTURE ||--o{ SPACE : contains
+  SPACE ||--o{ ASSET : contains
+
+  PROPERTY_RECORD ||--o{ PROPERTY_RIGHT : has
+  PROPERTY_RIGHT ||--o{ OWNERSHIP_INTEREST : allocates
+  PARTY ||--o{ OWNERSHIP_INTEREST : holds
+
+  PROPERTY_RECORD ||--o{ REGISTRY_IDENTITY : identifies
+  PROPERTY_RECORD ||--o{ DOCUMENT : documented_by
+  PROPERTY_RECORD ||--o{ CLAIM : has
+  CLAIM ||--o{ EVIDENCE : supported_by
+  CLAIM ||--o{ VERIFICATION : evaluated_by
+
+  PROPERTY_RECORD ||--o{ LEASE : operated_by
+  LEASE ||--o{ LEASE_PARTY : involves
+  PARTY ||--o{ LEASE_PARTY : participates
+
+  STRUCTURE ||--o{ BUILDING_MANAGEMENT_MANDATE : governed_by
+  STRUCTURE ||--o{ CHARGE_SCHEME : charged_by
+  CHARGE_SCHEME ||--o{ CHARGE_ASSESSMENT : issues
+  CHARGE_ASSESSMENT ||--o{ CHARGE_ALLOCATION : allocates
+
+  PROPERTY_RECORD ||--o{ LISTING : projected_as
+  LISTING ||--o{ OFFER : receives
+  OFFER ||--o{ DEAL : may_form
+
+  PROPERTY_RECORD ||--o{ STAY_OFFERING : may_host
+  STAY_OFFERING ||--o{ AVAILABILITY_DAY : calendar
+  STAY_OFFERING ||--o{ RATE_RULE : priced_by
+  STAY_OFFERING ||--o{ RESERVATION : booked_by
+
+  PROPERTY_RECORD ||--o{ INSPECTION : inspected_by
+  INSPECTION ||--o{ FINDING : yields

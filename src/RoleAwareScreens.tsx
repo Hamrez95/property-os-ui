@@ -62,6 +62,7 @@ function ManagerHome() {
       <button onClick={()=>go('/maintenance')}><Wrench/><span>تعمیرات</span><b>۳ باز</b></button>
       <button onClick={()=>go('/building-announcements')}><Bell/><span>اعلان‌ها</span><b>۱ پیش‌نویس</b></button>
       <button onClick={()=>go('/building-units')}><Users/><span>ساکنین</span><b>۹ فعال</b></button>
+      <button onClick={()=>go('/building-governance')}><Landmark/><span>مجمع و مصوبات</span><b>۱ رأی باز</b></button>
     </div>
     <button className="home-task warning" onClick={()=>go('/maintenance')}><Wrench/><div><strong>تیکت آسانسور منتظر تأیید است</strong><span>پیشنهاد سرویس‌کار: ۳.۸ میلیون تومان</span></div><ChevronLeft/></button>
   </>
@@ -100,6 +101,9 @@ export function RelationshipPortfolio() {
     {title:'ویلای لواسان',type:'ویلا',meta:'۴۲۰ زمین · ۲۳۰ بنا',relation:'مالک ۶/۶ دانگ',status:'خالی',tone:'warning' as Tone,route:'/property/villa',roles:['owner']},
     {title:'تجاری جردن',type:'تجاری',meta:'۸۵ متر · همکف',relation:'مالک ۲.۵/۶ دانگ',status:'اجاره‌شده',tone:'verified' as Tone,route:'/property/commercial',roles:['owner']},
     {title:'زمین دماوند',type:'زمین',meta:'۶۳۴ متر · مسکونی',relation:'مالک ۳/۶ دانگ',status:'بدون بهره‌بردار',tone:'neutral' as Tone,route:'/property/land',roles:['owner']},
+    {title:'دفتر سعادت‌آباد',type:'اداری',meta:'۱۱۰ متر · طبقه ۵',relation:'مالک ۶/۶ دانگ',status:'فعال',tone:'verified' as Tone,route:'/property/office',roles:['owner']},
+    {title:'باغ لواسانات',type:'باغ / کشاورزی',meta:'۳۲۰۰ متر · باغ میوه',relation:'مالک ۶/۶ دانگ',status:'فعال',tone:'verified' as Tone,route:'/property/agricultural',roles:['owner']},
+    {title:'سوله جاده مخصوص',type:'صنعتی',meta:'۱۰۰۰ زمین · ۴۷۰ سالن',relation:'مالک ۶/۶ دانگ',status:'اجاره‌شده',tone:'info' as Tone,route:'/property/industrial',roles:['owner']},
     {title:'خانه کلنگی یوسف‌آباد',type:'کلنگی',meta:'۲۸۰ زمین · دو نبش',relation:'مالک ۶/۶ دانگ',status:'نیاز به تصمیم',tone:'warning' as Tone,route:'/property/teardown',roles:['owner']},
     {title:'ساختمان نیاوران',type:'ساختمان',meta:'۱۲ واحد · تهران',relation:'مدیر ساختمان',status:'فعال',tone:'info' as Tone,route:'/building',roles:['manager']},
   ]

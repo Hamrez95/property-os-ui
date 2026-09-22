@@ -13,6 +13,7 @@ type DecisionState = 'locked' | 'working' | 'open'
 const nav = [
   { path: '/guide', label: 'راهنمای توسعه', icon: BookOpen },
   { path: '/roadmap', label: 'نقشه راه', icon: Flag },
+  { path: '/modeling', label: 'مدلینگ', icon: Database },
   { path: '/benchmark', label: 'Benchmark بازار', icon: Search },
   { path: '/operations', label: 'آمادگی لانچ', icon: Rocket },
   { path: '/design', label: 'Design Board', icon: LayoutDashboard },
@@ -31,7 +32,7 @@ function StatusPill({state}:{state:DecisionState}) {
   return <span className={'hub-status '+state}><b>{map[state][0]}</b><small>{map[state][1]}</small></span>
 }
 
-export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'benchmark'|'operations'|'design'}) {
+export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'modeling'|'benchmark'|'operations'|'design'}) {
   const [open,setOpen]=useState(false)
   return <header className="project-site-header" dir="rtl">
     <div className="project-site-header-inner">
@@ -58,7 +59,7 @@ export function ProjectSiteHeader({active}:{active:'guide'|'roadmap'|'benchmark'
   </header>
 }
 
-function HubPage({active,children}:{active:'guide'|'roadmap'|'benchmark'|'operations'|'design',children:ReactNode}) {
+function HubPage({active,children}:{active:'guide'|'roadmap'|'modeling'|'benchmark'|'operations'|'design',children:ReactNode}) {
   return <div className="hub-page" dir="rtl"><ProjectSiteHeader active={active}/><main className="hub-main">{children}</main></div>
 }
 
@@ -196,6 +197,8 @@ const fieldMatrix = [
   {type:'تجاری',core:'متراژ، کاربری، طبقه، عرض بر/ویترین، دهنه، ارتفاع سقف، انبار، سرویس، برق',special:'مالکیت/سرقفلی/حق کسب، امکان تابلو، بارگیری، پارکینگ، دسترسی خیابانی',market:'فروش/اجاره/حق؛ ودیعه و اجاره، قیمت مالکیت، کاربری پیشنهادی به‌عنوان Claim'},
   {type:'اداری',core:'متراژ، اتاق، طبقه، کاربری، آسانسور، پارکینگ، انباری، آبدارخانه، HVAC',special:'اتاق جلسه، لابی/پذیرش، شبکه/فیبر، امنیت، ساعات دسترسی، پارکینگ مراجع',market:'فروش/اجاره، موقعیت اداری، قیمت/اجاره، suitability به‌عنوان Claim'},
   {type:'زمین',core:'مساحت، ابعاد، بر، جهت، تعداد بر، عرض گذر، شکل/شیب، کاربری ثبت‌شده، دسترسی',special:'آب/برق/گاز، دیوارکشی، مختصات، داخل/خارج محدوده، سند و سهم دانگ',market:'قیمت کل/متری؛ تراکم، سطح اشغال، عقب‌نشینی و ساخت‌پذیری فقط با Evidence/استعلام'},
+  {type:'باغ / کشاورزی',core:'مساحت، سطح زیر کشت، نوع بهره‌برداری، محصول/باغ، راه دسترسی، کاربری ثبت‌شده',special:'منبع و حق آب، چاه و مجوز، آبیاری، برق، گلخانه، انبار، دیوارکشی، کیفیت خاک',market:'فروش/اجاره بهره‌برداری؛ تجهیزات همراه و محصول Offering؛ حقوق آب Evidence جدا'},
+  {type:'صنعتی / سوله',core:'زمین، سالن، اداری، ارتفاع مفید، سازه/سقف/کف، کاربری صنعتی',special:'برق سه‌فاز و ظرفیت، گاز صنعتی، تریلی‌رو، درب بارگیری، جرثقیل، ایمنی، انشعابات',market:'فروش/اجاره؛ قابلیت تقسیم Offering؛ مجوز فعالیت و suitability نیازمند Evidence'},
   {type:'کلنگی',core:'مساحت زمین، بنای فعلی، سن/وضعیت سازه، طبقات/واحد، بر، گذر، تعداد بر، سکونت',special:'انشعابات، پایان‌کار قدیم، دسترسی تخریب، سند/سهم، وضعیت تخلیه',market:'فروش کلنگی، قیمت زمین/متر، مشارکت در ساخت = Offering؛ پتانسیل ساخت = Claim'},
 ]
 
@@ -251,6 +254,8 @@ export function ProjectBenchmarkPage() {
       <article><span>R5</span><strong>Host calendar</strong><p>قیمت روزانه، پر/خالی، رزرو آنی و تراکنش برای ویلا/اقامت کوتاه‌مدت.</p></article>
       <article><span>R2/R3</span><strong>Evidence-first badges</strong><p>«سندی»، «بازرسی‌شده»، «Host claim» و «Official» به‌جای یک تیک سبز مبهم.</p></article>
       <article><span>R1</span><strong>Context-aware forms</strong><p>نوع ملک و Role کاربر تعیین کند کدام فیلدها و عملیات واقعاً لازم‌اند.</p></article>
+      <article><span>R1/R2</span><strong>Measurement provenance</strong><p>برای مساحت/ارتفاع/ابعاد، منبع اندازه‌گیری و زمان ثبت کنار مقدار نگهداری شود؛ ایده همسو با استانداردهای داده املاک.</p></article>
+      <article><span>Foundation</span><strong>Resources + Fields + Lookups</strong><p>از الگوی RESO برای نام‌گذاری typed resource/field/lookup و relationship الهام می‌گیریم، بدون کپی schema بازار آمریکا.</p></article>
     </section>
   </HubPage>
 }

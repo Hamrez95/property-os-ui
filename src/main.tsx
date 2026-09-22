@@ -15,6 +15,7 @@ import './design-system/interactive.css'
 import './design-system/project-hub.css'
 import './design-system/role-aware.css'
 import './design-system/property-types.css'
+import './design-system/modeling.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode><App /></React.StrictMode>

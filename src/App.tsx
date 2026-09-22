@@ -10,10 +10,11 @@ import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, In
 import { AdminBuildings, AdminDeals, AdminFeatureFlags, AdminInspectors, AdminListings, AdminPayments, AdminReports, AdminSecurityAudit, AdminSupport, AdminTrustQueue } from './AdminExtendedScreens'
 import { QualityGallery } from './QualityGallery'
 import { PublishListing, NegotiationThread, ContractReview, SecurePayment, NotificationSettings } from './MarketplaceAccountScreens'
-import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
+import { BuildingExpenses, BuildingAnnouncements, BuildingGovernance, MaintenanceRequest, InspectionStatus, VerifiedPassport } from './BuildingTrustScreens'
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PROTOTYPE_SCREENS, type PrototypeGroup } from './navigation'
 import { ProjectBenchmarkPage, ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
+import { ProjectModelingPage } from './ModelingBlueprint'
 import { RelationshipPortfolio, RoleAwareHome } from './RoleAwareScreens'
 import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
 
@@ -286,6 +287,7 @@ function BuildingDashboard() {
     <div className="building-actions">
       <button onClick={() => go('/charges')}><CircleDollarSign/><span>شارژ و بدهی</span></button><button onClick={() => go('/maintenance')}><Wrench/><span>تعمیرات</span></button>
       <button onClick={() => go('/building-announcements')}><Bell/><span>اعلان‌ها</span></button><button onClick={() => go('/building-units')}><Users/><span>ساکنین</span></button>
+      <button onClick={() => go('/building-governance')}><Landmark/><span>مجمع و مدیریت</span></button>
     </div>
     <section className="mobile-section">
       <div className="section-head"><h3>آخرین فعالیت‌ها</h3><button onClick={() => go('/building-expenses')}>همه</button></div>
@@ -551,7 +553,9 @@ function ReviewBoard() {
       <div className="screen-wrap"><PropertyTypeDetail type="commercial"/><label>10D. Commercial Detail</label></div>
       <div className="screen-wrap"><PropertyTypeDetail type="office"/><label>10E. Office Detail</label></div>
       <div className="screen-wrap"><PropertyTypeDetail type="land"/><label>10F. Land Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="teardown"/><label>10G. Teardown Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="agricultural"/><label>10G. Agricultural / Garden Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="industrial"/><label>10H. Industrial / Warehouse Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="teardown"/><label>10I. Teardown Detail</label></div>
       <div className="screen-wrap"><PropertyPassport/><label>11. Property Passport</label></div>
       <div className="screen-wrap"><PropertyTimeline/><label>12. Property Timeline</label></div>
       <div className="screen-wrap"><SpacesOverview/><label>13. Spaces</label></div>
@@ -574,9 +578,10 @@ function ReviewBoard() {
       <div className="screen-wrap"><InspectionRequest/><label>21. Inspection Request</label></div>
       <div className="screen-wrap"><BuildingExpenses/><label>21A. Building Expenses</label></div>
       <div className="screen-wrap"><BuildingAnnouncements/><label>21B. Announcements</label></div>
-      <div className="screen-wrap"><MaintenanceRequest/><label>21C. Maintenance</label></div>
-      <div className="screen-wrap"><InspectionStatus/><label>21D. Inspection Status</label></div>
-      <div className="screen-wrap"><VerifiedPassport/><label>21E. Verified Passport</label></div>
+      <div className="screen-wrap"><BuildingGovernance/><label>21C. Building Governance</label></div>
+      <div className="screen-wrap"><MaintenanceRequest/><label>21D. Maintenance</label></div>
+      <div className="screen-wrap"><InspectionStatus/><label>21E. Inspection Status</label></div>
+      <div className="screen-wrap"><VerifiedPassport/><label>21F. Verified Passport</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Marketplace + Transaction</span><h2>Search / Offer / Deal</h2></div><small>Property → Listing → Visit → Offer → Transaction</small></div>
     <div className="mobile-grid">
@@ -683,6 +688,7 @@ function App() {
 
   if (route === '/guide') return <ProjectGuidePage/>
   if (route === '/roadmap') return <ProjectRoadmapPage/>
+  if (route === '/modeling') return <ProjectModelingPage/>
   if (route === '/benchmark') return <ProjectBenchmarkPage/>
   if (route === '/operations') return <ProjectOperationsPage/>
   if (route === '/design') return <ReviewBoard/>
@@ -700,6 +706,8 @@ function App() {
   if (route === '/property/commercial') return mobile(<PropertyTypeDetail type="commercial"/>)
   if (route === '/property/office') return mobile(<PropertyTypeDetail type="office"/>)
   if (route === '/property/land') return mobile(<PropertyTypeDetail type="land"/>)
+  if (route === '/property/agricultural') return mobile(<PropertyTypeDetail type="agricultural"/>)
+  if (route === '/property/industrial') return mobile(<PropertyTypeDetail type="industrial"/>)
   if (route === '/property/teardown') return mobile(<PropertyTypeDetail type="teardown"/>)
   if (route === '/passport') return mobile(<PropertyPassport/>)
   if (route === '/property-timeline') return mobile(<PropertyTimeline/>)
@@ -717,6 +725,7 @@ function App() {
   if (route === '/charges') return mobile(<ChargesLedger/>)
   if (route === '/building-expenses') return mobile(<BuildingExpenses/>)
   if (route === '/building-announcements') return mobile(<BuildingAnnouncements/>)
+  if (route === '/building-governance') return mobile(<BuildingGovernance/>)
   if (route === '/maintenance') return mobile(<MaintenanceRequest/>)
   if (route === '/trust') return mobile(<TrustCenter/>)
   if (route === '/claim-evidence') return mobile(<ClaimEvidence/>)
