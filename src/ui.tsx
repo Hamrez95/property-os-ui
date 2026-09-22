@@ -4,6 +4,7 @@ import {
   House, Landmark, MessageSquare, Plus, Search, Settings, ShieldCheck, UserRound,
   Users, WalletCards, XCircle
 } from 'lucide-react'
+import { go, goBack } from './navigation'
 
 export type Tone = 'verified' | 'warning' | 'danger' | 'neutral' | 'info'
 
@@ -27,7 +28,7 @@ export function Status({ tone='neutral', children }: { tone?: Tone, children: Re
 export function Phone({ title, children, active='home' }: { title?: string, children: ReactNode, active?: string }) {
   return <div className="phone" dir="rtl" lang="fa">
     <div className="phone-status" aria-hidden="true"><span>9:41</span><span>▮▮◒</span></div>
-    {title && <header className="mobile-header"><ChevronLeft size={20} aria-hidden="true"/><strong>{title}</strong><span className="header-spacer"/></header>}
+    {title && <header className="mobile-header"><button className="header-back" onClick={() => goBack()} aria-label="بازگشت"><ChevronLeft size={20}/></button><strong>{title}</strong><span className="header-spacer"/></header>}
     <main className="phone-body">{children}</main>
     <BottomNav active={active}/>
   </div>
@@ -35,24 +36,26 @@ export function Phone({ title, children, active='home' }: { title?: string, chil
 
 export function BottomNav({ active='home' }: { active?: string }) {
   const items = [
-    ['home', Home, 'خانه'], ['search', Search, 'جستجو'], ['add', Plus, 'افزودن'],
-    ['messages', MessageSquare, 'پیام‌ها'], ['account', UserRound, 'حساب']
+    ['home', Home, 'خانه', '/home'], ['search', Search, 'جستجو', '/marketplace'], ['add', Plus, 'افزودن', '/property-add'],
+    ['messages', MessageSquare, 'پیام‌ها', '/messages'], ['account', UserRound, 'حساب', '/account']
   ] as const
   return <nav className="bottom-nav" aria-label="ناوبری اصلی">
-    {items.map(([key, Icon, label]) => <div
+    {items.map(([key, Icon, label, path]) => <button
       key={key}
-      role="link"
-      tabIndex={0}
+      type="button"
+      onClick={() => go(path)}
       aria-current={active===key ? 'page' : undefined}
       aria-label={label}
       className={'nav-item ' + (active===key ? 'active' : '') + (key==='add' ? ' add' : '')}>
       <span className="nav-icon" aria-hidden="true"><Icon size={17}/></span><span>{label}</span>
-    </div>)}
+    </button>)}
   </nav>
 }
 
-export function PropertyCard({title,meta,status,tone='verified'}:{title:string,meta:string,status:string,tone?:Tone}) {
-  return <article className="property-card" aria-label={title}>
+export function PropertyCard({title,meta,status,tone='verified',route='/property'}:{title:string,meta:string,status:string,tone?:Tone,route?:string}) {
+  return <article className="property-card" aria-label={title} role="button" tabIndex={0}
+    onClick={() => go(route)}
+    onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') go(route) }}>
     <div className="property-thumb" aria-hidden="true"><div className="mini-building"><i/><i/><i/></div></div>
     <div className="property-card-copy">
       <strong>{title}</strong><span>{meta}</span><Status tone={tone}>{status}</Status>
@@ -70,21 +73,21 @@ export function Stat({icon:Icon,label,value,delta}:{icon:any,label:string,value:
 
 export function AdminShell({section,children}:{section:string,children:ReactNode}) {
   const nav = [
-    [Home,'داشبورد'],[Users,'کاربران'],[Building2,'املاک'],[Landmark,'ساختمان‌ها'],
-    [FileCheck2,'قراردادها'],[ShieldCheck,'بازرسی‌ها'],[WalletCards,'پرداخت‌ها'],
-    [MessageSquare,'پیام‌ها'],[Settings,'تنظیمات']
+    [Home,'داشبورد','/admin'],[Users,'کاربران','/admin-users'],[Building2,'املاک','/admin-properties'],[Landmark,'ساختمان‌ها','/admin-buildings'],
+    [FileCheck2,'قراردادها','/admin-deals'],[ShieldCheck,'بازرسی‌ها','/admin-trust'],[WalletCards,'پرداخت‌ها','/admin-payments'],
+    [MessageSquare,'پیام‌ها','/admin-support'],[Settings,'تنظیمات','/admin-flags']
   ] as const
   return <div className="admin-shell" dir="rtl" lang="fa">
     <aside className="sidebar">
       <Brand compact/>
-      <nav aria-label="ناوبری مدیریت">{nav.map(([Icon,label])=><div
+      <nav aria-label="ناوبری مدیریت">{nav.map(([Icon,label,path])=><button
         key={label}
-        role="link"
-        tabIndex={0}
+        type="button"
+        onClick={() => go(path)}
         aria-current={section===label ? 'page' : undefined}
         className={section===label?'active':''}>
         <Icon size={17} aria-hidden="true"/><span>{label}</span>
-      </div>)}</nav>
+      </button>)}</nav>
     </aside>
     <main className="admin-main">
       <header className="admin-topbar">
