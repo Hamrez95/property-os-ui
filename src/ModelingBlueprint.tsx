@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import {
   BadgeCheck, Blocks, Building2, CalendarRange, CircleDollarSign, Database, FileCheck2,
   FileText, Fingerprint, GitBranch, Home, KeyRound, Landmark, Layers3, Link2, MapPinned,
@@ -173,7 +174,7 @@ export function ProjectModelingPage() {
 
       <div className="hub-section-head"><span>09 · PRIVACY</span><h2>Hide در UI کافی نیست؛ authorization باید از مدل بیاید</h2><p>Visibility class بخشی از قرارداد داده است.</p></div>
       <section className="privacy-stack">
-        {privacy.map(([name,desc],i)=><div key={name} style={{'--level':String(i)} as React.CSSProperties}><strong>{name}</strong><span>{desc}</span></div>)}
+        {privacy.map(([name,desc],i)=><div key={name} style={{'--level':String(i)} as CSSProperties}><strong>{name}</strong><span>{desc}</span></div>)}
       </section>
 
       <section className="modeling-done-card">
