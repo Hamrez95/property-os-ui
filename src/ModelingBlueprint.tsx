@@ -75,6 +75,8 @@ const propertyTypes = [
   {title:'Commercial',icon:Store,fields:'frontage · doors · ceiling · warehouse · 3-phase · business right',separate:'Sarqofli/right modeled explicitly'},
   {title:'Office',icon:Landmark,fields:'rooms · meeting · reception · HVAC · network · access hours',separate:'Business suitability → Claim'},
   {title:'Land',icon:MapPinned,fields:'dimensions · frontage · road width · corners · slope · land use · utilities',separate:'Density/buildability → Claim'},
+  {title:'Agricultural / Garden',icon:Home,fields:'cultivated area · water rights · irrigation · greenhouse · access · utilities',separate:'Well permit / water right → Claim + Evidence'},
+  {title:'Industrial / Warehouse',icon:Building2,fields:'hall · office · clear height · 3-phase power · truck access · loading',separate:'Activity permit / safety → Claim + Evidence'},
   {title:'Teardown',icon:Wrench,fields:'land · current build · age/condition · roads · utilities · old docs',separate:'Participation offer ≠ Property fact'},
 ]
 
@@ -102,6 +104,8 @@ export function ProjectModelingPage() {
         <h1>از طراحی قابل‌کلیک تا Schema قابل‌اعتماد</h1>
         <p>این صفحه مرجع سریع تو و مسعود قبل از ERD، migration و OpenAPI است. جزئیات کامل در docs قرار دارد؛ اینجا مرز منابع، invariants، نوع داده و visibility را یک‌جا می‌بینید.</p>
         <div className="modeling-doc-links">
+          <button onClick={()=>window.location.hash='/modeling/dictionary'}><Database size={15}/>Live Data Dictionary</button>
+          <button onClick={()=>window.location.hash='/modeling/decisions'}><ShieldCheck size={15}/>Founder Review</button>
           <a href="https://github.com/Hamrez95/property-os-ui/blob/main/docs/DOMAIN_MODEL_V1.md" target="_blank" rel="noreferrer"><FileText size={15}/>Domain Model</a>
           <a href="https://github.com/Hamrez95/property-os-ui/blob/main/docs/DATA_DICTIONARY_V1.md" target="_blank" rel="noreferrer"><Database size={15}/>Data Dictionary</a>
           <a href="https://github.com/Hamrez95/property-os-ui/blob/main/docs/IR_OFFICIAL_MODELING_NOTES.md" target="_blank" rel="noreferrer"><BadgeCheck size={15}/>Iran Official Notes</a>
