@@ -1,10 +1,10 @@
 import {
   AlertTriangle, Camera, CheckCircle2, ChevronLeft, ClipboardCheck, FileCheck2,
-  Home, MapPin, MoreVertical, Search, ShieldCheck, Upload, UserRound, WalletCards
+  Home, MapPin, MoreVertical, Search, ShieldCheck, Upload, UserRound, WalletCards, FileText, KeyRound
 } from 'lucide-react'
 import { Status } from './ui'
 
-function InspectorPhone({title,children,active='tasks'}:{title?:string,children:React.ReactNode,active?:string}) {
+export function InspectorPhone({title,children,active='tasks'}:{title?:string,children:React.ReactNode,active?:string}) {
   const nav=[['tasks',ClipboardCheck,'ماموریت‌ها'],['capture',Camera,'ثبت'],['profile',UserRound,'حساب']] as const
   return <div className="phone inspector-phone">
     <div className="phone-status"><span>9:41</span><span>▮▮◒</span></div>
@@ -70,6 +70,38 @@ export function InspectorChecklist() {
       <div className="check-state">{r[1]==='done'?'✓':i+1}</div><span>{r[0]}</span><ChevronLeft size={16}/>
     </div>)}</div>
     <div className="inspector-note"><AlertTriangle size={15}/><span>موارد تخصصی سازه، برق و تأسیسات پنهان نیازمند کارشناس تخصصی هستند.</span></div>
+  </InspectorPhone>
+}
+
+export function InspectorSpaceVerification() {
+  const rows=[
+    ['واحد مسکونی ۴','تطابق آدرس و دسترسی','verified'],
+    ['پارکینگ P-21','شماره و موقعیت فیزیکی','info'],
+    ['انباری A4','ابعاد و دسترسی','warning']
+  ] as const
+  return <InspectorPhone title="تأیید فضاها">
+    <div className="inspector-space-hero"><KeyRound size={24}/><div><span>دامنه ماموریت</span><strong>۳ Space مستقل</strong><small>هر فضا جداگانه نتیجه و evidence دارد.</small></div></div>
+    <div className="inspector-space-list">{rows.map((r,i)=><div key={r[0]} className="inspector-space-row">
+      <div className="space-number">{i+1}</div><div><strong>{r[0]}</strong><span>{r[1]}</span></div><Status tone={r[2]}>{r[2]==='verified'?'تأیید شد':r[2]==='info'?'در حال بررسی':'نیاز به مدرک'}</Status>
+    </div>)}</div>
+    <div className="inspector-note"><ShieldCheck size={15}/><span>پارکینگ و انباری به‌عنوان Space مستقل بررسی می‌شوند؛ نتیجه با واحد مسکونی ادغام نمی‌شود.</span></div>
+    <button className="btn primary inspector-cta">ثبت نتیجه فضاها</button>
+  </InspectorPhone>
+}
+
+export function InspectorDocumentEvidence() {
+  const docs=[
+    ['سند ارائه‌شده','مالکیت / حق استفاده','verified'],
+    ['پایان‌کار','مشخصات ساختمان','info'],
+    ['مدرک پارکینگ','Space P-21','warning']
+  ] as const
+  return <InspectorPhone title="مدارک و شواهد">
+    <div className="evidence-hero"><FileText size={24}/><div><span>Evidence Pack</span><strong>۳ مدرک دریافت‌شده</strong><small>اصل فایل + metadata نگهداری می‌شود.</small></div></div>
+    <div className="evidence-doc-list">{docs.map((d,i)=><div className="evidence-doc-row" key={d[0]}>
+      <div className="doc-index">{i+1}</div><div><strong>{d[0]}</strong><span>{d[1]}</span></div><Status tone={d[2]}>{d[2]==='verified'?'خوانا':d[2]==='info'?'ثبت شد':'تکمیل شود'}</Status>
+    </div>)}</div>
+    <div className="evidence-capture-card"><Upload size={20}/><div><strong>ثبت مدرک جدید</strong><span>تصویر کامل، بدون crop و با نور کافی</span></div></div>
+    <div className="capture-meta"><div><span>زمان</span><strong>16:52:08</strong></div><div><span>ماموریت</span><strong>INS-3281</strong></div><div><span>Audit</span><strong>فعال</strong></div></div>
   </InspectorPhone>
 }
 
