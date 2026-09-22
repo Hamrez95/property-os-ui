@@ -39,7 +39,7 @@ export function BottomNav({ active='auto' }: { active?: string }) {
   const inferred = route==='/home'||route==='/city' ? 'home'
     : route.startsWith('/property')||route==='/portfolio'||route==='/spaces'||route==='/space'||route==='/bundle'||route.startsWith('/building')||route==='/charges'||route==='/maintenance'||route==='/trust'||route.startsWith('/inspection')||route==='/verified-passport' ? 'properties'
     : route==='/messages'||route==='/notifications' ? 'messages'
-    : route==='/account'||route==='/subscription'||route==='/security'||route==='/support'||route==='/notification-settings' ? 'account'
+    : route==='/account'||route==='/subscription'||route==='/security'||route.startsWith('/support')||route==='/notification-settings' ? 'account'
     : 'home'
   const current = active==='auto' ? inferred : active
   const items = [
