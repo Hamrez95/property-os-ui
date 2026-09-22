@@ -5,6 +5,7 @@ import {
   ArrowLeft, House, Menu, Settings, Landmark, ClipboardCheck
 } from 'lucide-react'
 import { AdminShell, Brand, Phone, PropertyCard, Stat, Status, type Tone } from './ui'
+import { InspectorAssignments, InspectorAssignmentDetail, InspectorChecklist, InspectorDiscrepancy, InspectorEarnings, InspectorLogin, InspectorMediaCapture, InspectorSubmitReport } from './InspectorScreens'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -559,6 +560,17 @@ function ReviewBoard() {
       <div className="screen-wrap"><SecurityDevices/><label>32. Security & Devices</label></div>
       <div className="screen-wrap"><SupportCenter/><label>33. Support</label></div>
     </div>
+    <div className="review-section-head flow-heading"><div><span>Field operations</span><h2>Inspector App</h2></div><small>Fast · Auditable · Evidence-first</small></div>
+    <div className="mobile-grid">
+      <div className="screen-wrap"><InspectorLogin/><label>34. Inspector Login</label></div>
+      <div className="screen-wrap"><InspectorAssignments/><label>35. Assignments</label></div>
+      <div className="screen-wrap"><InspectorAssignmentDetail/><label>36. Assignment Detail</label></div>
+      <div className="screen-wrap"><InspectorChecklist/><label>37. Checklist</label></div>
+      <div className="screen-wrap"><InspectorMediaCapture/><label>38. Media Capture</label></div>
+      <div className="screen-wrap"><InspectorDiscrepancy/><label>39. Discrepancy</label></div>
+      <div className="screen-wrap"><InspectorSubmitReport/><label>40. Submit Report</label></div>
+      <div className="screen-wrap"><InspectorEarnings/><label>41. Quality & Earnings</label></div>
+    </div>
     <div className="review-section-head admin-heading"><div><span>Operations</span><h2>Admin — Calm Premium</h2></div><small>Dense · Clear · Trustworthy</small></div>
     <div className="admin-grid">
       <div className="screen-wrap admin-wrap"><AdminDashboard/><label>7. Admin Dashboard</label></div>
@@ -585,6 +597,7 @@ function App() {
   if (route === '/notifications') return <div className="single-screen"><NotificationsScreen/></div>
   if (route === '/account') return <div className="single-screen"><ProfileRoles/></div>
   if (route === '/security') return <div className="single-screen"><SecurityDevices/></div>
+  if (route === '/inspector') return <div className="single-screen"><InspectorAssignments/></div>
   return <ReviewBoard/>
 }
 
