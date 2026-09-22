@@ -1,0 +1,15 @@
+/* Inspector completion polish */
+.inspector-phone{background:#F7F9FC;border-color:rgba(208,213,221,.8)}
+.inspector-header{background:var(--pos-navy-950);border-bottom-color:rgba(255,255,255,.06)}
+.inspector-nav{background:var(--pos-navy-950);border-top:1px solid rgba(255,255,255,.06)}
+.inspector-nav .active{color:#fff}
+.inspector-summary,.assignment-hero,.earnings-hero{background:linear-gradient(145deg,var(--pos-navy-950),var(--pos-navy-800));box-shadow:0 10px 24px rgba(19,35,63,.16)}
+.assignment-card,.assignment-block,.capture-tips,.report-items{border-color:rgba(228,231,236,.8);box-shadow:var(--shadow-1)}
+.assignment-card{min-height:62px}
+.route-card{border:1px solid #D9E4FF;background:var(--color-action-soft)}
+.inspector-space-hero,.evidence-hero{margin:9px 10px 10px;padding:11px;border-radius:12px;background:linear-gradient(145deg,var(--pos-navy-900),#203D6B);color:#fff;display:grid;grid-template-columns:30px 1fr;gap:8px}
+.inspector-space-hero>div,.evidence-hero>div{display:flex;flex-direction:column}.inspector-space-hero span,.inspector-space-hero small,.evidence-hero span,.evidence-hero small{font-size:6px;color:#C5D3E6}.inspector-space-hero strong,.evidence-hero strong{font-size:9px}
+.inspector-space-list,.evidence-doc-list{margin:0 10px;border:1px solid var(--color-border);border-radius:11px;background:#fff;overflow:hidden}
+.inspector-space-row,.evidence-doc-row{display:grid;grid-template-columns:30px 1fr auto;gap:7px;align-items:center;padding:9px;border-bottom:1px solid #EEF1F4}.inspector-space-row:last-child,.evidence-doc-row:last-child{border-bottom:0}
+.space-number,.doc-index{width:28px;height:28px;border-radius:8px;background:var(--color-action-soft);color:var(--color-action);display:grid;place-items:center;font-weight:800}.inspector-space-row>div:nth-child(2),.evidence-doc-row>div:nth-child(2){display:flex;flex-direction:column}.inspector-space-row strong,.evidence-doc-row strong{font-size:8px}.inspector-space-row span,.evidence-doc-row span{font-size:6px;color:var(--color-text-secondary)}
+.evidence-capture-card{margin:10px;padding:10px;border:1px dashed #9FB2C8;border-radius:10px;background:#fff;display:flex;gap:8px;color:var(--color-action)}.evidence-capture-card>div{display:flex;flex-direction:column}.evidence-capture-card strong{font-size:8px}.evidence-capture-card span{font-size:6px;color:var(--color-text-secondary)}
