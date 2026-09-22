@@ -91,7 +91,7 @@ export function BusinessStrategyHub(){
       </section>
 
       <nav className="biz-local-nav" aria-label="ناوبری بیزینس">
-        {[['north','ویژن'],['market','بازار'],['segments','مشتری'],['canvas','Canvas'],['gtm','GTM'],['economics','اقتصاد'],['org','تیم'],['risk','ریسک'],['gates','Roadmap']].map(([id,label])=><button key={id} onClick={()=>jump(id)}>{label}</button>)}
+        {[['research-impact','اثر تحقیق'],['north','ویژن'],['market','بازار'],['segments','مشتری'],['canvas','Canvas'],['gtm','GTM'],['economics','اقتصاد'],['org','تیم'],['risk','ریسک'],['gates','Roadmap']].map(([id,label])=><button key={id} onClick={()=>jump(id)}>{label}</button>)}
       </nav>
 
       <section className="biz-evidence-strip">
@@ -99,6 +99,22 @@ export function BusinessStrategyHub(){
         <article><Network/><div><strong>73.8M</strong><span>کاربر اینترنت · late 2025</span></div><State kind="evidence">EVIDENCE</State></article>
         <article><Gauge/><div><strong>79.6%</strong><span>Internet penetration</span></div><State kind="evidence">EVIDENCE</State></article>
         <article><Landmark/><div><strong>Private Platform</strong><span>مسیر regulated در قوانین جدید دیده شده</span></div><State kind="evidence">EVIDENCE</State></article>
+      </section>
+
+      <section id="research-impact" className="biz-section">
+        <div className="hub-section-head">
+          <span>00 · RESEARCH → PRODUCT IMPACT</span>
+          <h2>تحقیق چه چیزهایی را برای محصول روشن کرد؟</h2>
+          <p>این بخش تصمیم‌های تحقیقاتی را به تغییرات قابل اجرا در Product تبدیل می‌کند؛ موارد حقوقی/رگولاتوری همچنان قبل از activation باید با منبع رسمی و متخصص verify شوند.</p>
+        </div>
+        <div className="macro-grid">
+          <article className="macro-card"><ShieldCheck/><strong>Passport دو لایه</strong><p><b>Private Passport</b> برای مالک/ساکن و <b>Shareable Trust Passport</b> برای طرف معامله. اطلاعات حساس و PII نباید خودکار share شوند.</p><State kind="decision">PRODUCT DECISION</State></article>
+          <article className="macro-card"><Users/><strong>Home = Role + Context</strong><p>Home نباید برای همه یک dashboard ثابت باشد. Tenant، Owner، Multi-owner و Building Manager باید بر اساس Scope و دارایی‌هایشان priority متفاوت ببینند.</p><State kind="decision">UX DIRECTION</State></article>
+          <article className="macro-card"><Building2/><strong>Short-stay یک Overlay است</strong><p>Villa همان Property Core می‌ماند؛ Short-stay با StayOffering، calendar، rate، rules و reservation روی آن اضافه می‌شود، نه به‌عنوان مدل جدا.</p><State kind="decision">DOMAIN DECISION</State></article>
+          <article className="macro-card"><KeyRound/><strong>Transaction از روز اول Gate شده</strong><p>UI می‌تواند flow را prototype کند، اما Official Registration، custody/escrow و regulated rails فقط با مسیر حقوقی و partner/access تأییدشده فعال می‌شوند.</p><State kind="decision">REGULATORY GATE</State></article>
+          <article className="macro-card"><Globe2/><strong>Resilience در Channel Design</strong><p>با توجه به ریسک اختلال اینترنت، معماری عملیات نباید فقط به App وابسته باشد؛ Web/PWA، SMS و fallback انسانی باید در roadmap عملیات دیده شوند.</p><State kind="hypothesis">ARCHITECTURE GUARDRAIL</State></article>
+          <article className="macro-card"><Network/><strong>Moat = History + Trust + Workflow</strong><p>UI و AI به‌تنهایی moat نیستند. Property History، provenance، relationship graph، collaboration و integration depth باید در مدل و UX قابل مشاهده باشند.</p><State kind="decision">STRATEGIC THESIS</State></article>
+        </div>
       </section>
 
       <section id="north" className="biz-section">
