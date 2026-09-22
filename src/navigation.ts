@@ -99,7 +99,7 @@ export function goBack(fallback = '/home') {
 }
 
 export function normalizeRoute(hash: string) {
-  const raw = hash.replace(/^#/, '') || '/design'
+  const raw = hash.replace(/^#/, '') || '/guide'
   if (raw === '/app' || raw === '/app/') return '/home'
   return raw.startsWith('/app/') ? raw.slice(4) : raw
 }
