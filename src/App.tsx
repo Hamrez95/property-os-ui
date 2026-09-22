@@ -14,6 +14,7 @@ import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, Inspection
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PROTOTYPE_SCREENS, type PrototypeGroup } from './navigation'
 import { ProjectBenchmarkPage, ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
+import { ProjectModelingPage } from './ModelingBlueprint'
 import { RelationshipPortfolio, RoleAwareHome } from './RoleAwareScreens'
 import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
 
@@ -551,7 +552,9 @@ function ReviewBoard() {
       <div className="screen-wrap"><PropertyTypeDetail type="commercial"/><label>10D. Commercial Detail</label></div>
       <div className="screen-wrap"><PropertyTypeDetail type="office"/><label>10E. Office Detail</label></div>
       <div className="screen-wrap"><PropertyTypeDetail type="land"/><label>10F. Land Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="teardown"/><label>10G. Teardown Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="agricultural"/><label>10G. Agricultural / Garden Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="industrial"/><label>10H. Industrial / Warehouse Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="teardown"/><label>10I. Teardown Detail</label></div>
       <div className="screen-wrap"><PropertyPassport/><label>11. Property Passport</label></div>
       <div className="screen-wrap"><PropertyTimeline/><label>12. Property Timeline</label></div>
       <div className="screen-wrap"><SpacesOverview/><label>13. Spaces</label></div>
@@ -683,6 +686,7 @@ function App() {
 
   if (route === '/guide') return <ProjectGuidePage/>
   if (route === '/roadmap') return <ProjectRoadmapPage/>
+  if (route === '/modeling') return <ProjectModelingPage/>
   if (route === '/benchmark') return <ProjectBenchmarkPage/>
   if (route === '/operations') return <ProjectOperationsPage/>
   if (route === '/design') return <ReviewBoard/>
@@ -700,6 +704,8 @@ function App() {
   if (route === '/property/commercial') return mobile(<PropertyTypeDetail type="commercial"/>)
   if (route === '/property/office') return mobile(<PropertyTypeDetail type="office"/>)
   if (route === '/property/land') return mobile(<PropertyTypeDetail type="land"/>)
+  if (route === '/property/agricultural') return mobile(<PropertyTypeDetail type="agricultural"/>)
+  if (route === '/property/industrial') return mobile(<PropertyTypeDetail type="industrial"/>)
   if (route === '/property/teardown') return mobile(<PropertyTypeDetail type="teardown"/>)
   if (route === '/passport') return mobile(<PropertyPassport/>)
   if (route === '/property-timeline') return mobile(<PropertyTimeline/>)
