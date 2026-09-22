@@ -331,6 +331,88 @@ function BundleBuilder() {
   </Phone>
 }
 
+
+function BuildingDashboard() {
+  return <Phone title="ساختمان نیاوران">
+    <div className="building-summary">
+      <div className="building-visual"><Building2 size={32}/></div>
+      <div><h3>ساختمان نیاوران</h3><p>۱۲ واحد · ۸ مالک · ۹ ساکن</p><Status tone="verified">فعال</Status></div>
+    </div>
+    <div className="building-kpis"><div><span>بدهی جاری</span><strong>۱۸.۴ م</strong></div><div><span>درخواست باز</span><strong>۳</strong></div><div><span>سرویس بعدی</span><strong>۶ روز</strong></div></div>
+    <div className="building-actions">
+      <div><CircleDollarSign/><span>شارژ و بدهی</span></div><div><Wrench/><span>تعمیرات</span></div>
+      <div><Bell/><span>اعلان‌ها</span></div><div><Users/><span>ساکنین</span></div>
+    </div>
+    <section className="mobile-section">
+      <div className="section-head"><h3>آخرین فعالیت‌ها</h3><button>همه</button></div>
+      <div className="activity-row"><CheckCircle2 size={16}/><div><strong>شارژ شهریور ثبت شد</strong><span>۱۰ واحد پرداخت کرده‌اند</span></div><small>امروز</small></div>
+      <div className="activity-row"><Wrench size={16}/><div><strong>تیکت آسانسور</strong><span>در انتظار تأیید مدیر</span></div><small>دیروز</small></div>
+      <div className="activity-row"><FileCheck2 size={16}/><div><strong>فاکتور نظافت</strong><span>۲,۸۰۰,۰۰۰ تومان</span></div><small>۳ روز</small></div>
+    </section>
+  </Phone>
+}
+
+function BuildingUnits() {
+  const units=[['واحد ۱','مالک: محمد رضایی','بدون بدهی','verified'],['واحد ۲','مستأجر: سارا محمدی','۱.۲ م بدهی','warning'],['واحد ۳','مالک: نرگس اکبری','بدون بدهی','verified'],['واحد ۴','مستأجر: علی محمدی','۸۵۰ ه بدهی','warning'],['واحد ۵','خالی','بدون بدهی','neutral']] as const
+  return <Phone title="واحدها و ساکنین">
+    <div className="units-top"><div className="searchbox"><Search size={15}/><span>جستجو در واحدها...</span></div><button className="icon-button"><Plus size={16}/></button></div>
+    <div className="units-list">{units.map((u,i)=><div className="unit-row" key={i}>
+      <div className="unit-no">{i+1}</div><div><strong>{u[0]}</strong><span>{u[1]}</span></div><Status tone={u[3] as Tone}>{u[2]}</Status>
+    </div>)}</div>
+  </Phone>
+}
+
+function ChargesLedger() {
+  return <Phone title="شارژ و بدهی">
+    <div className="ledger-hero"><div><span>دوره شهریور ۱۴۰۵</span><strong>۲۴,۶۰۰,۰۰۰</strong><small>تومان قابل وصول</small></div><Status tone="warning">۲ بدهکار</Status></div>
+    <div className="ledger-progress"><div><span>وصول‌شده</span><b>۸۱٪</b></div><i><em/></i></div>
+    <div className="ledger-list">
+      {[['واحد ۱','۲,۰۰۰,۰۰۰','پرداخت‌شده','verified'],['واحد ۲','۲,۲۰۰,۰۰۰','بدهکار','warning'],['واحد ۳','۱,۹۵۰,۰۰۰','پرداخت‌شده','verified'],['واحد ۴','۲,۳۵۰,۰۰۰','بدهکار','warning']].map((r,i)=><div key={i}><div><strong>{r[0]}</strong><span>{r[1]} تومان</span></div><Status tone={r[3] as Tone}>{r[2]}</Status></div>)}
+    </div>
+    <button className="btn primary ledger-cta">ثبت پرداخت / یادآوری</button>
+  </Phone>
+}
+
+function TrustCenter() {
+  return <Phone title="مرکز اعتماد">
+    <div className="trust-hero"><ShieldCheck size={30}/><div><h3>اعتماد، شفاف و قابل توضیح</h3><p>هر ادعا منبع و سطح اعتبار خودش را دارد.</p></div></div>
+    <div className="trust-levels">
+      <div><i className="dot neutral"/><span><strong>ثبت توسط مالک</strong><small>Self-reported</small></span></div>
+      <div><i className="dot info"/><span><strong>دارای مدرک</strong><small>Document-backed</small></span></div>
+      <div><i className="dot verified"/><span><strong>تأیید بازرس</strong><small>Inspector verified</small></span></div>
+      <div><i className="dot official"/><span><strong>تأیید رسمی</strong><small>Officially verified</small></span></div>
+    </div>
+    <div className="trust-task"><div><strong>پروفایل اعتماد آپارتمان نیاوران</strong><span>۳ مورد برای تکمیل باقی مانده</span></div><button className="btn primary compact">ادامه</button></div>
+  </Phone>
+}
+
+function ClaimEvidence() {
+  return <Phone title="مدرک ادعا">
+    <div className="claim-card">
+      <span>ادعا</span><h3>«لوله‌کشی در سال ۱۴۰۳ تعویض شده»</h3><Status tone="neutral">ثبت توسط مالک</Status>
+    </div>
+    <div className="evidence-section"><h3>مدارک موجود</h3>
+      <div className="evidence-file"><FileCheck2 size={20}/><div><strong>فاکتور-تأسیسات.pdf</strong><span>۲.۴ MB · ۱۴۰۳/۰۷/۱۲</span></div><Status tone="info">سند</Status></div>
+      <div className="evidence-file"><Wrench size={20}/><div><strong>رکورد سرویس</strong><span>ثبت توسط شرکت سرویس</span></div><Status tone="verified">ارائه‌دهنده</Status></div>
+    </div>
+    <div className="claim-result"><span>سطح فعلی</span><strong>Evidence-backed</strong><p>این Claim مدرک دارد، اما هنوز توسط بازرس یا منبع رسمی تأیید نشده است.</p></div>
+    <button className="btn primary claim-cta"><Plus size={15}/>افزودن مدرک</button>
+  </Phone>
+}
+
+function InspectionRequest() {
+  return <Phone title="درخواست بازرسی">
+    <div className="inspection-intro"><ShieldCheck size={27}/><h3>Verified Inspection</h3><p>برای فروش، اجاره یا تحویل با اعتماد بالاتر، بازرس Property OS اطلاعات قابل مشاهده و مدارک ارائه‌شده را ثبت می‌کند.</p></div>
+    <div className="inspection-scope"><h3>دامنه بازرسی</h3>
+      <label><span className="check-box">✓</span><div><strong>واحد مسکونی ۴</strong><small>۱۴۰ متر</small></div></label>
+      <label><span className="check-box">✓</span><div><strong>پارکینگ P-21</strong><small>طبقه -۱</small></div></label>
+      <label><span className="check-box"></span><div><strong>انباری A4</strong><small>۶ متر</small></div></label>
+    </div>
+    <div className="inspection-note"><AlertTriangle size={16}/><span>بازرس وضعیت حقوقی مالکیت یا سلامت تخصصی سازه را تضمین نمی‌کند.</span></div>
+    <button className="btn primary inspection-cta">انتخاب زمان و ادامه</button>
+  </Phone>
+}
+
 function DesignSystem() {
   const colors = [
     ['Primary','#13233F'],['Action','#315EFB'],['Success','#12A47A'],['Warning','#F59E0B'],['Error','#E5484D'],
@@ -365,6 +447,15 @@ function ReviewBoard() {
       <div className="screen-wrap"><SpaceDetail/><label>14. Space Detail</label></div>
       <div className="screen-wrap"><BundleBuilder/><label>15. Bundle Builder</label></div>
     </div>
+    <div className="review-section-head flow-heading"><div><span>Operations + Trust</span><h2>Building / Trust / Verification</h2></div><small>Capture freely → Verify selectively → Label clearly</small></div>
+    <div className="mobile-grid">
+      <div className="screen-wrap"><BuildingDashboard/><label>16. Building Dashboard</label></div>
+      <div className="screen-wrap"><BuildingUnits/><label>17. Units & Residents</label></div>
+      <div className="screen-wrap"><ChargesLedger/><label>18. Charges Ledger</label></div>
+      <div className="screen-wrap"><TrustCenter/><label>19. Trust Center</label></div>
+      <div className="screen-wrap"><ClaimEvidence/><label>20. Claim Evidence</label></div>
+      <div className="screen-wrap"><InspectionRequest/><label>21. Inspection Request</label></div>
+    </div>
     <div className="review-section-head admin-heading"><div><span>Operations</span><h2>Admin — Calm Premium</h2></div><small>Dense · Clear · Trustworthy</small></div>
     <div className="admin-grid">
       <div className="screen-wrap admin-wrap"><AdminDashboard/><label>7. Admin Dashboard</label></div>
@@ -382,6 +473,9 @@ function App() {
   if (route === '/portfolio') return <div className="single-screen"><PortfolioOverview/></div>
   if (route === '/passport') return <div className="single-screen"><PropertyPassport/></div>
   if (route === '/spaces') return <div className="single-screen"><SpacesOverview/></div>
+  if (route === '/building') return <div className="single-screen"><BuildingDashboard/></div>
+  if (route === '/trust') return <div className="single-screen"><TrustCenter/></div>
+  if (route === '/inspection') return <div className="single-screen"><InspectionRequest/></div>
   return <ReviewBoard/>
 }
 
