@@ -14,6 +14,8 @@ import { BuildingExpenses, BuildingAnnouncements, MaintenanceRequest, Inspection
 import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, PropertyLease, SpaceLease } from './PropertySpacesScreens'
 import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PROTOTYPE_SCREENS, type PrototypeGroup } from './navigation'
 import { ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
+import { RelationshipPortfolio, RoleAwareHome } from './RoleAwareScreens'
+import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -536,13 +538,19 @@ function ReviewBoard() {
       <div className="screen-wrap"><Splash/><label>1. Splash</label></div>
       <div className="screen-wrap"><Login/><label>2. Login</label></div>
       <div className="screen-wrap"><Otp/><label>3. OTP</label></div>
-      <div className="screen-wrap"><HomeScreen/><label>4. Home</label></div>
+      <div className="screen-wrap"><RoleAwareHome/><label>4. Role-aware Home</label></div>
       <div className="screen-wrap"><PropertyDetail/><label>5. Property Detail</label></div>
       <div className="screen-wrap"><MyCity/><label>6. My City</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Domain-driven mobile</span><h2>Portfolio / Property / Spaces</h2></div><small>Property → Structure → Space → History</small></div>
     <div className="mobile-grid">
-      <div className="screen-wrap"><PortfolioOverview/><label>10. Portfolio</label></div>
+      <div className="screen-wrap"><RelationshipPortfolio/><label>10. Properties / Relationships</label></div>
+      <div className="screen-wrap"><PropertyTypeGallery/><label>10A. Property Types</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="apartment"/><label>10B. Apartment Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="villa"/><label>10C. Villa Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="commercial"/><label>10D. Commercial Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="land"/><label>10E. Land Detail</label></div>
+      <div className="screen-wrap"><PropertyTypeDetail type="teardown"/><label>10F. Teardown Detail</label></div>
       <div className="screen-wrap"><PropertyPassport/><label>11. Property Passport</label></div>
       <div className="screen-wrap"><PropertyTimeline/><label>12. Property Timeline</label></div>
       <div className="screen-wrap"><SpacesOverview/><label>13. Spaces</label></div>
@@ -680,10 +688,17 @@ function App() {
   if (route === '/splash') return mobile(<Splash/>)
   if (route === '/login') return mobile(<Login/>)
   if (route === '/otp') return mobile(<Otp/>)
-  if (route === '/home') return mobile(<HomeScreen/>)
+  if (route === '/home') return mobile(<RoleAwareHome/>)
   if (route === '/city') return mobile(<MyCity/>)
-  if (route === '/portfolio') return mobile(<PortfolioOverview/>)
-  if (route === '/property') return mobile(<PropertyDetail/>)
+  if (route === '/portfolio') return mobile(<RelationshipPortfolio/>)
+  if (route === '/property') return mobile(<PropertyTypeDetail type="apartment"/>)
+  if (route === '/property-types') return mobile(<PropertyTypeGallery/>)
+  if (route === '/property/apartment') return mobile(<PropertyTypeDetail type="apartment"/>)
+  if (route === '/property/villa') return mobile(<PropertyTypeDetail type="villa"/>)
+  if (route === '/property/commercial') return mobile(<PropertyTypeDetail type="commercial"/>)
+  if (route === '/property/office') return mobile(<PropertyTypeDetail type="office"/>)
+  if (route === '/property/land') return mobile(<PropertyTypeDetail type="land"/>)
+  if (route === '/property/teardown') return mobile(<PropertyTypeDetail type="teardown"/>)
   if (route === '/passport') return mobile(<PropertyPassport/>)
   if (route === '/property-timeline') return mobile(<PropertyTimeline/>)
   if (route === '/property-add') return mobile(<AddProperty/>)
