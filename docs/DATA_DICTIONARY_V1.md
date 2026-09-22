@@ -261,6 +261,47 @@ Legend:
 
 ---
 
+## 13.1 Agricultural / Garden profile
+
+| Field | Type | Req |
+|---|---|---:|
+| property_id | uuid | R |
+| operation_type | enum | O |
+| cultivated_area_m2 | numeric(12,2) | O |
+| crop_or_orchard_type | lookup/text | O |
+| water_source | enum | O |
+| irrigation_type | enum | O |
+| electricity_profile | enum/text | O |
+| greenhouse_area_m2 | numeric(12,2) | O |
+| storage_area_m2 | numeric(12,2) | O |
+| worker_space_area_m2 | numeric(12,2) | O |
+| vehicle_access | enum | O |
+| well_permit_claim_id | uuid | O |
+| water_right_claim_id | uuid | O |
+| soil_quality_claim_id | uuid | O |
+
+## 13.2 Industrial / Warehouse profile
+
+| Field | Type | Req |
+|---|---|---:|
+| property_id | uuid | R |
+| land_area_m2 | numeric(12,2) | O |
+| hall_area_m2 | numeric(12,2) | O |
+| office_area_m2 | numeric(12,2) | O |
+| clear_height_m | numeric(6,2) | O |
+| floor_type | enum | O |
+| roof_type | enum | O |
+| wall_type | enum | O |
+| power_phase | enum | O |
+| power_capacity_value | numeric(12,2) | O |
+| power_capacity_unit | enum | O |
+| industrial_gas | boolean | O |
+| truck_access | boolean | O |
+| loading_door_count | smallint | O |
+| overhead_crane_profile | text | O |
+| fire_safety_claim_id | uuid | O |
+| operating_permit_claim_id | uuid | O |
+
 ## 14. RegistryIdentity
 
 | Field | Type | Req | Visibility | Provenance |
