@@ -15,6 +15,7 @@ import { AddProperty, PropertyDocuments, PropertyPeople, PropertyFinance, Proper
 import { adjacentScreen, go, goDesignBoard, isPrototypeRoute, normalizeRoute, PROTOTYPE_SCREENS, type PrototypeGroup } from './navigation'
 import { ProjectBenchmarkPage, ProjectGuidePage, ProjectOperationsPage, ProjectRoadmapPage, ProjectSiteHeader } from './ProjectHub'
 import { ProjectModelingPage } from './ModelingBlueprint'
+import { ModelingDecisionsPage, ModelingDictionaryPage } from './ModelingReviewCenter'
 import { RelationshipPortfolio, RoleAwareHome } from './RoleAwareScreens'
 import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
 
@@ -533,107 +534,116 @@ function ReviewBoard() {
       <div><h1>مدیریت هوشمند املاک و ساختمان‌ها</h1><p>ساختاری · امن‌تر · ارزشمندتر</p></div>
       <div className="review-header-actions"><button className="prototype-launch" onClick={() => go('/splash')}>مشاهده پروتوتایپ تعاملی</button><Brand/></div>
     </header>
+    <div className="release-legend">
+      <div><strong>Build Priority</strong><span>کد کنار هر Screen ترتیب توسعه را نشان می‌دهد.</span></div>
+      <span className="legend-pill r1">R1 · Private Beta</span>
+      <span className="legend-pill r2">R2 · Trust</span>
+      <span className="legend-pill r3">R3 · Marketplace</span>
+      <span className="legend-pill r4">R4 · Transaction</span>
+      <span className="legend-pill r5">R5 · Growth</span>
+      <button onClick={()=>window.location.hash='/roadmap'}>جزئیات Roadmap</button>
+    </div>
     <DesignSystem/>
     <QualityGallery/>
     <div className="review-section-head"><div><span>Reference screens</span><h2>Mobile — Calm Premium</h2></div><small>RTL first · LTR ready</small></div>
     <div className="mobile-grid">
-      <div className="screen-wrap"><Splash/><label>1. Splash</label></div>
-      <div className="screen-wrap"><Login/><label>2. Login</label></div>
-      <div className="screen-wrap"><Otp/><label>3. OTP</label></div>
-      <div className="screen-wrap"><RoleAwareHome/><label>4. Role-aware Home</label></div>
-      <div className="screen-wrap"><PropertyDetail/><label>5. Property Detail</label></div>
-      <div className="screen-wrap"><MyCity/><label>6. My City</label></div>
+      <div className="screen-wrap" data-priority="R1-01" data-release="Private Beta"><Splash/><label>1. Splash</label></div>
+      <div className="screen-wrap" data-priority="R1-01" data-release="Private Beta"><Login/><label>2. Login</label></div>
+      <div className="screen-wrap" data-priority="R1-01" data-release="Private Beta"><Otp/><label>3. OTP</label></div>
+      <div className="screen-wrap" data-priority="R1-02" data-release="Private Beta"><RoleAwareHome/><label>4. Role-aware Home</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyDetail/><label>5. Property Detail</label></div>
+      <div className="screen-wrap" data-priority="R5-51" data-release="Growth"><MyCity/><label>6. My City</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Domain-driven mobile</span><h2>Portfolio / Property / Spaces</h2></div><small>Property → Structure → Space → History</small></div>
     <div className="mobile-grid">
-      <div className="screen-wrap"><RelationshipPortfolio/><label>10. Properties / Relationships</label></div>
-      <div className="screen-wrap"><PropertyTypeGallery/><label>10A. Property Types</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="apartment"/><label>10B. Apartment Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="villa"/><label>10C. Villa Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="commercial"/><label>10D. Commercial Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="office"/><label>10E. Office Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="land"/><label>10F. Land Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="agricultural"/><label>10G. Agricultural / Garden Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="industrial"/><label>10H. Industrial / Warehouse Detail</label></div>
-      <div className="screen-wrap"><PropertyTypeDetail type="teardown"/><label>10I. Teardown Detail</label></div>
-      <div className="screen-wrap"><PropertyPassport/><label>11. Property Passport</label></div>
-      <div className="screen-wrap"><PropertyTimeline/><label>12. Property Timeline</label></div>
-      <div className="screen-wrap"><SpacesOverview/><label>13. Spaces</label></div>
-      <div className="screen-wrap"><SpaceDetail/><label>14. Space Detail</label></div>
-      <div className="screen-wrap"><BundleBuilder/><label>15. Bundle Builder</label></div>
-      <div className="screen-wrap"><AddProperty/><label>15A. Add Property</label></div>
-      <div className="screen-wrap"><PropertyDocuments/><label>15B. Property Documents</label></div>
-      <div className="screen-wrap"><PropertyPeople/><label>15C. People & Roles</label></div>
-      <div className="screen-wrap"><PropertyFinance/><label>15D. Property Finance</label></div>
-      <div className="screen-wrap"><PropertyLease/><label>15E. Property Lease</label></div>
-      <div className="screen-wrap"><SpaceLease/><label>15F. Space Lease</label></div>
+      <div className="screen-wrap" data-priority="R1-03" data-release="Private Beta"><RelationshipPortfolio/><label>10. Properties / Relationships</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTypeGallery/><label>10A. Property Types</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTypeDetail type="apartment"/><label>10B. Apartment Detail</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTypeDetail type="villa"/><label>10C. Villa Detail</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTypeDetail type="commercial"/><label>10D. Commercial Detail</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTypeDetail type="office"/><label>10E. Office Detail</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTypeDetail type="land"/><label>10F. Land Detail</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTypeDetail type="agricultural"/><label>10G. Agricultural / Garden Detail</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTypeDetail type="industrial"/><label>10H. Industrial / Warehouse Detail</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTypeDetail type="teardown"/><label>10I. Teardown Detail</label></div>
+      <div className="screen-wrap" data-priority="R2-21" data-release="Trust"><PropertyPassport/><label>11. Property Passport</label></div>
+      <div className="screen-wrap" data-priority="R1-05" data-release="Private Beta"><PropertyTimeline/><label>12. Property Timeline</label></div>
+      <div className="screen-wrap" data-priority="R1-08" data-release="Private Beta"><SpacesOverview/><label>13. Spaces</label></div>
+      <div className="screen-wrap" data-priority="R1-09" data-release="Private Beta"><SpaceDetail/><label>14. Space Detail</label></div>
+      <div className="screen-wrap" data-priority="R1-09" data-release="Private Beta"><BundleBuilder/><label>15. Bundle Builder</label></div>
+      <div className="screen-wrap" data-priority="R1-04" data-release="Private Beta"><AddProperty/><label>15A. Add Property</label></div>
+      <div className="screen-wrap" data-priority="R1-06" data-release="Private Beta"><PropertyDocuments/><label>15B. Property Documents</label></div>
+      <div className="screen-wrap" data-priority="R1-07" data-release="Private Beta"><PropertyPeople/><label>15C. People & Roles</label></div>
+      <div className="screen-wrap" data-priority="R1-11" data-release="Private Beta"><PropertyFinance/><label>15D. Property Finance</label></div>
+      <div className="screen-wrap" data-priority="R1-10" data-release="Private Beta"><PropertyLease/><label>15E. Property Lease</label></div>
+      <div className="screen-wrap" data-priority="R1-10" data-release="Private Beta"><SpaceLease/><label>15F. Space Lease</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Operations + Trust</span><h2>Building / Trust / Verification</h2></div><small>Capture freely → Verify selectively → Label clearly</small></div>
     <div className="mobile-grid">
-      <div className="screen-wrap"><BuildingDashboard/><label>16. Building Dashboard</label></div>
-      <div className="screen-wrap"><BuildingUnits/><label>17. Units & Residents</label></div>
-      <div className="screen-wrap"><ChargesLedger/><label>18. Charges Ledger</label></div>
-      <div className="screen-wrap"><TrustCenter/><label>19. Trust Center</label></div>
-      <div className="screen-wrap"><ClaimEvidence/><label>20. Claim Evidence</label></div>
-      <div className="screen-wrap"><InspectionRequest/><label>21. Inspection Request</label></div>
-      <div className="screen-wrap"><BuildingExpenses/><label>21A. Building Expenses</label></div>
-      <div className="screen-wrap"><BuildingAnnouncements/><label>21B. Announcements</label></div>
-      <div className="screen-wrap"><BuildingGovernance/><label>21C. Building Governance</label></div>
-      <div className="screen-wrap"><MaintenanceRequest/><label>21D. Maintenance</label></div>
-      <div className="screen-wrap"><InspectionStatus/><label>21E. Inspection Status</label></div>
-      <div className="screen-wrap"><VerifiedPassport/><label>21F. Verified Passport</label></div>
+      <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingDashboard/><label>16. Building Dashboard</label></div>
+      <div className="screen-wrap" data-priority="R1-13" data-release="Private Beta"><BuildingUnits/><label>17. Units & Residents</label></div>
+      <div className="screen-wrap" data-priority="R1-14" data-release="Private Beta"><ChargesLedger/><label>18. Charges Ledger</label></div>
+      <div className="screen-wrap" data-priority="R2-22" data-release="Trust"><TrustCenter/><label>19. Trust Center</label></div>
+      <div className="screen-wrap" data-priority="R2-23" data-release="Trust"><ClaimEvidence/><label>20. Claim Evidence</label></div>
+      <div className="screen-wrap" data-priority="R2-24" data-release="Trust"><InspectionRequest/><label>21. Inspection Request</label></div>
+      <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingExpenses/><label>21A. Building Expenses</label></div>
+      <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingAnnouncements/><label>21B. Announcements</label></div>
+      <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><BuildingGovernance/><label>21C. Building Governance</label></div>
+      <div className="screen-wrap" data-priority="R1-12" data-release="Private Beta"><MaintenanceRequest/><label>21D. Maintenance</label></div>
+      <div className="screen-wrap" data-priority="R2-25" data-release="Trust"><InspectionStatus/><label>21E. Inspection Status</label></div>
+      <div className="screen-wrap" data-priority="R2-26" data-release="Trust"><VerifiedPassport/><label>21F. Verified Passport</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Marketplace + Transaction</span><h2>Search / Offer / Deal</h2></div><small>Property → Listing → Visit → Offer → Transaction</small></div>
     <div className="mobile-grid">
-      <div className="screen-wrap"><MarketplaceSearch/><label>22. Marketplace Search</label></div>
-      <div className="screen-wrap"><ListingDetail/><label>23. Listing Detail</label></div>
-      <div className="screen-wrap"><VisitBooking/><label>24. Visit Booking</label></div>
-      <div className="screen-wrap"><OfferBuilder/><label>25. Offer</label></div>
-      <div className="screen-wrap"><DealSummary/><label>26. Deal Summary</label></div>
-      <div className="screen-wrap"><TransactionTracker/><label>27. Transaction Tracker</label></div>
-      <div className="screen-wrap"><PublishListing/><label>27A. Publish Listing</label></div>
-      <div className="screen-wrap"><NegotiationThread/><label>27B. Negotiation</label></div>
-      <div className="screen-wrap"><ContractReview/><label>27C. Contract Review</label></div>
-      <div className="screen-wrap"><SecurePayment/><label>27D. Secure Payment</label></div>
+      <div className="screen-wrap" data-priority="R3-32" data-release="Marketplace"><MarketplaceSearch/><label>22. Marketplace Search</label></div>
+      <div className="screen-wrap" data-priority="R3-33" data-release="Marketplace"><ListingDetail/><label>23. Listing Detail</label></div>
+      <div className="screen-wrap" data-priority="R3-34" data-release="Marketplace"><VisitBooking/><label>24. Visit Booking</label></div>
+      <div className="screen-wrap" data-priority="R3-35" data-release="Marketplace"><OfferBuilder/><label>25. Offer</label></div>
+      <div className="screen-wrap" data-priority="R3-37" data-release="Marketplace"><DealSummary/><label>26. Deal Summary</label></div>
+      <div className="screen-wrap" data-priority="R4-43" data-release="Transaction"><TransactionTracker/><label>27. Transaction Tracker</label></div>
+      <div className="screen-wrap" data-priority="R3-31" data-release="Marketplace"><PublishListing/><label>27A. Publish Listing</label></div>
+      <div className="screen-wrap" data-priority="R3-36" data-release="Marketplace"><NegotiationThread/><label>27B. Negotiation</label></div>
+      <div className="screen-wrap" data-priority="R4-41" data-release="Transaction"><ContractReview/><label>27C. Contract Review</label></div>
+      <div className="screen-wrap" data-priority="R4-42" data-release="Transaction"><SecurePayment/><label>27D. Secure Payment</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Communication + Account</span><h2>Messages / Profile / Security</h2></div><small>Personal · Clear · Controlled</small></div>
     <div className="mobile-grid">
-      <div className="screen-wrap"><NotificationsScreen/><label>28. Notifications</label></div>
-      <div className="screen-wrap"><MessagesScreen/><label>29. Messages</label></div>
-      <div className="screen-wrap"><ProfileRoles/><label>30. Profile & Roles</label></div>
-      <div className="screen-wrap"><SubscriptionScreen/><label>31. Subscription</label></div>
-      <div className="screen-wrap"><SecurityDevices/><label>32. Security & Devices</label></div>
-      <div className="screen-wrap"><SupportCenter/><label>33. Support</label></div>
-      <div className="screen-wrap"><NotificationSettings/><label>33A. Notification Settings</label></div>
+      <div className="screen-wrap" data-priority="R1-15" data-release="Private Beta"><NotificationsScreen/><label>28. Notifications</label></div>
+      <div className="screen-wrap" data-priority="R1-15" data-release="Private Beta"><MessagesScreen/><label>29. Messages</label></div>
+      <div className="screen-wrap" data-priority="R1-16" data-release="Private Beta"><ProfileRoles/><label>30. Profile & Roles</label></div>
+      <div className="screen-wrap" data-priority="R5-52" data-release="Growth"><SubscriptionScreen/><label>31. Subscription</label></div>
+      <div className="screen-wrap" data-priority="R1-17" data-release="Private Beta"><SecurityDevices/><label>32. Security & Devices</label></div>
+      <div className="screen-wrap" data-priority="R1-16" data-release="Private Beta"><SupportCenter/><label>33. Support</label></div>
+      <div className="screen-wrap" data-priority="R1-15" data-release="Private Beta"><NotificationSettings/><label>33A. Notification Settings</label></div>
     </div>
     <div className="review-section-head flow-heading"><div><span>Field operations</span><h2>Inspector App</h2></div><small>Fast · Auditable · Evidence-first</small></div>
     <div className="mobile-grid">
-      <div className="screen-wrap"><InspectorLogin/><label>34. Inspector Login</label></div>
-      <div className="screen-wrap"><InspectorAssignments/><label>35. Assignments</label></div>
-      <div className="screen-wrap"><InspectorAssignmentDetail/><label>36. Assignment Detail</label></div>
-      <div className="screen-wrap"><InspectorChecklist/><label>37. Checklist</label></div>
-      <div className="screen-wrap"><InspectorSpaceVerification/><label>37A. Space Verification</label></div>
-      <div className="screen-wrap"><InspectorDocumentEvidence/><label>37B. Document Evidence</label></div>
-      <div className="screen-wrap"><InspectorMediaCapture/><label>38. Media Capture</label></div>
-      <div className="screen-wrap"><InspectorDiscrepancy/><label>39. Discrepancy</label></div>
-      <div className="screen-wrap"><InspectorSubmitReport/><label>40. Submit Report</label></div>
-      <div className="screen-wrap"><InspectorEarnings/><label>41. Quality & Earnings</label></div>
+      <div className="screen-wrap" data-priority="R2-27" data-release="Trust"><InspectorLogin/><label>34. Inspector Login</label></div>
+      <div className="screen-wrap" data-priority="R2-28" data-release="Trust"><InspectorAssignments/><label>35. Assignments</label></div>
+      <div className="screen-wrap" data-priority="R2-28" data-release="Trust"><InspectorAssignmentDetail/><label>36. Assignment Detail</label></div>
+      <div className="screen-wrap" data-priority="R2-29" data-release="Trust"><InspectorChecklist/><label>37. Checklist</label></div>
+      <div className="screen-wrap" data-priority="R2-29" data-release="Trust"><InspectorSpaceVerification/><label>37A. Space Verification</label></div>
+      <div className="screen-wrap" data-priority="R2-30" data-release="Trust"><InspectorDocumentEvidence/><label>37B. Document Evidence</label></div>
+      <div className="screen-wrap" data-priority="R2-30" data-release="Trust"><InspectorMediaCapture/><label>38. Media Capture</label></div>
+      <div className="screen-wrap" data-priority="R2-30" data-release="Trust"><InspectorDiscrepancy/><label>39. Discrepancy</label></div>
+      <div className="screen-wrap" data-priority="R2-30" data-release="Trust"><InspectorSubmitReport/><label>40. Submit Report</label></div>
+      <div className="screen-wrap" data-priority="R2-30" data-release="Trust"><InspectorEarnings/><label>41. Quality & Earnings</label></div>
     </div>
     <div className="review-section-head admin-heading"><div><span>Operations</span><h2>Admin — Calm Premium</h2></div><small>Dense · Clear · Trustworthy</small></div>
     <div className="admin-grid">
-      <div className="screen-wrap admin-wrap"><AdminDashboard/><label>7. Admin Dashboard</label></div>
-      <div className="screen-wrap admin-wrap"><UsersManagement/><label>8. Users Management</label></div>
-      <div className="screen-wrap admin-wrap"><PropertyManagement/><label>9. Property Management</label></div>
-      <div className="screen-wrap admin-wrap"><AdminBuildings/><label>9A. Buildings</label></div>
-      <div className="screen-wrap admin-wrap"><AdminListings/><label>9B. Listings</label></div>
-      <div className="screen-wrap admin-wrap"><AdminDeals/><label>9C. Deals</label></div>
-      <div className="screen-wrap admin-wrap"><AdminTrustQueue/><label>9D. Trust Queue</label></div>
-      <div className="screen-wrap admin-wrap"><AdminInspectors/><label>9E. Inspectors</label></div>
-      <div className="screen-wrap admin-wrap"><AdminPayments/><label>9F. Payments</label></div>
-      <div className="screen-wrap admin-wrap"><AdminSupport/><label>9G. Support</label></div>
-      <div className="screen-wrap admin-wrap"><AdminReports/><label>9H. Reports</label></div>
-      <div className="screen-wrap admin-wrap"><AdminFeatureFlags/><label>9I. Feature Flags</label></div>
-      <div className="screen-wrap admin-wrap"><AdminSecurityAudit/><label>9J. Security & Audit</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R1-18" data-release="Private Beta"><AdminDashboard/><label>7. Admin Dashboard</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R1-19" data-release="Private Beta"><UsersManagement/><label>8. Users Management</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R1-20" data-release="Private Beta"><PropertyManagement/><label>9. Property Management</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R1-20" data-release="Private Beta"><AdminBuildings/><label>9A. Buildings</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R3-38" data-release="Marketplace"><AdminListings/><label>9B. Listings</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R3-39" data-release="Marketplace"><AdminDeals/><label>9C. Deals</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R2-26" data-release="Trust"><AdminTrustQueue/><label>9D. Trust Queue</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R2-28" data-release="Trust"><AdminInspectors/><label>9E. Inspectors</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R4-49" data-release="Transaction"><AdminPayments/><label>9F. Payments</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R1-16" data-release="Private Beta"><AdminSupport/><label>9G. Support</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R5-53" data-release="Growth"><AdminReports/><label>9H. Reports</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R1-18" data-release="Private Beta"><AdminFeatureFlags/><label>9I. Feature Flags</label></div>
+      <div className="screen-wrap admin-wrap" data-priority="R1-17" data-release="Private Beta"><AdminSecurityAudit/><label>9J. Security & Audit</label></div>
     </div>
   </div>
   </>
@@ -689,6 +699,8 @@ function App() {
   if (route === '/guide') return <ProjectGuidePage/>
   if (route === '/roadmap') return <ProjectRoadmapPage/>
   if (route === '/modeling') return <ProjectModelingPage/>
+  if (route === '/modeling/dictionary') return <ModelingDictionaryPage/>
+  if (route === '/modeling/decisions') return <ModelingDecisionsPage/>
   if (route === '/benchmark') return <ProjectBenchmarkPage/>
   if (route === '/operations') return <ProjectOperationsPage/>
   if (route === '/design') return <ReviewBoard/>
