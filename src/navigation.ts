@@ -10,6 +10,7 @@ export const PROTOTYPE_SCREENS: PrototypeScreen[] = [
   { path: '/splash', label: 'Splash', group: 'mobile' },
   { path: '/login', label: 'ورود / ثبت‌نام', group: 'mobile' },
   { path: '/otp', label: 'کد تأیید', group: 'mobile' },
+  { path: '/onboarding', label: 'معرفی اولیه', group: 'mobile' },
   { path: '/home', label: 'خانه', group: 'mobile' },
   { path: '/city', label: 'شهر من', group: 'mobile' },
   { path: '/portfolio', label: 'سبد املاک', group: 'mobile' },

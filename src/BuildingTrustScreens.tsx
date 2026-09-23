@@ -5,6 +5,7 @@ import {
 } from 'lucide-react'
 import { Phone, Status } from './ui'
 import { go } from './navigation'
+import { useRoleScope } from './RoleScopeContext'
 
 export function BuildingGovernance() {
   const resolutions=[
@@ -84,16 +85,23 @@ export function BuildingAnnouncementComposer() {
 }
 
 export function MaintenanceRequest() {
+  const { context } = useRoleScope()
+  const work = context.role === 'مستأجر'
+    ? { title: 'سرویس سالانه کولر', place: 'داخل واحد', budget: 'هماهنگی با مالک / ساکن', action: 'ثبت زمان پیشنهادی' }
+    : context.role === 'مالک'
+      ? { title: 'ترکیدگی لوله', place: 'داخل ملک', budget: '۱۵–۲۰ میلیون', action: 'مشاهده سرویس‌کارها' }
+      : { title: 'خرابی پمپ آب', place: 'موتورخانه', budget: '۱۵–۲۰ میلیون', action: 'مشاهده سرویس‌کارها' }
   return <Phone title="درخواست تعمیرات">
-    <div className="maintenance-hero"><Wrench size={24}/><div><strong>خرابی پمپ آب</strong><span>مشاعات · موتورخانه</span></div><Status tone="warning">اولویت بالا</Status></div>
+    <div className="maintenance-hero"><Wrench size={24}/><div><strong>{work.title}</strong><span>{context.scope} · {work.place}</span></div><Status tone="warning">اولویت بالا</Status></div>
     <div className="maintenance-timeline">
       <div className="done"><i>✓</i><span><strong>ثبت درخواست</strong><small>امروز ۰۹:۱۲</small></span></div>
       <div className="active"><i>2</i><span><strong>تخصیص سرویس‌کار</strong><small>در حال هماهنگی</small></span></div>
       <div><i>3</i><span><strong>انجام خدمت</strong><small>پس از تأیید زمان</small></span></div>
       <div><i>4</i><span><strong>ثبت هزینه و نتیجه</strong><small>پایان کار</small></span></div>
     </div>
-    <div className="maintenance-detail"><div><span>ثبت‌کننده</span><strong>مدیر ساختمان</strong></div><div><span>بودجه اولیه</span><strong>۱۵–۲۰ میلیون</strong></div><div><span>دسترسی</span><strong>موتورخانه</strong></div></div>
-    <button className="btn primary bt-bottom-cta" onClick={() => go('/support')}>مشاهده سرویس‌کارها</button>
+    <div className="maintenance-scope"><span>Scope: {context.scope}</span><span>مسئولیت: {context.role}</span><span>محل: {work.place}</span></div>
+    <div className="maintenance-detail"><div><span>ثبت‌کننده</span><strong>{context.role}</strong></div><div><span>بودجه اولیه</span><strong>{work.budget}</strong></div><div><span>دسترسی</span><strong>{work.place}</strong></div></div>
+    <button className="btn primary bt-bottom-cta" onClick={() => go('/support')}>{work.action}</button>
   </Phone>
 }
 

@@ -1,19 +1,10 @@
-import { useState } from 'react'
 import {
   Bell, Building2, CalendarDays, ChevronLeft, CircleDollarSign, FileCheck2,
   Home, KeyRound, Landmark, ShieldCheck, Users, WalletCards, Wrench
 } from 'lucide-react'
 import { Phone, Status, type Tone } from './ui'
 import { go } from './navigation'
-
-type Context = 'all' | 'tenant' | 'owner' | 'manager'
-
-function ContextTabs({value,onChange}:{value:Context,onChange:(v:Context)=>void}) {
-  const items:[Context,string][]=[['all','همه'],['tenant','مستأجر'],['owner','مالک'],['manager','مدیر ساختمان']]
-  return <div className="context-tabs" role="tablist" aria-label="نمای نقش">
-    {items.map(([key,label])=><button key={key} role="tab" aria-selected={value===key} className={value===key?'active':''} onClick={()=>onChange(key)}>{label}</button>)}
-  </div>
-}
+import { useRoleScope } from './RoleScopeContext'
 
 function RelationshipCard({title,type,meta,relation,status,tone='verified',route}:{title:string,type:string,meta:string,relation:string,status:string,tone?:Tone,route:string}) {
   return <button className="relationship-property-card" onClick={()=>go(route)}>
@@ -68,27 +59,39 @@ function ManagerHome() {
   </>
 }
 
+function HomeTour({ onClose }: { onClose: () => void }) {
+  const [step, setStep] = useState(0)
+  const slides = [
+    ['نقش و محدودهٔ فعال', 'اینجا همیشه می‌بینی در نقش چه کسی و برای کدام واحد یا ساختمان کار می‌کنی.'],
+    ['ملک یا واحد فعال', 'کارت‌های صفحه فقط به رابطه و محل فعال تو مربوط‌اند؛ لازم نیست حدس بزنی اطلاعات برای چیست.'],
+    ['اقدام‌های سریع', 'قرارداد، تعمیرات و شارژ از همان context باز می‌شوند؛ هر مسیر عمومیِ اشتباهی به پیام‌ها نمی‌رود.'],
+    ['یادآوری‌های مهم', 'اولویت‌ها و موعدها را در همین نقش می‌بینی؛ هر زمان خواستی از بالای صفحه نقش را عوض کن.'],
+  ]
+  return <div className="home-tour" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+    <div className="home-tour-spotlight" aria-hidden="true"/>
+    <section className="home-tour-card">
+      <span>راهنمای کوتاه · {step + 1} از {slides.length}</span>
+      <h2 id="tour-title">{slides[step][0]}</h2><p>{slides[step][1]}</p>
+      <div><button onClick={onClose}>رد کردن</button><button className="btn primary compact" onClick={() => step === slides.length - 1 ? onClose() : setStep(step + 1)}>{step === slides.length - 1 ? 'متوجه شدم' : 'بعدی'}</button></div>
+      <button className="home-tour-never" onClick={onClose}>دیگر نشان نده</button>
+    </section>
+  </div>
+}
+
 export function RoleAwareHome() {
-  const [context,setContext]=useState<Context>('all')
+  const { activeScope: context } = useRoleScope()
+  const [tourOpen, setTourOpen] = useState(true)
   return <Phone active="home">
     <div className="role-home-top">
       <div className="hello role-hello"><div className="avatar">ح</div><div><strong>سلام حمیدرضا</strong><span>مهم‌ترین کارهای امروز، متناسب با رابطه شما</span></div></div>
-      <ContextTabs value={context} onChange={setContext}/>
-      <p className="context-explainer">در محصول واقعی این نما خودکار از رابطه‌های فعال ساخته می‌شود؛ این کنترل فقط برای مرور Prototype است.</p>
+      <p className="context-explainer">نقش و محدودهٔ فعال در بالای صفحه ثابت است و در تعمیرات، شارژ، ساختمان و قرارداد هم حفظ می‌شود.</p>
     </div>
     <div className="role-home-body">
       {context==='tenant' && <TenantHome/>}
       {context==='owner' && <OwnerHome/>}
       {context==='manager' && <ManagerHome/>}
-      {context==='all' && <>
-        <TenantHome/>
-        <div className="home-section-head compact-head"><h3>مالکیت و مدیریت</h3><span>خلاصه، نه کل Portfolio</span></div>
-        <div className="mixed-role-grid">
-          <button onClick={()=>setContext('owner')}><Landmark/><div><strong>۴ ملک ملکی</strong><span>۲ مورد نیاز به توجه</span></div><ChevronLeft/></button>
-          <button onClick={()=>setContext('manager')}><Building2/><div><strong>مدیر ۱ ساختمان</strong><span>۳ درخواست باز</span></div><ChevronLeft/></button>
-        </div>
-      </>}
     </div>
+    {tourOpen && <HomeTour onClose={() => setTourOpen(false)}/>}
   </Phone>
 }
 
@@ -121,3 +124,4 @@ export function RelationshipPortfolio() {
     <button className="portfolio-add" onClick={()=>go('/property-add')}>+ افزودن ملک یا رابطه جدید</button>
   </Phone>
 }
+import { useState } from 'react'

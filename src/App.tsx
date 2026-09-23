@@ -19,6 +19,8 @@ import { ModelingDecisionsPage, ModelingDictionaryPage } from './ModelingReviewC
 import { BusinessStrategyHub } from './BusinessStrategyHub'
 import { RelationshipPortfolio, RoleAwareHome } from './RoleAwareScreens'
 import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
+import { RoleScopeProvider } from './RoleScopeContext'
+import { Onboarding } from './Onboarding'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -58,7 +60,7 @@ function Otp() {
       <div className="auth-copy"><h2>کد تأیید</h2><p>کد ۶ رقمی ارسال‌شده به<br/><b>0912 345 6789</b> را وارد کنید.</p></div>
       <div className="otp">{[1,2,3,4,5,6].map(i=><span key={i}/>)}</div>
       <div className="otp-meta"><span>0:52</span><button>ارسال مجدد کد</button></div>
-      <button className="btn primary" onClick={() => go('/home')}>تأیید و ادامه</button>
+      <button className="btn primary" onClick={() => go('/onboarding')}>تأیید و ادامه</button>
       <div className="keypad">{[1,2,3,4,5,6,7,8,9,'',0,'⌫'].map((n,i)=><span key={i}>{n}</span>)}</div>
     </div>
   </Phone>
@@ -728,6 +730,7 @@ function App() {
     ? <PrototypeShell route={route} admin>{screen}</PrototypeShell>
     : <div className="single-screen admin-single">{screen}</div>
 
+  const render = () => {
   if (route === '/guide') return <ProjectGuidePage/>
   if (route === '/roadmap') return <ProjectRoadmapPage/>
   if (route === '/business') return <BusinessStrategyHub/>
@@ -741,6 +744,7 @@ function App() {
   if (route === '/splash') return mobile(<Splash/>)
   if (route === '/login') return mobile(<Login/>)
   if (route === '/otp') return mobile(<Otp/>)
+  if (route === '/onboarding') return mobile(<Onboarding/>)
   if (route === '/home') return mobile(<RoleAwareHome/>)
   if (route === '/city') return mobile(<MyCity/>)
   if (route === '/portfolio') return mobile(<RelationshipPortfolio/>)
@@ -825,6 +829,8 @@ function App() {
   if (route === '/admin-security') return admin(<AdminSecurityAudit/>)
 
   return <ReviewBoard/>
+  }
+  return <RoleScopeProvider>{render()}</RoleScopeProvider>
 }
 
 export default App
