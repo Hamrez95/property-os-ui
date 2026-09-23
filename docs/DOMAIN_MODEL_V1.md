@@ -222,6 +222,29 @@ Examples that should often be Claims until sourced:
 
 ---
 
+### 3.6 Building / Unit identity and membership (P0 working contract)
+
+`Building` is a physical `Structure` with its own address identity. `Unit` is a canonical `Space` inside that Building. Party access is modelled as a time-bounded relationship to an existing Building or Unit — never by duplicating the physical record for each arriving user.
+
+Required resources / relationships:
+- `PostalAddress` belongs to Building / Structure and keeps `postal_code` as a matching attribute.
+- `Building → Unit` is the physical hierarchy.
+- `RoleAssignment` provides the shared `Party → Role → Scope → Time` relationship.
+- `UnitMembership` is an authorization/request projection for resident / tenant participation; it must resolve to the canonical Unit.
+- `BuildingMembership` is an authorization/request projection for building-wide participation.
+- `BuildingManagementMandate` remains separate from permanent physical Building data.
+- `Invitation` / `JoinCode` is scoped to Building or Unit, is time-limited and only initiates a relationship request.
+- `OwnershipInterest` is never created as official truth merely by UI entry; owner onboarding begins with `Claim → Evidence → Verification`.
+
+`postal_code` is a useful signal but **not assumed to be a canonical global Unit identifier**. Duplicate prevention evaluates postal code with normalized address, Building identity and Unit identifier. The exact Iranian provider/uniqueness rules remain an explicit integration research item before production enforcement.
+
+Canonical scenarios:
+- Tenant first: match Building + Unit → request `Tenant → Unit` → manager/inviter approval → validity period.
+- Owner later: match existing Building + Unit → ownership Claim → Evidence → Verification → policy-governed OwnershipInterest.
+- Manager: create/import Building + Units → scoped invitation/QR/join code → accepted role/scope/time relationship.
+
+---
+
 ## 4. Physical model
 
 ### 4.1 Parcel

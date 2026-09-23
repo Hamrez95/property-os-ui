@@ -35,3 +35,11 @@ Use `#/design` (or the root hash route) to review the entire system together.
 - The active context is shared between Home, Property, Space, Building, Charges, Lease and Maintenance prototype routes.
 - A work order must name its scope, responsible role and physical place. It must not rely on color, a generic title or a redirect to general messages to imply ownership.
 - First-run onboarding is a four-step RTL flow; the Home tour is optional, dismissible and includes a "do not show again" control.
+
+## Building / Unit matching (P0)
+
+- A join or ownership flow must try to match an existing Building + Unit before presenting creation.
+- Postal code is displayed as one matching signal, never as an asserted canonical Unit identifier.
+- Tenant membership is a requested, approved and time-bounded relationship to a Unit; it is not a duplicate Unit creation.
+- Owner entry begins as a Claim and must name the Evidence / Verification boundary.
+- Manager invitations / QR / join codes are scope-bound and only initiate relationship acceptance.
