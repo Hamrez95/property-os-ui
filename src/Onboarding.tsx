@@ -14,10 +14,11 @@ export function Onboarding() {
   const [step, setStep] = useState(0)
   const slide = slides[step]
   const Icon = slide.icon
-  const finish = () => go('/join-residence')
+  const startResidence = () => go('/join-residence')
+  const skip = () => go('/home')
   return <Phone active="none">
     <section className="onboarding" aria-label={`معرفی محصول، مرحله ${step + 1} از ${slides.length}`}>
-      <div className="onboarding-top"><Brand compact/><button onClick={finish}>رد کردن</button></div>
+      <div className="onboarding-top"><Brand compact/><button onClick={skip}>رد کردن</button></div>
       <div className={`onboarding-visual step-${step}`} aria-hidden="true">
         <div className="onboarding-building"><i/><i/><i/><i/><i/><i/></div>
         <div className="onboarding-orbit orbit-one"/><div className="onboarding-orbit orbit-two"/>
@@ -26,8 +27,8 @@ export function Onboarding() {
       <div className="onboarding-copy"><span>{slide.eyebrow}</span><h1>{slide.title}</h1><p>{slide.text}</p></div>
       <div className="onboarding-footer">
         <div className="onboarding-dots" aria-label={`${step + 1} از ${slides.length}`}>{slides.map((_, index) => <i className={index === step ? 'active' : ''} key={index}/>)}</div>
-        <button className="btn primary onboarding-next" onClick={() => step === slides.length - 1 ? finish() : setStep(step + 1)}>{step === slides.length - 1 ? 'تنظیم محل فعلی' : <>بعدی <ArrowLeft size={16}/></>}</button>
-        {step < slides.length - 1 && <button className="onboarding-skip" onClick={finish}>دیگر نشان نده</button>}
+        <button className="btn primary onboarding-next" onClick={() => step === slides.length - 1 ? startResidence() : setStep(step + 1)}>{step === slides.length - 1 ? 'تنظیم محل فعلی' : <>بعدی <ArrowLeft size={16}/></>}</button>
+        {step < slides.length - 1 && <button className="onboarding-skip" onClick={skip}>دیگر نشان نده</button>}
       </div>
     </section>
   </Phone>
