@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import {
   Bell, Building2, CalendarDays, CheckCircle2, ChevronLeft, CircleDollarSign,
-  FileCheck2, Home, KeyRound, Map, MessageSquare, Plus, Search, ShieldCheck,
+  FileCheck2, Home, KeyRound, Map, MapPinned, MessageSquare, Plus, Search, ShieldCheck,
   UserRound, Users, WalletCards, Wrench, XCircle, AlertTriangle, MoreVertical,
   ArrowLeft, House, Menu, Settings, Landmark, ClipboardCheck
 } from 'lucide-react'
@@ -21,6 +21,7 @@ import { RelationshipPortfolio, RoleAwareHome } from './RoleAwareScreens'
 import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
 import { RoleScopeProvider } from './RoleScopeContext'
 import { Onboarding } from './Onboarding'
+import { PropertyAtlas, PropertyAtlasWelcome } from './PropertyAtlas'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -118,6 +119,7 @@ function MyCity() {
       <button className="map-card interactive-card" onClick={() => go('/building')}><strong>ساختمان نیاوران</strong><span>۱۲ واحد · تهران</span><small>میانگین قیمت: ۲۶۰ میلیون / متر</small></button>
       <div className="map-switch"><button className="active" onClick={() => go('/city')}><Map size={14}/>نقشه</button><button onClick={() => go('/portfolio')}><Menu size={14}/>لیست</button></div>
     </div>
+    <button className="atlas-entry" onClick={() => go('/atlas-welcome')}><MapPinned size={16}/><div><strong>آزمایش Property Atlas</strong><span>نمای تصویریِ دارایی‌ها و رابطه‌های من</span></div><ChevronLeft size={16}/></button>
   </Phone>
 }
 
@@ -745,6 +747,8 @@ function App() {
   if (route === '/login') return mobile(<Login/>)
   if (route === '/otp') return mobile(<Otp/>)
   if (route === '/onboarding') return mobile(<Onboarding/>)
+  if (route === '/atlas-welcome') return mobile(<PropertyAtlasWelcome/>)
+  if (route === '/atlas') return mobile(<PropertyAtlas/>)
   if (route === '/home') return mobile(<RoleAwareHome/>)
   if (route === '/city') return mobile(<MyCity/>)
   if (route === '/portfolio') return mobile(<RelationshipPortfolio/>)

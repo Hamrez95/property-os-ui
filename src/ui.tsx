@@ -28,7 +28,7 @@ export function Status({ tone='neutral', children }: { tone?: Tone, children: Re
 
 export function Phone({ title, children, active='auto' }: { title?: string, children: ReactNode, active?: string }) {
   const route = window.location.hash.replace(/^#\/app/, '').replace(/^#/, '')
-  const scopeRoutes = ['/home', '/property', '/spaces', '/space', '/building', '/building-units', '/charges', '/maintenance', '/property-lease']
+  const scopeRoutes = ['/home', '/atlas', '/property', '/spaces', '/space', '/building', '/building-units', '/charges', '/maintenance', '/property-lease']
   const showScope = scopeRoutes.some(path => route === path || (path === '/property' && route.startsWith('/property/')))
   return <div className="phone" dir="rtl" lang="fa">
     <div className="phone-status" aria-hidden="true"><span>9:41</span><span>▮▮◒</span></div>
@@ -57,7 +57,7 @@ export function RoleScopeSwitcher() {
 
 export function BottomNav({ active='auto' }: { active?: string }) {
   const route = window.location.hash.replace(/^#\/app/,'').replace(/^#/,'')
-  const inferred = route==='/home'||route==='/city' ? 'home'
+  const inferred = route==='/home'||route==='/city'||route==='/atlas' ? 'home'
     : route.startsWith('/property')||route==='/portfolio'||route==='/spaces'||route==='/space'||route==='/bundle'||route.startsWith('/building')||route==='/charges'||route==='/maintenance'||route==='/trust'||route.startsWith('/inspection')||route==='/verified-passport' ? 'properties'
     : route==='/messages'||route==='/notifications' ? 'messages'
     : route==='/account'||route==='/subscription'||route==='/security'||route.startsWith('/support')||route==='/notification-settings' ? 'account'
