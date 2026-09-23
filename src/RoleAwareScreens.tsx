@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Bell, Building2, CalendarDays, ChevronLeft, CircleDollarSign, FileCheck2,
   Home, KeyRound, Landmark, ShieldCheck, Users, WalletCards, Wrench
@@ -19,7 +20,7 @@ function TenantHome() {
     <section className="home-focus-card tenant">
       <div className="focus-head"><div><span>خانه فعلی من</span><strong>آپارتمان نیاوران</strong><small>مستأجر · واحد ۴ + پارکینگ P-21</small></div><Status tone="verified">فعال</Status></div>
       <div className="focus-metrics"><div><span>مانده قرارداد</span><b>۲۷ روز</b></div><div><span>شارژ این ماه</span><b>۸۵۰ هزار</b></div><div><span>درخواست باز</span><b>۱</b></div></div>
-      <div className="focus-actions"><button onClick={()=>go('/property-lease')}><FileCheck2/>قرارداد</button><button onClick={()=>go('/building')}><Building2/>ساختمان</button><button onClick={()=>go('/maintenance')}><Wrench/>تعمیرات</button></div>
+      <div className="focus-actions" data-tour="quick-actions"><button onClick={()=>go('/property-lease')}><FileCheck2/>قرارداد</button><button onClick={()=>go('/building')}><Building2/>ساختمان</button><button onClick={()=>go('/maintenance')}><Wrench/>تعمیرات</button></div>
     </section>
     <div className="home-section-head"><h3>کارهای مهم شما</h3><span>بر اساس نقش مستأجر</span></div>
     <button className="home-task warning" onClick={()=>go('/property-lease')}><CalendarDays/><div><strong>تمدید قرارداد نزدیک است</strong><span>۲۷ روز تا پایان اجاره</span></div><ChevronLeft/></button>
@@ -67,8 +68,9 @@ function HomeTour({ onClose }: { onClose: () => void }) {
     ['اقدام‌های سریع', 'قرارداد، تعمیرات و شارژ از همان context باز می‌شوند؛ هر مسیر عمومیِ اشتباهی به پیام‌ها نمی‌رود.'],
     ['یادآوری‌های مهم', 'اولویت‌ها و موعدها را در همین نقش می‌بینی؛ هر زمان خواستی از بالای صفحه نقش را عوض کن.'],
   ]
-  return <div className="home-tour" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+  return <div className={`home-tour step-${step}`} role="dialog" aria-modal="true" aria-labelledby="tour-title">
     <div className="home-tour-spotlight" aria-hidden="true"/>
+    <div className="home-tour-arrow" aria-hidden="true">↓</div>
     <section className="home-tour-card">
       <span>راهنمای کوتاه · {step + 1} از {slides.length}</span>
       <h2 id="tour-title">{slides[step][0]}</h2><p>{slides[step][1]}</p>
@@ -82,11 +84,11 @@ export function RoleAwareHome() {
   const { activeScope: context } = useRoleScope()
   const [tourOpen, setTourOpen] = useState(true)
   return <Phone active="home">
-    <div className="role-home-top">
+    <div className="role-home-top" data-tour="active-scope">
       <div className="hello role-hello"><div className="avatar">ح</div><div><strong>سلام حمیدرضا</strong><span>مهم‌ترین کارهای امروز، متناسب با رابطه شما</span></div></div>
       <p className="context-explainer">نقش و محدودهٔ فعال در بالای صفحه ثابت است و در تعمیرات، شارژ، ساختمان و قرارداد هم حفظ می‌شود.</p>
     </div>
-    <div className="role-home-body">
+    <div className="role-home-body" data-tour="active-property">
       {context==='tenant' && <TenantHome/>}
       {context==='owner' && <OwnerHome/>}
       {context==='manager' && <ManagerHome/>}
@@ -121,7 +123,6 @@ export function RelationshipPortfolio() {
     <div className="relationship-list">
       {visible.map(item=><RelationshipCard key={item.title} {...item}/>)}
     </div>
-    <button className="portfolio-add" onClick={()=>go('/property-add')}>+ افزودن ملک یا رابطه جدید</button>
+    <button className="portfolio-add" onClick={()=>go('/claim-ownership')}>+ افزودن ملک یا Claim رابطهٔ موجود</button>
   </Phone>
 }
-import { useState } from 'react'

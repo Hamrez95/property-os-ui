@@ -22,6 +22,7 @@ import { PropertyTypeDetail, PropertyTypeGallery } from './PropertyTypeScreens'
 import { RoleScopeProvider } from './RoleScopeContext'
 import { Onboarding } from './Onboarding'
 import { PropertyAtlas, PropertyAtlasWelcome } from './PropertyAtlas'
+import { BuildingInvite, ClaimOwnership, ClaimOwnershipEvidence, JoinResidence, JoinResidenceMatch, TenantRequestSent } from './MembershipFlows'
 
 const properties = [
   { title: 'آپارتمان نیاوران', meta: '۱۴۰ متر · طبقه ۴', tone: 'verified' as Tone, status: 'اجاره‌شده' },
@@ -307,7 +308,7 @@ function BuildingDashboard() {
 function BuildingUnits() {
   const units=[['واحد ۱','مالک: محمد رضایی','بدون بدهی','verified'],['واحد ۲','مستأجر: سارا محمدی','۱.۲ م بدهی','warning'],['واحد ۳','مالک: نرگس اکبری','بدون بدهی','verified'],['واحد ۴','مستأجر: علی محمدی','۸۵۰ ه بدهی','warning'],['واحد ۵','خالی','بدون بدهی','neutral']] as const
   return <Phone title="واحدها و ساکنین">
-    <div className="units-top"><div className="searchbox"><Search size={15}/><span>جستجو در واحدها...</span></div><button className="icon-button" onClick={() => go('/property-people')} aria-label="افزودن ساکن"><Plus size={16}/></button></div>
+    <div className="units-top"><div className="searchbox"><Search size={15}/><span>جستجو در واحدها...</span></div><button className="icon-button" onClick={() => go('/building-invite')} aria-label="دعوت ساکن"><Plus size={16}/></button></div>
     <div className="units-list">{units.map((u,i)=><button className="unit-row interactive-row" key={i} onClick={() => go(i===3?'/property':'/charges')}>
       <div className="unit-no">{i+1}</div><div><strong>{u[0]}</strong><span>{u[1]}</span></div><Status tone={u[3] as Tone}>{u[2]}</Status>
     </button>)}</div>
@@ -747,6 +748,12 @@ function App() {
   if (route === '/login') return mobile(<Login/>)
   if (route === '/otp') return mobile(<Otp/>)
   if (route === '/onboarding') return mobile(<Onboarding/>)
+  if (route === '/join-residence') return mobile(<JoinResidence/>)
+  if (route === '/join-residence-match') return mobile(<JoinResidenceMatch/>)
+  if (route === '/tenant-request-sent') return mobile(<TenantRequestSent/>)
+  if (route === '/claim-ownership') return mobile(<ClaimOwnership/>)
+  if (route === '/claim-ownership-evidence') return mobile(<ClaimOwnershipEvidence/>)
+  if (route === '/building-invite') return mobile(<BuildingInvite/>)
   if (route === '/atlas-welcome') return mobile(<PropertyAtlasWelcome/>)
   if (route === '/atlas') return mobile(<PropertyAtlas/>)
   if (route === '/home') return mobile(<RoleAwareHome/>)

@@ -15,7 +15,7 @@ const places: AtlasPlace[] = [
 export function PropertyAtlasWelcome() {
   return <Phone active="none">
     <section className="atlas-welcome">
-      <img src="/images/property-atlas-evening.webp" alt="نمای آزمایشی از محله دارایی‌های Property OS"/>
+      <img src="/assets/property-city/environment/property_city_district_arcade_pixel_v1.webp" alt="نمای آزمایشی پیکسلی از محله دارایی‌های Property OS"/>
       <div className="atlas-welcome-shade"/>
       <div className="atlas-welcome-copy"><span>PROPERTY ATLAS · CONCEPT</span><h1>دارایی‌هایت را<br/>مثل یک محله ببین</h1><p>یک لایهٔ تصویریِ اختیاری برای دیدن رابطه‌ها، نه جایگزین کارهای مهم روزانه.</p></div>
       <div className="atlas-welcome-actions"><button className="btn primary" onClick={() => go('/atlas')}><MapPinned size={16}/>ورود به Atlas</button><button onClick={() => go('/home')}>بازگشت به خانهٔ فعلی</button></div>
@@ -31,7 +31,7 @@ export function PropertyAtlas() {
     <section className="atlas-intro"><div><span>EXPERIMENT · VISUAL HOME</span><h2>محلهٔ دارایی‌های من</h2><p>این نمای آزمایشی، نقش‌ها و Property Recordهای مرتبط را به شکل نقشه‌ای آرام نشان می‌دهد.</p></div><button onClick={() => setLegendOpen(!legendOpen)} aria-expanded={legendOpen} aria-label="راهنمای Atlas"><Sparkles size={17}/></button></section>
     {legendOpen && <div className="atlas-legend"><span><i className="owner"/>دارایی</span><span><i className="tenant"/>سکونت</span><span><i className="manager"/>مدیریت</span><button onClick={() => setLegendOpen(false)} aria-label="بستن راهنما"><X size={13}/></button></div>}
     <div className="atlas-scene">
-      <img src="/images/property-atlas-evening.webp" alt="نمای ایزومتریک محلهٔ دارایی‌ها"/>
+      <img src="/assets/property-city/environment/property_city_district_arcade_pixel_v1.webp" alt="نمای پیکسلی ایزومتریک محلهٔ دارایی‌ها"/>
       <div className="atlas-atmosphere" aria-hidden="true"><MoonStar/></div>
       {places.map(place => <button key={place.id} className={`atlas-marker ${place.marker} ${selected.id === place.id ? 'selected' : ''}`} onClick={() => setSelected(place)} aria-pressed={selected.id === place.id}>
         <i/><span>{place.type}</span>
