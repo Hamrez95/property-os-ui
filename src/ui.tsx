@@ -1,10 +1,11 @@
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import {
   AlertTriangle, Bell, Building2, CheckCircle2, ChevronLeft, FileCheck2, Home,
   House, Landmark, MessageSquare, Plus, Search, Settings, ShieldCheck, UserRound,
   Users, WalletCards, XCircle
 } from 'lucide-react'
 import { go, goBack } from './navigation'
+import { ROLE_SCOPES, useRoleScope, type RoleScopeKey } from './RoleScopeContext'
 
 export type Tone = 'verified' | 'warning' | 'danger' | 'neutral' | 'info'
 
@@ -26,12 +27,32 @@ export function Status({ tone='neutral', children }: { tone?: Tone, children: Re
 }
 
 export function Phone({ title, children, active='auto' }: { title?: string, children: ReactNode, active?: string }) {
+  const route = window.location.hash.replace(/^#\/app/, '').replace(/^#/, '')
+  const scopeRoutes = ['/home', '/property', '/spaces', '/space', '/building', '/building-units', '/charges', '/maintenance', '/property-lease']
+  const showScope = scopeRoutes.some(path => route === path || (path === '/property' && route.startsWith('/property/')))
   return <div className="phone" dir="rtl" lang="fa">
     <div className="phone-status" aria-hidden="true"><span>9:41</span><span>▮▮◒</span></div>
     {title && <header className="mobile-header"><button className="header-back" onClick={() => goBack()} aria-label="بازگشت"><ChevronLeft size={20}/></button><strong>{title}</strong><span className="header-spacer"/></header>}
+    {showScope && <RoleScopeSwitcher/>}
     <main className="phone-body">{children}</main>
     {active!=='none' && <BottomNav active={active}/>}
   </div>
+}
+
+export function RoleScopeSwitcher() {
+  const { activeScope, setActiveScope, context } = useRoleScope()
+  const [open, setOpen] = useState(false)
+  return <section className="role-scope-switcher" aria-label="نقش و محدوده فعال">
+    <button className="role-scope-current" aria-expanded={open} onClick={() => setOpen(!open)}>
+      <span className="role-scope-dot"/><span>{context.label}</span><ChevronLeft size={14} className={open ? 'open' : ''}/>
+    </button>
+    {open && <div className="role-scope-menu" role="menu">
+      <strong>کارها با این نقش و محدوده نمایش داده می‌شوند</strong>
+      {(Object.keys(ROLE_SCOPES) as RoleScopeKey[]).map(key => <button role="menuitemradio" aria-checked={activeScope === key} className={activeScope === key ? 'active' : ''} key={key} onClick={() => { setActiveScope(key); setOpen(false) }}>
+        <span>{ROLE_SCOPES[key].role}</span><small>{ROLE_SCOPES[key].scope} · {ROLE_SCOPES[key].place}</small>
+      </button>)}
+    </div>}
+  </section>
 }
 
 export function BottomNav({ active='auto' }: { active?: string }) {
